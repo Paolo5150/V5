@@ -70,11 +70,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>int\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>int\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -91,14 +91,17 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>V5_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;V5_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5\src\include\V5</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>PCH.h</ForcedIncludeFiles>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
+      <Command>xcopy "$(ProjectDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
 xcopy "$(SolutionDir)Dependencies" "D:\C++\V5App\Dependencies" /E /Y /S /R /Q
-xcopy "$(SolutionDir)bin\$(Platform)\$(Configuration)" "D:\C++\V5App\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q
-xcopy "$(SolutionDir)V5\src\include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q</Command>
+xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "D:\C++\V5App\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q
+xcopy "$(ProjectDir)\src\include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q</Command>
     </PostBuildEvent>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib</AdditionalLibraryDirectories>
@@ -127,8 +130,11 @@ xcopy "$(SolutionDir)V5\src\include" "D:\C++\V5App\Dependencies\V5\include" /E /
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>V5_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;V5_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5\src\include\V5</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>PCH.h</ForcedIncludeFiles>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -137,20 +143,36 @@ xcopy "$(SolutionDir)V5\src\include" "D:\C++\V5App\Dependencies\V5\include" /E /
       <AdditionalDependencies>glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
+      <Command>xcopy "$(ProjectDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
 xcopy "$(SolutionDir)Dependencies" "D:\C++\V5App\Dependencies" /E /Y /S /R /Q
-xcopy "$(SolutionDir)bin\$(Platform)\$(Configuration)" "D:\C++\V5App\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q
-xcopy "$(SolutionDir)V5\src\include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q</Command>
+xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "D:\C++\V5App\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q
+xcopy "$(ProjectDir)\src\include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\CoreLogger.h" />
+    <ClInclude Include="src\include\PCH.h" />
+    <ClInclude Include="src\include\V5\Application\Application.h" />
+    <ClInclude Include="src\Core\Core.h" />
+    <ClInclude Include="src\include\V5\Core\Factory.h" />
+    <ClInclude Include="src\include\V5\Core\ICore.h" />
+    <ClInclude Include="src\include\V5\Core\IWindow.h" />
+    <ClInclude Include="src\include\V5\Core\IWindowListener.h" />
     <ClInclude Include="src\include\V5\Core\Logger.h" />
+    <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\include\V5\Debugging\Intrumentor.h" />
     <ClInclude Include="src\include\V5\Dll.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Core.cpp" />
+    <ClCompile Include="src\Core\Factory.cpp" />
     <ClCompile Include="src\Core\Insturmentor.cpp" />
     <ClCompile Include="src\Core\Logger.cpp" />
+    <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\include\PCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
