@@ -13,22 +13,8 @@ class EditorLayer : public V5Core::Layer
 public:
 	EditorLayer() : Layer("EditorLayer"){};
 
-	void OnUpdate() override
-	{
+	void OnUpdate() override;
 
-	}
-
-	void OnEvent(V5Core::Event& e) override
-	{
-		if (e.GetType() == V5Core::EventType::MouseBtnClick)
-		{
-			V5CLOG_INFO("EditorLayer received {0}", e.GetType());
-		}
-		else if (e.GetType() == V5Core::EventType::WindowClose)
-		{
-			V5CLOG_INFO("closing");
-			system("pause");
-		}
-	}
+	void OnEvent(V5Core::Event& e) override;
 
 };
