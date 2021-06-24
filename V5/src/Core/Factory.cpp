@@ -19,7 +19,7 @@ Factory& Factory::Instance()
 
 IWindow& Factory::GetWindow()
 {
-	return Window::Instance();
+	return Core::Instance().GetWindow();
 }
 
 ICore& Factory::GetCore()

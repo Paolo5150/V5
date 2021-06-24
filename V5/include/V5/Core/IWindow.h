@@ -19,6 +19,5 @@ namespace V5Core
 		virtual void Refresh() = 0;
 		virtual void RegisterEventListener(std::function<void(Event&)> listener) = 0;
 		virtual void MaximizeWindow() = 0;
-		virtual bool IsQuitRequested() = 0;
 	};
 }

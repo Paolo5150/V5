@@ -24,6 +24,11 @@ public:
 		{
 			V5CLOG_INFO("EditorLayer received {0}", e.GetType());
 		}
+		else if (e.GetType() == V5Core::EventType::WindowClose)
+		{
+			V5CLOG_INFO("closing");
+			system("pause");
+		}
 	}
 
 };

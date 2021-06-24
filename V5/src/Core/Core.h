@@ -4,7 +4,7 @@
 
 namespace V5Core
 {
-	class Window;
+	class IWindow;
 	class Application;
 	class Event;
 
@@ -17,13 +17,14 @@ namespace V5Core
 		~Core();
 
 		void Start(Application* app, int winWidth, int winHeight, std::string wintitle) override;
-
+		IWindow& GetWindow() override { return *m_window; };
 	private:
 
 		static std::unique_ptr<Core> s_Instance;
 
 		bool m_isEngineRunning = false;
 		Application* m_Application;
+		std::unique_ptr<IWindow> m_window;
 
 		void OnEvent(Event& e);
 		void Run();

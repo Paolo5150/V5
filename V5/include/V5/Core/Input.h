@@ -14,7 +14,7 @@ namespace V5Core
 	{
 
 	public:
-		friend class Window;
+		friend class WindowsWindow;
 		friend class Core;
 
 		static bool IsKeyDown(int key);

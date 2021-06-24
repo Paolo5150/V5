@@ -6,6 +6,7 @@
 #include <V5/Application/Application.h>
 #include <functional>
 #include <V5/Core/Input.h>
+#include <V5/Core/IWindow.h>
 #include "Window.h"
 #include "Time.h"
 #include <V5/Event/Event.h>
@@ -55,9 +56,9 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 	}
 	V5CORE_LOG_INFO("GLFW successfully initialized");
 
-	Window::Instance().RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));
 	//This will call OnWindowOpen
-	V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);
+	m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);
+	m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));
 
 
 	Run();
@@ -85,7 +86,7 @@ void Core::Run()
 
 void Core::Update(double dt)
 {
-	Window::Instance().Update(); //Poll events before application update
+	m_window->Update(); //Poll events before application update
 	m_Application->Update();
 	Input::ResetDownKeys();
 
@@ -104,13 +105,12 @@ void Core::OnEvent(Event& e)
 
 void Core::Render()
 {
-	Window::Instance().Refresh();
+	m_window->Refresh();
 }
 
 
 void Core::Shutdown()
 {
-	Window::Instance().m_eventListener = nullptr;
 	glfwTerminate();
 	V5CORE_LOG_INFO("Engine successfully shutdown");
 }
