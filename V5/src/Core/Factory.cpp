@@ -1,6 +1,8 @@
-#include <Core/Factory.h>
+#include <V5/Core/Factory.h>
 #include "Window.h"
 #include "Core.h"
+#include "Time.h"
+
 using namespace V5Core;
 
 std::unique_ptr<Factory> Factory::s_Instance;
@@ -20,11 +22,15 @@ IWindow& Factory::GetWindow()
 	return Window::Instance();
 }
 
-
 ICore& Factory::GetCore()
 {
 	return Core::Instance();
-
 }
+
+ITime& Factory::GetTime()
+{
+	return Time::Instance();
+}
+
 
 

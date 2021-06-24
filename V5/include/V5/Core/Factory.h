@@ -6,6 +6,7 @@ namespace V5Core
 {
 	class IWindow;
 	class ICore;
+	class ITime;
 
 	class V5_API Factory
 	{
@@ -14,6 +15,7 @@ namespace V5Core
 
 		IWindow& GetWindow();
 		ICore& GetCore();
+		ITime& GetTime();
 
 	private:
 		static std::unique_ptr<Factory> s_Instance;

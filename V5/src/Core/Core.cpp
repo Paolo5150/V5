@@ -1,10 +1,14 @@
 #include "Core.h"
-#include "Core/Logger.h"
+#include <V5/Core/PlatformDetection.h>
+#include <V5/Core/Logger.h>
 #include "CoreLogger.h"
 #include <GLFW/glfw3.h>
+#include <V5/Application/Application.h>
+#include <functional>
+#include <V5/Core/Input.h>
 #include "Window.h"
-#include <Application/Application.h>
-
+#include "Time.h"
+#include <V5/Event/Event.h>
 
 using namespace V5Core;
 
@@ -34,11 +38,15 @@ Core::~Core()
 
 void Core::Start(Application* app, int winWidth, int winHeight, std::string wintitle)
 {
-	m_Application = std::unique_ptr <Application>(app);
+	m_Application = app;
 
 	//Initialize systems
 
 	Logger::Init();
+	Time::Instance().Init();
+
+	Time::Instance().RegisterUpdateCallback(std::bind(&Core::Update, this, std::placeholders::_1));
+	Time::Instance().RegisterRenderCallback(std::bind(&Core::Render, this));
 
 	if (!glfwInit())
 	{
@@ -47,8 +55,8 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 	}
 	V5CORE_LOG_INFO("GLFW successfully initialized");
 
-	Window::Instance().RegisterWindowListener(*this);
-
+	Window::Instance().RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));
+	//This will call OnWindowOpen
 	V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);
 
 
@@ -61,12 +69,12 @@ void Core::Run()
 	m_isEngineRunning = true;
 	m_Application->OnStart();
 
+	Time::Instance().Reset();
 	while (m_isEngineRunning)
 	{
-		m_Application->Update();
+		//Update timer, will trigger calls to Update and Render
+		Time::Instance().Update();
 
-		Window::Instance().Update();
-		Sleep(1000);
 	}
 
 	V5CORE_LOG_INFO("Engine Run has ended");
@@ -75,37 +83,39 @@ void Core::Run()
 	Shutdown();
 }
 
+void Core::Update(double dt)
+{
+	Window::Instance().Update(); //Poll events before application update
+	m_Application->Update();
+	Input::ResetDownKeys();
+
+}
+
+void Core::OnEvent(Event& e)
+{
+	if (e.GetType() == EventType::WindowClose)
+	{
+		m_isEngineRunning = false;
+	}
+
+	m_Application->OnEvent(e);
+}
+
+
+void Core::Render()
+{
+	Window::Instance().Refresh();
+}
+
 
 void Core::Shutdown()
 {
+	Window::Instance().m_eventListener = nullptr;
 	glfwTerminate();
 	V5CORE_LOG_INFO("Engine successfully shutdown");
 }
 
 
-
-void Core::OnWindowOpen(Window& win)
-{
-
-
-}
-
-void Core::OnWindowCloseRequested(Window& window)
-{
-	m_isEngineRunning = false;
-	
-}
-
-void Core::OnWindowResized(Window& window, int w, int h)
-{
-	//V5CORE_LOG_INFO("Window resized to {0} {1}", w, h);
-}
-
-void  Core::OnFocusChanged(Window& window, int f)
-{
-	V5CORE_LOG_INFO("Focused: {0} ", f);
-
-}
 
 
 

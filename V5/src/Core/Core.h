@@ -1,14 +1,14 @@
 #pragma once
 #include <iostream>
-#include <Core/IWindowListener.h>
-#include <Core/ICore.h>
+#include <V5/Core/ICore.h>
 
 namespace V5Core
 {
 	class Window;
 	class Application;
+	class Event;
 
-	class Core : public IWindowListener, public ICore
+	class Core :  public ICore
 	{
 
 	public:
@@ -18,22 +18,26 @@ namespace V5Core
 
 		void Start(Application* app, int winWidth, int winHeight, std::string wintitle) override;
 
-
-
 	private:
 
 		static std::unique_ptr<Core> s_Instance;
+
 		bool m_isEngineRunning = false;
-		std::unique_ptr<Application> m_Application;
+		Application* m_Application;
 
-
+		void OnEvent(Event& e);
 		void Run();
 		void Shutdown();
-		void OnWindowOpen(Window& win) override;
-		void OnWindowCloseRequested(Window& window) override;
-		void OnWindowResized(Window& window, int w, int h) override;
-		void OnFocusChanged(Window& window, int f) override;
 
+		/**
+		* Called By Time, this is the runtime update (follows FPS)
+		*/
+		void Update(double dt);
+
+		/**
+		* Called By Time
+		*/
+		void Render();
 
 	};
 }

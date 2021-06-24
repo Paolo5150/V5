@@ -1,0 +1,72 @@
+[2021-06-22 21:31:07.306] [Generic] [info] ------------------ START OF LOG ----------------------
+
+[2021-06-22 21:31:07.471] [V5Engine] [info] GLFW successfully initialized
+[2021-06-22 21:31:07.930] [Generic] [info] App V5Editor start
+[2021-06-22 21:31:09.060] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.074] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.083] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.091] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.099] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.110] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.115] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.126] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.132] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.142] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.148] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.157] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.165] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.171] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.182] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.187] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.195] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.206] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.213] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.238] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.476] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.492] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.510] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.515] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.525] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.533] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.539] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.548] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.555] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.565] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.571] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.581] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.587] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.597] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.603] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.612] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.619] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.628] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.635] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.646] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.651] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.663] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.677] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.683] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.692] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.699] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.707] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.715] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.955] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.963] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.971] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.979] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.987] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:09.995] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:31:11.683] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:12.163] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:12.447] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:12.697] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:12.897] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:14.214] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:14.414] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:14.613] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:14.797] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:15.013] [Generic] [info] App V5Editor event 4
+[2021-06-22 21:31:17.659] [Generic] [info] App V5Editor event 1
+[2021-06-22 21:31:17.661] [V5Engine] [info] Engine Run has ended
+[2021-06-22 21:31:17.661] [Generic] [info] App V5Editor quit
+[2021-06-22 21:31:17.735] [V5Engine] [info] Engine successfully shutdown

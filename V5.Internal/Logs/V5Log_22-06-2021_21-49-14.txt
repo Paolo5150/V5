@@ -1,0 +1,9 @@
+[2021-06-22 21:49:14.101] [Generic] [info] ------------------ START OF LOG ----------------------
+
+[2021-06-22 21:49:14.261] [V5Engine] [info] GLFW successfully initialized
+[2021-06-22 21:49:14.711] [Generic] [info] App V5Editor start
+[2021-06-22 21:49:25.232] [Generic] [info] App V5Editor event 2
+[2021-06-22 21:49:27.891] [Generic] [info] App V5Editor event 1
+[2021-06-22 21:49:27.893] [V5Engine] [info] Engine Run has ended
+[2021-06-22 21:49:27.893] [Generic] [info] App V5Editor quit
+[2021-06-22 21:49:27.971] [V5Engine] [info] Engine successfully shutdown
