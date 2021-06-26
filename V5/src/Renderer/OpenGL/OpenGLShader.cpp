@@ -68,6 +68,8 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 		V5LOG_CRITICAL("Failed to link shader");
 	}
 
+	glDeleteShader(vertShader);
+	glDeleteShader(fragShader);
 	glUseProgram(m_shaderID);
 }
 void OpenGLShader::Bind() const

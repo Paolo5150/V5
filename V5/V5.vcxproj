@@ -156,7 +156,10 @@ xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
   <ItemGroup>
     <ClInclude Include="include\V5\Core\PlatformDetection.h" />
     <ClInclude Include="include\V5\Event\InputEvents.h" />
+    <ClInclude Include="src\Renderer\Buffer.h" />
+    <ClInclude Include="src\Renderer\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Renderer\OpenGL\OpenGLVertexBuffer.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Core\CoreLogger.h" />
     <ClInclude Include="include\V5\Core\Input.h" />
@@ -181,7 +184,8 @@ xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
     <ClInclude Include="include\V5\Event\WindowEvents.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Renderer\Shader.h" />
+    <ClInclude Include="include\V5\Renderer\Shader.h" />
+    <ClInclude Include="src\Renderer\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c">
@@ -192,6 +196,8 @@ xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ForcedIncludeFiles>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Renderer\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\Core\Factory.cpp" />
@@ -208,9 +214,11 @@ xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
     <ClCompile Include="src\Core\WindowsWindow.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Renderer\OpenGL\OpenGLVertexBuffer.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Renderer\VertexArray.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

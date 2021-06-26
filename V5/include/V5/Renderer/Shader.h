@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <unordered_map>
+
 namespace V5Rendering
 {
 	class Shader
@@ -20,10 +21,11 @@ namespace V5Rendering
 	class ShaderLibrary
 	{
 	public:
-		void Add(std::string, std::unique_ptr<Shader>);
+		static void Add(std::string, std::unique_ptr<Shader>);
+		static Shader& GetShader(std::string name);
 
 	private:
-		std::unordered_map<std::string, std::unique_ptr<Shader>> m_shaderMap;
+		static std::unordered_map<std::string, std::unique_ptr<Shader>> m_shaderMap;
 
 	};
 }
