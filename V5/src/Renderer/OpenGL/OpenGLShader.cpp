@@ -11,7 +11,7 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 	GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
 	{
 		// Load the shader into a std::vector
-		std::ifstream inStream("Assets\\Shaders\\colorOnly.vert.spv", std::ios::binary);
+		std::ifstream inStream(vert, std::ios::binary);
 		std::istreambuf_iterator<char> startIt(inStream), endIt;
 		std::vector<char> buffer(startIt, endIt);
 		inStream.close();
@@ -36,7 +36,7 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 	GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Load the shader into a std::vector
-	std::ifstream inStream("Assets\\Shaders\\colorOnly.frag.spf", std::ios::binary);
+	std::ifstream inStream(frag, std::ios::binary);
 	std::istreambuf_iterator<char> startIt(inStream), endIt;
 	std::vector<char> buffer(startIt, endIt);
 	inStream.close();

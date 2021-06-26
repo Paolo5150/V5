@@ -29,6 +29,7 @@ Window::Window()
 
 std::unique_ptr<IWindow> Window::OpenWindow(int width, int height, std::string title)
 {
+	V5_PROFILE_FUNCTION();
 #ifdef V5_PLATFORM_WINDOWS
 	auto w = std::make_unique<WindowsWindow>(width, height, title);
 	return std::move(w);

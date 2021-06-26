@@ -4,10 +4,10 @@
 #include <fstream>
 #include <V5/Core/Logger.h>
 #include <V5/Renderer/Shader.h>
-#include "Renderer/OpenGL/OpenGLShader.h"
 #include"Renderer/VertexArray.h"
 #include"Renderer/Buffer.h"
-
+#include "Vertex.h"
+#include <V5/Debugging/Intrumentor.h>
 using namespace V5Rendering;
 
 std::unique_ptr<Renderer> Renderer::s_Instance;
@@ -30,6 +30,8 @@ Renderer& Renderer::Instance()
 
 void Renderer::Init()
 {
+	V5_PROFILE_FUNCTION();
+
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
 
@@ -39,18 +41,14 @@ void Renderer::Init()
 	auto& r = ShaderLibrary::GetShader("ColorOnly");
 	r.Bind();
 
-	//TODO: Refactor, no opengl code here
-
-	std::vector<float> vertices = {
-		-0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.0f, 0.5f, -0.5f
+	std::vector<Vertex> vertices = {
+		{{-0.5f, -0.5f, -0.5f}, {1,0,0}},
+		{{0.5f, -0.5f, -0.5f}, {0,1,0}},
+		{{0.0f, 0.5f, -0.5f }, {0,0,1} }
 	};
 
-	auto vbo = VertexBuffer::Create(vertices.data(), sizeof(vertices));
-	auto layout = BufferLayout::BufferLayout({
-		BufferElement(ShaderDataType::Float3,"Position")
-		});
+	auto vbo = VertexBuffer::Create(vertices.data(), sizeof(Vertex) * vertices.size());
+	auto layout = Vertex::GetLayout();
 
 	vbo->SetLayout(layout);
 

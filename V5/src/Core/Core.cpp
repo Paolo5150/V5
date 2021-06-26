@@ -46,7 +46,6 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 	{
 
 	V5_PROFILE_FUNCTION();
-	Time::Instance().StartTimer();
 
 	m_Application = app;
 
@@ -70,9 +69,7 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 
 	//This will call OnWindowOpen
 	m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);	
-
 	m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));
-
 	
 
 	//Renderer
@@ -80,8 +77,7 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 	}
 	V5_PROFILE_END();
 
-	auto initTime = Time::Instance().StopTimer();
-	V5CLOG_INFO("Windowopen time {0}", initTime);
+
 	Run();
 
 }
