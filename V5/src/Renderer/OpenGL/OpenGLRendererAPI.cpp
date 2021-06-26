@@ -28,9 +28,9 @@ void OpenGLRendererAPI::Init()
 
 	glEnable(GL_SCISSOR_TEST);
 
-	glClearColor(1, 0, 0, 1);
+	glClearColor(0, 0, 0, 1);
 	glViewport(0, 0, Factory::Instance().GetWindow().GetWidth(), Factory::Instance().GetWindow().GetHeight());
-	glScissor(0, 0, Factory::Instance().GetWindow().GetWidth()/2, Factory::Instance().GetWindow().GetHeight());
+
 }
 
 void OpenGLRendererAPI::Shutdown()
@@ -44,7 +44,7 @@ void OpenGLRendererAPI::OnEvent(V5Core::Event& e)
 	{
 		V5CLOG_INFO("W {0} H {0}", Factory::Instance().GetWindow().GetWidth(), Factory::Instance().GetWindow().GetHeight());
 		glViewport(0, 0, Factory::Instance().GetWindow().GetWidth(), Factory::Instance().GetWindow().GetHeight());
-		glScissor(0, 0, Factory::Instance().GetWindow().GetWidth() / 2, Factory::Instance().GetWindow().GetHeight());
+
 
 	}
 	else if (e.GetType() == EventType::WindowFocus)

@@ -17,8 +17,10 @@ namespace V5Rendering
 		static Renderer& Instance();
 
 		void Init();
+		void Render();
 		void Shutdown();
 		void OnEvent(V5Core::Event& e);
+
 	private:
 		static std::unique_ptr<Renderer> s_Instance;
 		std::unique_ptr<RendererAPI> m_renderAPI;

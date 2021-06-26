@@ -39,13 +39,13 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;V5_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)V5\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5\src;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5\include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>PCH.h</ForcedIncludeFiles>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -101,9 +101,9 @@
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
 xcopy "$(SolutionDir)Dependencies" "D:\C++\V5App\Dependencies" /E /Y /S /R /Q
-xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "D:\C++\V5App\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q
 xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q
-xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "$(SolutionDir)V5.Internal\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q</Command>
+xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
+</Command>
     </PostBuildEvent>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib</AdditionalLibraryDirectories>
@@ -132,7 +132,7 @@ xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "$(Solu
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;V5_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)V5\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5\src;$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5\include</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>PCH.h</ForcedIncludeFiles>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -148,14 +148,15 @@ xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "$(Solu
     <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
 xcopy "$(SolutionDir)Dependencies" "D:\C++\V5App\Dependencies" /E /Y /S /R /Q
-xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "D:\C++\V5App\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q
 xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q
-xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "$(SolutionDir)V5.Internal\bin\$(Platform)\$(Configuration)" /E /Y /S /R /Q</Command>
+xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\V5\Core\PlatformDetection.h" />
     <ClInclude Include="include\V5\Event\InputEvents.h" />
+    <ClInclude Include="src\Renderer\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Core\CoreLogger.h" />
     <ClInclude Include="include\V5\Core\Input.h" />
@@ -180,6 +181,7 @@ xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "$(Solu
     <ClInclude Include="include\V5\Event\WindowEvents.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c">
@@ -205,8 +207,10 @@ xcopy "$(ProjectDir)bin\$(Platform)\$(Configuration)\$(ProjectName).dll" "$(Solu
     </ClCompile>
     <ClCompile Include="src\Core\WindowsWindow.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Renderer\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Renderer\Shader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

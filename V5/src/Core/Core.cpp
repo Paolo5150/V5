@@ -69,9 +69,7 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 
 
 	//This will call OnWindowOpen
-	m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);
-
-	
+	m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);	
 
 	m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));
 
@@ -124,8 +122,7 @@ void Core::Render()
 {
 	V5_PROFILE_FUNCTION();
 
-	//Do rendering
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	V5Rendering::Renderer::Instance().Render();
 
 	m_window->Refresh();
 }

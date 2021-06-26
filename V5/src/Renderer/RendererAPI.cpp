@@ -14,4 +14,6 @@ std::unique_ptr<RendererAPI> RendererAPI::Create()
 	default:
 		break;
 	}
+	throw std::runtime_error("Graphics API unknown!");
+	return nullptr;
 }
