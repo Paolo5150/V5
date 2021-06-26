@@ -1,4 +1,5 @@
 #pragma once
+
 #include <GLFW/glfw3.h>
 #include <string>
 #include <vector>
@@ -20,7 +21,7 @@ namespace V5Core
 		void Update() override;
 
 		void RegisterEventListener(std::function<void(Event&)> listener) override; ///< Intended for a single, main listener
-		void Refresh() override {};
+		void Refresh() override;
 		int GetWidth() override { return m_data.Width; }
 		int GetHeight() override { return m_data.Height; }
 		void SetTitle(std::string title) override;

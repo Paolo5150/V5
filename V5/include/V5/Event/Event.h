@@ -5,7 +5,7 @@ namespace V5Core
 	enum class  EventType
 	{
 		None = 0,
-		WindowClose, WindowResize, WindowFocus,
+		WindowOpen, WindowClose, WindowResize, WindowFocus,
 		KeyDown, KeyHold,
 		MouseBtnClick, MouseBtnHold
 		

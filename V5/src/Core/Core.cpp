@@ -2,7 +2,7 @@
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
 #include "CoreLogger.h"
-#include <GLFW/glfw3.h>
+
 #include <V5/Application/Application.h>
 #include <functional>
 #include <V5/Core/Input.h>
@@ -10,6 +10,8 @@
 #include "Window.h"
 #include "Time.h"
 #include <V5/Event/Event.h>
+#include <Renderer/Renderer.h>
+#include <V5/Debugging/Intrumentor.h>
 
 using namespace V5Core;
 
@@ -39,12 +41,20 @@ Core::~Core()
 
 void Core::Start(Application* app, int winWidth, int winHeight, std::string wintitle)
 {
+
+	V5_PROFILE_BEGIN("Core", "CoreInit.json");
+	{
+
+	V5_PROFILE_FUNCTION();
+	Time::Instance().StartTimer();
+
 	m_Application = app;
 
 	//Initialize systems
 
 	Logger::Init();
 	Time::Instance().Init();
+
 
 	Time::Instance().RegisterUpdateCallback(std::bind(&Core::Update, this, std::placeholders::_1));
 	Time::Instance().RegisterRenderCallback(std::bind(&Core::Render, this));
@@ -56,12 +66,26 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 	}
 	V5CORE_LOG_INFO("GLFW successfully initialized");
 
+
+
 	//This will call OnWindowOpen
 	m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);
+
+	
+
 	m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));
 
+	
 
+	//Renderer
+	V5Rendering::Renderer::Instance().Init();
+	}
+	V5_PROFILE_END();
+
+	auto initTime = Time::Instance().StopTimer();
+	V5CLOG_INFO("Windowopen time {0}", initTime);
 	Run();
+
 }
 
 
@@ -71,6 +95,8 @@ void Core::Run()
 	m_Application->OnStart();
 
 	Time::Instance().Reset();
+	V5_PROFILE_BEGIN("Core", "CoreUpdate.json");
+
 	while (m_isEngineRunning)
 	{
 		//Update timer, will trigger calls to Update and Render
@@ -79,39 +105,58 @@ void Core::Run()
 	}
 
 	V5CORE_LOG_INFO("Engine Run has ended");
+	V5_PROFILE_END();
 
-	m_Application->OnQuit();
 	Shutdown();
+	system("pause");
 }
 
 void Core::Update(double dt)
 {
+	V5_PROFILE_FUNCTION();
 	m_window->Update(); //Poll events before application update
 	m_Application->Update();
 	Input::ResetDownKeys();
 
 }
 
+void Core::Render()
+{
+	V5_PROFILE_FUNCTION();
+
+	//Do rendering
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	m_window->Refresh();
+}
+
 void Core::OnEvent(Event& e)
 {
+	//If the windows is being close, the core will consume the event.
+	// All systems will be shutting down in the Shutdown method (they won't receive the WindowClose event)
 	if (e.GetType() == EventType::WindowClose)
 	{
 		m_isEngineRunning = false;
+		V5CORE_LOG_INFO("WindowClose event received by Core, initiating shutdown");
+		e.Consume();
 	}
 
-	m_Application->OnEvent(e);
+	if (!e.GetIsConsumed())
+	{
+		V5Rendering::Renderer::Instance().OnEvent(e);
+		m_Application->OnEvent(e);
+	}
 }
 
 
-void Core::Render()
-{
-	m_window->Refresh();
-}
+
 
 
 void Core::Shutdown()
 {
+	m_Application->OnQuit();
 	glfwTerminate();
+	V5Rendering::Renderer::Instance().Shutdown();
 	V5CORE_LOG_INFO("Engine successfully shutdown");
 }
 

@@ -5,6 +5,7 @@
 #include <V5/Event/WindowEvents.h>
 #include <V5/Event/InputEvents.h>
 #include <V5/Core/PlatformDetection.h>
+#include <V5/Debugging/Intrumentor.h>
 #include "WindowsWindow.h"
 
 using namespace V5Core;
@@ -25,11 +26,6 @@ Window& Window::Instance()
 Window::Window()
 {
 }
-
-
-
-
-
 
 std::unique_ptr<IWindow> Window::OpenWindow(int width, int height, std::string title)
 {

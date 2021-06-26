@@ -1,6 +1,5 @@
-
-
 #include <V5/Debugging/Intrumentor.h>
+#include <sstream>
 
 using namespace V5Debug;
 
@@ -11,7 +10,10 @@ Instrumentor::Instrumentor()
 
 void Instrumentor::BeginSession(const std::string& name, const std::string& filepath)
 {
-	m_OutputStream.open(filepath);
+	std::stringstream ss;
+	ss << folderName << filepath;
+
+	m_OutputStream.open(ss.str());
 	WriteHeader();
 	m_CurrentSession = new InstrumentationSession{ name };
 }

@@ -21,6 +21,11 @@
 #include "../Dll.h"
 #include <thread>
 
+namespace
+{
+	std::string folderName = "Profiles\\";
+}
+
 namespace V5Debug
 {
 	struct V5_API ProfileResult

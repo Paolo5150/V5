@@ -19,7 +19,7 @@ public:
 	{
 		if (e.GetType() == V5Core::EventType::MouseBtnClick)
 		{
-			V5CLOG_INFO("GUI layer received {0}", e.GetType());
+			//V5CLOG_INFO("GUI layer received {0}", e.GetType());
 			//e.Consume();
 		}
 		//

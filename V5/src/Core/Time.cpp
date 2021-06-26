@@ -48,17 +48,34 @@ void Time::Update()
 
 	while (m_accumulator > frameTime)
 	{
-		for (auto c : m_updateCallbacks)
-			c(m_accumulator);
-
 		m_deltaTime = m_accumulator;
 		//Update callback
 		m_accumulator -= frameTime;
+
+		for (auto c : m_updateCallbacks)
+			c(m_accumulator);
+
+		//Render callback
+		for (auto c : m_renderCallbacks)
+			c();
 	}
 
-	//Render callback
-	for (auto c : m_renderCallbacks)
-		c();
+
 }
+
+void Time::StartTimer()
+{
+	m_timeStart = std::chrono::high_resolution_clock::now();
+}
+
+double Time::StopTimer()
+{
+	auto now = std::chrono::high_resolution_clock::now();
+
+	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_timeStart);
+	return time_span.count();
+}
+
+
 
 

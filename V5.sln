@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "V5", "V5\V5.vcxproj", "{078C9D80-4850-47B5-B389-083A331FB68B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "V5.Internal", "V5.Internal\V5.Internal.vcxproj", "{E9028B06-7763-485B-A045-2D09C834F420}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "V5.Editor", "V5.Internal\V5.Internal.vcxproj", "{E9028B06-7763-485B-A045-2D09C834F420}"
 	ProjectSection(ProjectDependencies) = postProject
 		{078C9D80-4850-47B5-B389-083A331FB68B} = {078C9D80-4850-47B5-B389-083A331FB68B}
 	EndProjectSection

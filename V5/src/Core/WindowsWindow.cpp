@@ -4,6 +4,7 @@
 #include <Event/IEventListener.h>
 #include <V5/Event/WindowEvents.h>
 #include <V5/Event/InputEvents.h>
+#include <glad/glad.h>
 
 using namespace V5Core;
 
@@ -27,6 +28,7 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 	m_data.Height = height;
 	m_data.VSync = false;
 
+
 	glfwSetWindowUserPointer(m_glfwWindow, &m_data);
 
 	//Register callbacks
@@ -41,6 +43,8 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 	glfwSetWindowSizeCallback(m_glfwWindow, [](GLFWwindow* win, int newWidth, int newHeight) {
 
 		auto data = (WindowData*)glfwGetWindowUserPointer(win);
+		data->Width = newWidth;
+		data->Height = newHeight;
 
 		WindowResizeEvent e(newWidth, newHeight);
 		if (data->m_eventListener)
@@ -122,12 +126,21 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 	});
 
 	glfwFocusWindow(m_glfwWindow);
+
+
+
 }
 
 void WindowsWindow::Update()
 {
 	glfwPollEvents();
 };
+
+void WindowsWindow::Refresh()
+{
+	glfwSwapBuffers(m_glfwWindow);
+}
+
 
 void WindowsWindow::RegisterEventListener(std::function<void(Event&)> listener)
 {
