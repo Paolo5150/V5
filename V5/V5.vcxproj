@@ -184,6 +184,8 @@ xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R 
     <ClInclude Include="src\Renderer\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Renderer\RendererAPI.h" />
     <ClInclude Include="include\V5\Renderer\Shader.h" />
+    <ClInclude Include="include\V5\Renderer\Texture.h" />
+    <ClInclude Include="include\V5\Renderer\stb_image.h" />
     <ClInclude Include="src\Renderer\Vertex.h" />
     <ClInclude Include="src\Renderer\VertexArray.h" />
   </ItemGroup>
@@ -219,6 +221,7 @@ xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R 
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Renderer\Texture.cpp" />
     <ClCompile Include="src\Renderer\VertexArray.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

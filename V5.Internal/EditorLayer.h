@@ -14,6 +14,7 @@ public:
 	EditorLayer() : Layer("EditorLayer"){};
 
 	void OnUpdate() override;
+	void OnAttach() override;
 
 	void OnEvent(V5Core::Event& e) override;
 

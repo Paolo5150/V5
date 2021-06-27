@@ -20,10 +20,16 @@ namespace V5Core
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+
+	protected:
+		/**
+		* Called right before main loop starts, layers should be added here
+		*/
+		virtual void OnStart();
+
 	
 	private:
 
-		void OnStart();
 		void Update();
 		void OnQuit(); //Called by Core, no need to handle the WindowCloseEvent in this class
 		void OnEvent(Event& e);

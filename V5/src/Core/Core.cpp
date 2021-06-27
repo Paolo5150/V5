@@ -2,7 +2,6 @@
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
 #include "CoreLogger.h"
-
 #include <V5/Application/Application.h>
 #include <functional>
 #include <V5/Core/Input.h>
@@ -49,42 +48,29 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 
 	m_Application = app;
 
-	//Initialize systems
-
 	Logger::Init();
 	Time::Instance().Init();
-
-
 	Time::Instance().RegisterUpdateCallback(std::bind(&Core::Update, this, std::placeholders::_1));
-	Time::Instance().RegisterRenderCallback(std::bind(&Core::Render, this));
-
-	if (!glfwInit())
-	{
-		V5CORE_LOG_ERROR("GLFW failed to initialize, throwing exception");
-		throw std::runtime_error("GLFW failed to initialize");
-	}
-	V5CORE_LOG_INFO("GLFW successfully initialized");
-
-
+	Time::Instance().RegisterRenderCallback(std::bind(&Core::Render, this));	
 
 	//This will call OnWindowOpen
 	m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);	
-	m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));
-	
+	m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));	
 
-	//Renderer
+	//Renderer must be inintialized here, after context is set up
 	V5Rendering::Renderer::Instance().Init();
+	m_Application->OnStart();
 	}
+
 	V5_PROFILE_END();
 	Run();
-
 }
 
 
 void Core::Run()
 {
+
 	m_isEngineRunning = true;
-	m_Application->OnStart();
 
 	Time::Instance().Reset();
 	V5_PROFILE_BEGIN("Core", "CoreUpdate.json");
@@ -150,19 +136,9 @@ void Core::Shutdown()
 	m_Application->OnQuit();
 
 	V5Rendering::Renderer::Instance().Shutdown();
-	CloseLibs();
 	V5CORE_LOG_INFO("Engine successfully shutdown");
 }
 
-//Just put the glfw terminate in function so i can probilfe it
-void  Core::CloseLibs()
-{
-#ifdef V5_PLATFORM_WINDOWS
-	V5_PROFILE_FUNCTION();
-	glfwTerminate();
-#endif
-
-}
 
 
 

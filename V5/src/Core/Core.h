@@ -30,7 +30,6 @@ namespace V5Core
 		void OnEvent(Event& e);
 		void Run();
 		void Shutdown();
-		void CloseLibs();
 
 		/**
 		* Called By Time, this is the runtime update (follows FPS)

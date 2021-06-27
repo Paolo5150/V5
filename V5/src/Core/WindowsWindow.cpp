@@ -11,6 +11,13 @@ using namespace V5Core;
 
 WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 {
+	if (!glfwInit())
+	{
+		V5CORE_LOG_ERROR("GLFW failed to initialize, throwing exception");
+		throw std::runtime_error("GLFW failed to initialize");
+	}
+	V5CORE_LOG_INFO("GLFW successfully initialized");
+
 	auto monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
@@ -148,9 +155,9 @@ void WindowsWindow::Destroy()
 	V5_PROFILE_FUNCTION();
 
 	glfwDestroyWindow(m_glfwWindow);
+	glfwTerminate();
+	V5CORE_LOG_INFO("Windows destroyed, GLFW terminated");
 }
-
-
 
 void WindowsWindow::RegisterEventListener(std::function<void(Event&)> listener)
 {
@@ -159,8 +166,6 @@ void WindowsWindow::RegisterEventListener(std::function<void(Event&)> listener)
 		m_data.m_eventListener = listener;
 	}
 }
-
-
 
 void WindowsWindow::SetTitle(std::string title)
 {
