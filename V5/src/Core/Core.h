@@ -18,6 +18,7 @@ namespace V5Core
 
 		void Start(Application* app, int winWidth, int winHeight, std::string wintitle) override;
 		IWindow& GetWindow() override { return *m_window; };
+
 	private:
 
 		static std::unique_ptr<Core> s_Instance;
@@ -29,6 +30,7 @@ namespace V5Core
 		void OnEvent(Event& e);
 		void Run();
 		void Shutdown();
+		void CloseLibs();
 
 		/**
 		* Called By Time, this is the runtime update (follows FPS)

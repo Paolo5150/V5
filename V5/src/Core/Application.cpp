@@ -49,6 +49,7 @@ void Application::Update()
 void Application::OnQuit()
 {
 	V5LOG_INFO("App {0} quit", m_name);
+	V5_PROFILE_FUNCTION();
 
 }
 

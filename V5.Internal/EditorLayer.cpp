@@ -1,8 +1,10 @@
 #include "EditorLayer.h"
+#include <V5/Renderer/RenderCommand.h>
+#include <V5/Core/Factory.h>
+#include <V5/Core/IWindow.h>
 
 void EditorLayer::OnUpdate() 
 {
-
 }
 
 void EditorLayer::OnEvent(V5Core::Event& e) 

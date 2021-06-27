@@ -26,7 +26,6 @@ void OpenGLRendererAPI::Init()
 	V5CORE_LOG_INFO("\t OpenGL: {0}", version);
 	V5CORE_LOG_INFO("\t GLSL: {0}", glsl);
 
-	glEnable(GL_SCISSOR_TEST);
 
 	glClearColor(0, 0, 0, 1);
 	glViewport(0, 0, Factory::Instance().GetWindow().GetWidth(), Factory::Instance().GetWindow().GetHeight());
@@ -42,9 +41,9 @@ void OpenGLRendererAPI::OnEvent(V5Core::Event& e)
 {
 	if (e.GetType() == EventType::WindowResize)
 	{
-		V5CLOG_INFO("W {0} H {0}", Factory::Instance().GetWindow().GetWidth(), Factory::Instance().GetWindow().GetHeight());
-		glViewport(0, 0, Factory::Instance().GetWindow().GetWidth(), Factory::Instance().GetWindow().GetHeight());
-
+		WindowResizeEvent& ev = dynamic_cast<WindowResizeEvent&>(e);
+		V5CLOG_INFO("W {0} H {1}", ev.GetWidth(), ev.GetHeight());
+		glViewport(0, 0, ev.GetWidth(), ev.GetHeight());
 
 	}
 	else if (e.GetType() == EventType::WindowFocus)
@@ -52,4 +51,16 @@ void OpenGLRendererAPI::OnEvent(V5Core::Event& e)
 		
 	}
 }
+
+void OpenGLRendererAPI::SetClearColor(float r, float g, float b, float a) const
+{
+	glClearColor(r,g,b,a);
+}
+
+void OpenGLRendererAPI::SetViewport(float x, float y, float width, float height) const
+{
+	glViewport(x,y,width, height);
+}
+
+
 

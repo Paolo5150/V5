@@ -16,6 +16,7 @@ namespace V5Rendering
 	public:
 		static Renderer& Instance();
 
+		RendererAPI& GetRenderAPI() { return *m_renderAPI; }
 		void Init();
 		void Render();
 		void Shutdown();

@@ -5,6 +5,7 @@
 #include <V5/Event/WindowEvents.h>
 #include <V5/Event/InputEvents.h>
 #include <glad/glad.h>
+#include <V5/Debugging/Intrumentor.h>
 
 using namespace V5Core;
 
@@ -130,7 +131,6 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 WindowsWindow::~WindowsWindow()
 {
-	glfwDestroyWindow(m_glfwWindow);
 }
 
 void WindowsWindow::Update()
@@ -142,6 +142,14 @@ void WindowsWindow::Refresh()
 {
 	glfwSwapBuffers(m_glfwWindow);
 }
+
+void WindowsWindow::Destroy()
+{
+	V5_PROFILE_FUNCTION();
+
+	glfwDestroyWindow(m_glfwWindow);
+}
+
 
 
 void WindowsWindow::RegisterEventListener(std::function<void(Event&)> listener)

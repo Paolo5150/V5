@@ -23,5 +23,6 @@ namespace V5Core
 	private:	
 		static std::unique_ptr<Window> s_Instance;
 
+
 	};
 }

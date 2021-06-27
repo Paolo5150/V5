@@ -38,7 +38,7 @@ void Renderer::Init()
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
 
-	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\colorOnly.vert.spv", "Assets\\Shaders\\colorOnly.frag.spv"));
+	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\colorOnly.vert.spv", "Assets\\Shaders\\bin\\colorOnly.frag.spv"));
 
 	auto& r = ShaderLibrary::GetShader("ColorOnly");
 	r.Bind();
@@ -79,6 +79,7 @@ void Renderer::Render()
 
 void Renderer::Shutdown()
 {
+	V5_PROFILE_FUNCTION();
 	m_renderAPI->Shutdown();
 }
 

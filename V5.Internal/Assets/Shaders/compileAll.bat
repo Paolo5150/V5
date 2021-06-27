@@ -1,3 +1,3 @@
-glslangValidator.exe -G colorOnly.vert -o colorOnly.vert.spv
-glslangValidator.exe -G colorOnly.frag -o colorOnly.frag.spv
+glslangValidator.exe -G src/colorOnly.vert -o bin/colorOnly.vert.spv
+glslangValidator.exe -G src/colorOnly.frag -o bin/colorOnly.frag.spv
 pause

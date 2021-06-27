@@ -27,6 +27,9 @@ Window::Window()
 {
 }
 
+
+
+
 std::unique_ptr<IWindow> Window::OpenWindow(int width, int height, std::string title)
 {
 	V5_PROFILE_FUNCTION();

@@ -76,8 +76,6 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 	V5Rendering::Renderer::Instance().Init();
 	}
 	V5_PROFILE_END();
-
-
 	Run();
 
 }
@@ -101,7 +99,11 @@ void Core::Run()
 	V5CORE_LOG_INFO("Engine Run has ended");
 	V5_PROFILE_END();
 
+	V5_PROFILE_BEGIN("Core", "CoreShutdown.json");
+
 	Shutdown();
+	V5_PROFILE_END();
+
 	system("pause");
 }
 
@@ -141,17 +143,27 @@ void Core::OnEvent(Event& e)
 	}
 }
 
-
-
-
-
 void Core::Shutdown()
 {
+	V5_PROFILE_FUNCTION();
+	m_window->Destroy();
 	m_Application->OnQuit();
-	glfwTerminate();
+
 	V5Rendering::Renderer::Instance().Shutdown();
+	CloseLibs();
 	V5CORE_LOG_INFO("Engine successfully shutdown");
 }
+
+//Just put the glfw terminate in function so i can probilfe it
+void  Core::CloseLibs()
+{
+#ifdef V5_PLATFORM_WINDOWS
+	V5_PROFILE_FUNCTION();
+	glfwTerminate();
+#endif
+
+}
+
 
 
 
