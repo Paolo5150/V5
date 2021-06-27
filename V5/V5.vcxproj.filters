@@ -108,10 +108,10 @@
     <ClInclude Include="src\Renderer\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\OpenGL\OpenGLVertexBuffer.h">
+    <ClInclude Include="src\Renderer\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\Vertex.h">
+    <ClInclude Include="src\Renderer\OpenGL\OpenGLBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -176,7 +176,7 @@
     <ClCompile Include="src\Renderer\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\OpenGL\OpenGLVertexBuffer.cpp">
+    <ClCompile Include="src\Renderer\OpenGL\OpenGLBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

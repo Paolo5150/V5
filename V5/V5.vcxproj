@@ -159,7 +159,7 @@ xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
     <ClInclude Include="src\Renderer\Buffer.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLShader.h" />
-    <ClInclude Include="src\Renderer\OpenGL\OpenGLVertexBuffer.h" />
+    <ClInclude Include="src\Renderer\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Core\CoreLogger.h" />
     <ClInclude Include="include\V5\Core\Input.h" />
@@ -215,7 +215,7 @@ xcopy "$(SolutionDir)Assets" "$(SolutionDir)V5.Internal\Assets" /E /Y /S /R /Q
     <ClCompile Include="src\Core\WindowsWindow.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLShader.cpp" />
-    <ClCompile Include="src\Renderer\OpenGL\OpenGLVertexBuffer.cpp" />
+    <ClCompile Include="src\Renderer\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />

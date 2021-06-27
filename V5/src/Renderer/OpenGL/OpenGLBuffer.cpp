@@ -1,4 +1,4 @@
-#include "OpenGLVertexBuffer.h"
+#include "OpenGLBuffer.h"
 #include <iostream>
 #include <glad/glad.h>
 #include <Core/CoreLogger.h>
@@ -48,4 +48,33 @@ void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
+}
+
+
+//********** Index Buffer **********//
+
+OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* data, uint32_t count) : m_count(count)
+{
+	glCreateBuffers(1, &m_bufferID);
+
+	glNamedBufferStorage(m_bufferID, count * sizeof(uint32_t), data, 0);
+}
+
+OpenGLIndexBuffer::~OpenGLIndexBuffer()
+{
+	glDeleteBuffers(1, &m_bufferID);
+}
+
+void OpenGLIndexBuffer::Bind()
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferID);
+}
+void OpenGLIndexBuffer::Unbind()
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+uint32_t OpenGLIndexBuffer::GetCount() const
+{
+	return m_count;
 }

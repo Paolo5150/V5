@@ -23,4 +23,21 @@ namespace V5Rendering
 		uint32_t m_bufferID;
 		BufferLayout m_layout;
 	};
+
+
+	class OpenGLIndexBuffer : public IndexBuffer
+	{
+	public:
+		OpenGLIndexBuffer(uint32_t* data, uint32_t count);
+		~OpenGLIndexBuffer();
+
+		virtual void Bind() override;
+		virtual void Unbind() override;
+
+		virtual uint32_t GetCount() const override;
+
+	private:
+		uint32_t m_bufferID;
+		uint32_t m_count;
+	};
 }

@@ -126,9 +126,11 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 	});
 
 	glfwFocusWindow(m_glfwWindow);
+}
 
-
-
+WindowsWindow::~WindowsWindow()
+{
+	glfwDestroyWindow(m_glfwWindow);
 }
 
 void WindowsWindow::Update()

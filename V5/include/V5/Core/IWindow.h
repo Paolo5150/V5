@@ -10,6 +10,7 @@ namespace V5Core
 	class V5_API IWindow
 	{
 	public:
+		virtual ~IWindow() = default;
 		virtual int GetWidth() = 0;
 		virtual int GetHeight() = 0;
 		virtual std::string GetTitle() = 0;

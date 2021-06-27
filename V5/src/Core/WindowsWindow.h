@@ -16,7 +16,7 @@ namespace V5Core
 		friend class Core;
 
 		WindowsWindow(int width, int height, const std::string& title);
-
+		~WindowsWindow();
 
 		void Update() override;
 
@@ -27,8 +27,6 @@ namespace V5Core
 		void SetTitle(std::string title) override;
 		std::string GetTitle() override { return m_data.Title; }
 		void MaximizeWindow() override;
-
-
 	private:
 		GLFWwindow* m_glfwWindow;
 
