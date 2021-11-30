@@ -10,9 +10,9 @@ using namespace V5Rendering;
 void EditorLayer::OnAttach()
 {
 	V5_PROFILE_FUNCTION();
-	TextureData texture = V5Rendering::Texture::LoadData("Assets\\Textures\\wall.jpg");
-	V5CLOG_INFO("Texture w {0} h {1}", texture.Width, texture.Height);
-	texture.Delete();
+
+
+
 }
 
 void EditorLayer::OnUpdate() 

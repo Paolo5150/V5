@@ -155,6 +155,7 @@ xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R 
     <ClInclude Include="include\V5\Core\PlatformDetection.h" />
     <ClInclude Include="include\V5\Event\InputEvents.h" />
     <ClInclude Include="src\Renderer\Buffer.h" />
+    <ClInclude Include="src\Renderer\OpenGL\OpenGLTexture2D.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLBuffer.h" />
@@ -199,6 +200,7 @@ xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R 
       </ForcedIncludeFiles>
     </ClCompile>
     <ClCompile Include="src\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Renderer\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />

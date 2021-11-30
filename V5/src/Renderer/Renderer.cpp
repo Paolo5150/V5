@@ -9,6 +9,7 @@
 #include "Vertex.h"
 #include <V5/Debugging/Intrumentor.h>
 #include <Core/Time.h>
+#include <V5/Renderer/Texture.h>
 
 using namespace V5Rendering;
 
@@ -17,6 +18,7 @@ std::unique_ptr<Renderer> Renderer::s_Instance;
 namespace
 {
 	std::shared_ptr<VertexArray> vao;
+	std::shared_ptr<Texture2D> texture;
 
 }
 
@@ -38,16 +40,18 @@ void Renderer::Init()
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
 
-	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\colorOnly.vert.spv", "Assets\\Shaders\\bin\\colorOnly.frag.spv"));
+	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
+	
+	texture = Texture2D::Create("Assets\\Textures\\wall.jpg");
 
 	auto& r = ShaderLibrary::GetShader("ColorOnly");
 	r.Bind();
 
 	std::vector<Vertex> vertices = {
-		{{-0.5f, -0.5f, -0.5f}, {1,0,0}},
-		{{0.5f, -0.5f, -0.5f}, {0,1,0}},
-		{{0.5f, 0.5f, -0.5f }, {1,1,1} },
-		{{-0.5f, 0.5f, -0.5f }, {0,0,1} },
+		{{-0.5f, -0.5f, -0.5f}, {1,0,0}, {0,0}},
+		{{0.5f, -0.5f, -0.5f}, {0,1,0}, {1,0}},
+		{{0.5f, 0.5f, -0.5f }, {1,1,1} , {1,1}},
+		{{-0.5f, 0.5f, -0.5f }, {0,0,1} , {0,1}},
 	};
 
 	std::vector<uint32_t> indices = { 0,1,2, 2, 3, 0 };
@@ -68,11 +72,11 @@ void Renderer::Init()
 
 void Renderer::Render()
 {
+	V5_PROFILE_FUNCTION();
+	m_renderAPI->Clear();
 	//Do rendering
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	vao->Bind();
-	vao->GetIndexBuffer()->Bind();
-	glDrawElements(GL_TRIANGLES, vao->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+	texture->Bind(0);
+	m_renderAPI->RenderIndexed(*vao);
 
 }
 

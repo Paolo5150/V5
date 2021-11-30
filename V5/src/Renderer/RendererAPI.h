@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#define G_API VULKAN
+
 namespace V5Core
 {
 	class Event;
@@ -8,6 +10,8 @@ namespace V5Core
 
 namespace V5Rendering
 {
+	class VertexArray;
+
 	class RendererAPI
 	{
 	public:
@@ -23,6 +27,8 @@ namespace V5Rendering
 
 		virtual void SetClearColor(float r, float g, float b, float a) const = 0;
 		virtual void SetViewport(float x, float y, float width, float height) const = 0;
+		virtual void RenderIndexed(VertexArray& ar) = 0;
+		virtual void Clear() = 0;
 
 
 		static std::unique_ptr<RendererAPI> Create();

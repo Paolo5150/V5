@@ -12,6 +12,8 @@ namespace V5Rendering
 
 		void SetClearColor(float r, float g, float b, float a) const override;
 		void SetViewport(float x, float y, float width, float height) const override;
+		void RenderIndexed(VertexArray& aroverride) override;
+		void Clear() override;
 
 
 	};

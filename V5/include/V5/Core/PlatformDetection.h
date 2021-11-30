@@ -4,6 +4,7 @@
 #ifdef _WIN64
 	/* Windows x64  */
 #define V5_PLATFORM_WINDOWS
+#define API_OPENGL
 #else
 	/* Windows x86 */
 #error "x86 Builds are not supported!"

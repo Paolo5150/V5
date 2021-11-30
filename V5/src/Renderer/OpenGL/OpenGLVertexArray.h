@@ -16,7 +16,7 @@ namespace V5Rendering
 		void SetIndexBuffer(std::shared_ptr<IndexBuffer> ib) override;
 
 		std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() override { return m_vertexBuffers; };
-		std::shared_ptr<IndexBuffer>& GetIndexBuffer() override { return m_indexBuffer; };
+		IndexBuffer& GetIndexBuffer() override { return *m_indexBuffer; };
 	private:
 		uint32_t m_vertexArrayID;
 		uint32_t m_locationIndex = 0;

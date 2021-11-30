@@ -17,7 +17,7 @@ namespace V5Rendering
 			virtual void SetIndexBuffer(std::shared_ptr<IndexBuffer> ib) = 0;
 
 			virtual std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() = 0;
-			virtual std::shared_ptr<IndexBuffer>& GetIndexBuffer() = 0;
+			virtual IndexBuffer& GetIndexBuffer() = 0;
 
 			static std::unique_ptr<VertexArray> Create();
 

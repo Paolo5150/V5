@@ -33,7 +33,6 @@ void Application::OnStart()
 void Application::Update()
 {
 	{
-
 		for (Layer* layer : m_layerStack)
 			layer->OnUpdate();
 	}

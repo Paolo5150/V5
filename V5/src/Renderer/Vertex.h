@@ -8,12 +8,14 @@ namespace V5Rendering
 	{
 		glm::vec3 Position;
 		glm::vec3 Color;
+		glm::vec2 UV;
 
 		static BufferLayout GetLayout()
 		{
 			BufferLayout l({
 		BufferElement(ShaderDataType::Float3,"Position"),
-		BufferElement(ShaderDataType::Float3,"Color")
+		BufferElement(ShaderDataType::Float3,"Color"),
+		BufferElement(ShaderDataType::Float2,"Uvs")
 				});
 
 			return l;

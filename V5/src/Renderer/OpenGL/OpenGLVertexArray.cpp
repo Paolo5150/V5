@@ -1,7 +1,7 @@
 #include "OpenGLVertexArray.h"
 #include <glad/glad.h>
 #include "Renderer/Buffer.h"
-
+#include <V5/Debugging/Intrumentor.h>
 using namespace V5Rendering;
 
 static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
@@ -39,6 +39,7 @@ OpenGLVertexArray::~OpenGLVertexArray()
 
 void OpenGLVertexArray::Bind() const
 {
+	V5_PROFILE_FUNCTION();
 	glBindVertexArray(m_vertexArrayID);
 }
 

@@ -6,6 +6,8 @@
 #include <V5/Event/WindowEvents.h>
 #include <V5/Core/Factory.h>
 #include <V5/Core/IWindow.h>
+#include <Renderer/VertexArray.h>
+#include <Renderer/Buffer.h>
 
 using namespace V5Core;
 using namespace V5Rendering;
@@ -61,6 +63,20 @@ void OpenGLRendererAPI::SetViewport(float x, float y, float width, float height)
 {
 	glViewport(x,y,width, height);
 }
+
+void OpenGLRendererAPI::RenderIndexed(VertexArray& vao)
+{
+	vao.Bind();
+	vao.GetIndexBuffer().Bind();
+	glDrawElements(GL_TRIANGLES, vao.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);
+}
+
+void OpenGLRendererAPI::Clear()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+
 
 
 

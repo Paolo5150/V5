@@ -123,6 +123,9 @@
     <ClInclude Include="include\V5\Renderer\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\OpenGL\OpenGLTexture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Logger.cpp">
@@ -192,6 +195,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\OpenGL\OpenGLTexture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
