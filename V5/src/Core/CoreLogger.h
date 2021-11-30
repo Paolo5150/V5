@@ -1,9 +1,8 @@
 #pragma once
 #include <V5/Core/Logger.h>
 
-#define LOG_ENABLE
 
-#ifdef LOG_ENABLE
+#if ENABLE_LOGS
 
 	#define V5CORE_LOG_TRACE(...)         ::V5Core::Logger::GetV5Logger()->trace(__VA_ARGS__)
 	#define V5CORE_LOG_INFO(...)          ::V5Core::Logger::GetV5Logger()->info(__VA_ARGS__)

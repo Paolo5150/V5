@@ -99,10 +99,8 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
-xcopy "$(SolutionDir)Dependencies" "D:\C++\V5App\Dependencies" /E /Y /S /R /Q
-xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\GLFW\lib</AdditionalLibraryDirectories>
@@ -145,10 +143,8 @@ xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R 
       <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)bin" "D:\C++\V5App\Dependencies\V5\lib" /E /Y /S /R /Q
-xcopy "$(SolutionDir)Dependencies" "D:\C++\V5App\Dependencies" /E /Y /S /R /Q
-xcopy "$(ProjectDir)include" "D:\C++\V5App\Dependencies\V5\include" /E /Y /S /R /Q
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

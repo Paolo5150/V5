@@ -17,7 +17,8 @@ namespace V5Rendering
 	public:
 		enum class API
 		{
-			OpenGL
+			OpenGL,
+			Vulkan
 		};
 
 		virtual ~RendererAPI() = default;
