@@ -35,14 +35,13 @@ namespace V5Rendering
 	class BufferElement
 	{
 	public:
-		std::string Name;
 		ShaderDataType DataType;
 		uint32_t Size;
 		bool Normalized;
 		size_t Offset;
 
-		BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-			: Name(name), DataType(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
+		BufferElement(ShaderDataType type, bool normalized = false)
+			: DataType(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
 		{
 		}
 
