@@ -51,9 +51,7 @@ namespace V5Rendering
 		void Bind() const override;
 		void Unbind() const override;
 		void SetData(const void* data, uint32_t size) override;
-		void SetLayout(const BufferLayout& layout) override;
 		uint32_t GetBinding() const { return m_binding; }
-		const BufferLayout& GetLayout() override;
 		virtual uint32_t GetID() const override { return m_bufferID; }
 
 	private:

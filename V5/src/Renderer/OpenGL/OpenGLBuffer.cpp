@@ -117,15 +117,6 @@ void OpenGLUniformBuffer::Unbind() const
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-void OpenGLUniformBuffer::SetLayout(const BufferLayout& layout)
-{
-	m_layout = layout;
-}
-const BufferLayout& OpenGLUniformBuffer::GetLayout()
-{
-	return m_layout;
-}
-
 void OpenGLUniformBuffer::SetData(const void* data, uint32_t size)
 {
 	Bind();
