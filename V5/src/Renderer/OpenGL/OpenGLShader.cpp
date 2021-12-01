@@ -65,7 +65,13 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 	glGetProgramiv(m_shaderID, GL_LINK_STATUS, (int*)&isLinked);
 	if (isLinked == GL_FALSE)
 	{
-		V5LOG_CRITICAL("Failed to link shader");
+		int InfoLogLength;
+		glGetProgramiv(m_shaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+		std::vector<char> ProgramErrorMessage(InfoLogLength);
+		glGetProgramInfoLog(m_shaderID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+		printf("%s\n", &ProgramErrorMessage[0]);
+
+	
 	}
 
 	glDeleteShader(vertShader);

@@ -19,6 +19,7 @@ namespace
 {
 	std::shared_ptr<VertexArray> vao;
 	std::shared_ptr<Texture2D> texture;
+	std::shared_ptr<Texture2D> texture2;
 	std::shared_ptr<UniformBuffer> ubo;
 
 }
@@ -44,6 +45,7 @@ void Renderer::Init()
 	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
 	
 	texture = Texture2D::Create("Assets\\Textures\\wall.jpg");
+	texture2 = Texture2D::Create("Assets\\Textures\\smiley.png");
 
 	auto& r = ShaderLibrary::GetShader("ColorOnly");
 	r.Bind();
@@ -79,8 +81,10 @@ void Renderer::Render()
 {
 	V5_PROFILE_FUNCTION();
 	m_renderAPI->Clear();
+	ShaderLibrary::GetShader("ColorOnly").Bind();
 	//Do rendering
-	texture->Bind(0);
+	texture2->Bind(0);
+	texture->Bind(1);
 	ubo->Bind();
 
 	m_renderAPI->RenderIndexed(*vao);
