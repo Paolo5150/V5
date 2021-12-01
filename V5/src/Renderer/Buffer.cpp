@@ -44,3 +44,29 @@ std::shared_ptr<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t cou
 	return nullptr;
 }
 
+std::shared_ptr<UniformBuffer> UniformBuffer::Create(uint32_t binding, const void* data, uint32_t size)
+{
+	switch (RendererAPI::GetAPI())
+	{
+	case RendererAPI::API::OpenGL:
+		return std::make_shared<OpenGLUniformBuffer>(binding, data, size);
+	default:
+		break;
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<UniformBuffer> UniformBuffer::Create(uint32_t binding, uint32_t size)
+{
+	switch (RendererAPI::GetAPI())
+	{
+	case RendererAPI::API::OpenGL:
+		return std::make_shared<OpenGLUniformBuffer>(binding, size);
+	default:
+		break;
+	}
+
+	return nullptr;
+}
+

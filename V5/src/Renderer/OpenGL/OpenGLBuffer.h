@@ -40,4 +40,25 @@ namespace V5Rendering
 		uint32_t m_bufferID;
 		uint32_t m_count;
 	};
+
+	class OpenGLUniformBuffer : public UniformBuffer
+	{
+	public:
+		OpenGLUniformBuffer(uint32_t binding, uint32_t size);
+		OpenGLUniformBuffer(uint32_t binding, const void* data, uint32_t size);
+		~OpenGLUniformBuffer();
+
+		void Bind() const override;
+		void Unbind() const override;
+		void SetData(const void* data, uint32_t size) override;
+		void SetLayout(const BufferLayout& layout) override;
+		uint32_t GetBinding() const { return m_binding; }
+		const BufferLayout& GetLayout() override;
+		virtual uint32_t GetID() const override { return m_bufferID; }
+
+	private:
+		uint32_t m_bufferID;
+		uint32_t m_binding;
+		BufferLayout m_layout;
+	};
 }

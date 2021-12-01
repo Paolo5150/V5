@@ -78,3 +78,56 @@ uint32_t OpenGLIndexBuffer::GetCount() const
 {
 	return m_count;
 }
+
+//********** Uniform Buffer **********//
+
+OpenGLUniformBuffer::OpenGLUniformBuffer(uint32_t binding, uint32_t size) :
+	m_binding(binding)
+{
+	glGenBuffers(1, &m_bufferID);
+	glBindBuffer(GL_UNIFORM_BUFFER, m_bufferID);
+	glNamedBufferStorage(m_bufferID, size, NULL, GL_DYNAMIC_STORAGE_BIT);
+	glBindBufferBase(GL_UNIFORM_BUFFER, m_binding, m_bufferID);
+
+}
+
+OpenGLUniformBuffer::OpenGLUniformBuffer(uint32_t binding, const void* data, uint32_t size) :
+	m_binding(binding)
+{
+	glGenBuffers(1, &m_bufferID);
+	glBindBuffer(GL_UNIFORM_BUFFER, m_bufferID);
+	glNamedBufferStorage(m_bufferID, size, data, 0); // Flag 0 means static data, cannot be changed
+	glBindBufferBase(GL_UNIFORM_BUFFER, m_binding, m_bufferID);
+}
+
+OpenGLUniformBuffer::~OpenGLUniformBuffer()
+{
+	glDeleteBuffers(1, &m_bufferID);
+}
+
+
+void OpenGLUniformBuffer::Bind() const
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, m_bufferID);
+
+}
+
+void OpenGLUniformBuffer::Unbind() const
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void OpenGLUniformBuffer::SetLayout(const BufferLayout& layout)
+{
+	m_layout = layout;
+}
+const BufferLayout& OpenGLUniformBuffer::GetLayout()
+{
+	return m_layout;
+}
+
+void OpenGLUniformBuffer::SetData(const void* data, uint32_t size)
+{
+	Bind();
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, size, data);
+}

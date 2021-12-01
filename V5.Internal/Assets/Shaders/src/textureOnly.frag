@@ -6,8 +6,13 @@ layout(location = 0) out vec4 fragColor;
 
 uniform sampler2D albedo;
 
+layout (std140, binding = 0) uniform TestColor
+{
+    vec4 testColor;
+};
+
 void main()
 {
-	vec3 textureColor = texture(albedo, textCoords).xyz; 
+	vec3 textureColor = texture(albedo, textCoords).xyz * testColor.xyz; 
 	fragColor = vec4(textureColor,1.0);
 }
