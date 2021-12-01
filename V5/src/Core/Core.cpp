@@ -14,6 +14,12 @@
 
 using namespace V5Core;
 
+namespace
+{
+	int FPS = 60;
+	double frameTime = 1.0 / FPS;
+}
+
 std::unique_ptr<Core> Core::s_Instance;
 
 Core& Core::Instance()
@@ -43,23 +49,19 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 
 	V5_PROFILE_BEGIN("Core", "CoreInit.json");
 	{
+		V5_PROFILE_FUNCTION();
 
-	V5_PROFILE_FUNCTION();
+		m_Application = app;
 
-	m_Application = app;
+		Logger::Init();
 
-	Logger::Init();
-	Time::Instance().Init();
-	Time::Instance().RegisterUpdateCallback(std::bind(&Core::Update, this, std::placeholders::_1));
-	Time::Instance().RegisterRenderCallback(std::bind(&Core::Render, this));	
+		//This will call OnWindowOpen
+		m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);	
+		m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));	
 
-	//This will call OnWindowOpen
-	m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);	
-	m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));	
-
-	//Renderer must be inintialized here, after context is set up
-	V5Rendering::Renderer::Instance().Init();
-	m_Application->OnStart();
+		//Renderer must be inintialized here, after context is set up
+		V5Rendering::Renderer::Instance().Init();
+		m_Application->OnStart();
 	}
 
 	V5_PROFILE_END();
@@ -72,14 +74,28 @@ void Core::Run()
 
 	m_isEngineRunning = true;
 
-	Time::Instance().Reset();
 	V5_PROFILE_BEGIN("Core", "CoreUpdate.json");
 
 	while (m_isEngineRunning)
 	{
-		//Update timer, will trigger calls to Update and Render
-		Time::Instance().Update();
+		double now = glfwGetTime();
+		m_looseDeltaTime = now - m_prevTime;
+		m_prevTime = now;
 
+		auto delta = m_looseDeltaTime;
+		m_accumulator += delta;
+
+		if (m_accumulator > frameTime)
+		{
+			m_deltaTime = m_accumulator;
+			//Update callback
+			m_accumulator = 0;
+
+			Update(m_deltaTime);
+			//Render callback
+			Render();
+		}
+	
 	}
 
 	V5CORE_LOG_INFO("Engine Run has ended");
@@ -95,9 +111,11 @@ void Core::Run()
 
 void Core::Update(double dt)
 {
+	V5CLOG_INFO("Delta {0}", dt);
+	V5CLOG_INFO("FPS {0}", 1.0 / dt);
 	V5_PROFILE_FUNCTION();
 	m_window->Update(); //Poll events before application update
-	m_Application->Update();
+	m_Application->Update(dt);
 	Input::ResetDownKeys();
 
 }

@@ -27,10 +27,5 @@ ICore& Factory::GetCore()
 	return Core::Instance();
 }
 
-ITime& Factory::GetTime()
-{
-	return Time::Instance();
-}
-
 
 

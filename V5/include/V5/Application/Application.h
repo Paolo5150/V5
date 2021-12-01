@@ -30,7 +30,7 @@ namespace V5Core
 	
 	private:
 
-		void Update();
+		void Update(double dt);
 		void OnQuit(); //Called by Core, no need to handle the WindowCloseEvent in this class
 		void OnEvent(Event& e);
 		LayerStack m_layerStack;

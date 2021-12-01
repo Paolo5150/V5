@@ -35,7 +35,7 @@ Renderer& Renderer::Instance()
 void Renderer::Init()
 {
 	V5_PROFILE_FUNCTION();
-	V5Core::Time::Instance().StartTimer();
+	V5Core::Time::StartTimer();
 
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
@@ -66,7 +66,7 @@ void Renderer::Init()
 	vao->AddVertexBuffer(vbo);
 	vao->SetIndexBuffer(ibo);
 
-	auto time = V5Core::Time().Instance().StopTimer();
+	auto time = V5Core::Time::StopTimer();
 	V5CLOG_INFO("Render init time: {0}", time);
 }
 
@@ -75,7 +75,7 @@ void Renderer::Render()
 	V5_PROFILE_FUNCTION();
 	m_renderAPI->Clear();
 	//Do rendering
-	texture->Bind(0);
+	texture->Bind(1);
 	m_renderAPI->RenderIndexed(*vao);
 
 }

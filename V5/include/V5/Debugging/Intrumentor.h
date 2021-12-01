@@ -26,6 +26,8 @@ namespace
 	std::string folderName = "Profiles\\";
 }
 
+#define ENABLE_PROFILING 1
+
 namespace V5Debug
 {
 	struct V5_API ProfileResult
@@ -91,9 +93,15 @@ namespace V5Debug
 		bool m_Stopped;
 	};
 
-
+#if ENABLE_PROFILING
 #define V5_PROFILE_BEGIN(name, filepath) ::V5Debug::Instrumentor::Get().BeginSession(name, filepath)
 #define V5_PROFILE_END() ::V5Debug::Instrumentor::Get().EndSession()
 #define V5_PROFILE_SCOPE(name) ::V5Debug::InstrumentationTimer timer##__LINE__(name);
 #define V5_PROFILE_FUNCTION() V5_PROFILE_SCOPE(__FUNCSIG__)
+#else
+#define V5_PROFILE_BEGIN(name, filepath) 
+#define V5_PROFILE_END()
+#define V5_PROFILE_SCOPE(name) 
+#define V5_PROFILE_FUNCTION()
+#endif
 };

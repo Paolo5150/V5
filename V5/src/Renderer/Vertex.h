@@ -13,10 +13,10 @@ namespace V5Rendering
 		static BufferLayout GetLayout()
 		{
 			BufferLayout l({
-		BufferElement(ShaderDataType::Float3,"Position"),
-		BufferElement(ShaderDataType::Float3,"Color"),
-		BufferElement(ShaderDataType::Float2,"Uvs")
-				});
+				BufferElement(ShaderDataType::Float3,"Position"),
+				BufferElement(ShaderDataType::Float3,"Color"),
+				BufferElement(ShaderDataType::Float2,"Uvs")
+			});
 
 			return l;
 		}

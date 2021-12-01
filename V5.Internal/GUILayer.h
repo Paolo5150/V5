@@ -9,7 +9,7 @@ class GUILayer : public V5Core::Layer
 public:
 	GUILayer() : Layer("GUILayer") {};
 
-	void OnUpdate() override
+	void OnUpdate(double dt) override
 	{
 		//V5LOG_INFO("Update GUI layer");
 	}

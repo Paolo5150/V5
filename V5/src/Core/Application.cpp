@@ -30,11 +30,11 @@ void Application::OnStart()
 	V5LOG_INFO("App {0} start", m_name);
 
 }
-void Application::Update()
+void Application::Update(double dt)
 {
 	{
 		for (Layer* layer : m_layerStack)
-			layer->OnUpdate();
+			layer->OnUpdate(dt);
 	}
 
 	/*m_ImGuiLayer->Begin();

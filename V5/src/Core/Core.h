@@ -31,6 +31,11 @@ namespace V5Core
 		void Run();
 		void Shutdown();
 
+		double m_prevTime;
+		double m_deltaTime;
+		double m_looseDeltaTime;
+		double m_accumulator = 0;
+
 		/**
 		* Called By Time, this is the runtime update (follows FPS)
 		*/
