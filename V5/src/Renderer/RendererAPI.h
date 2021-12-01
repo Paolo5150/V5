@@ -27,7 +27,7 @@ namespace V5Rendering
 		virtual void OnEvent(V5Core::Event& e) = 0;
 
 		virtual void SetClearColor(float r, float g, float b, float a) const = 0;
-		virtual void SetViewport(float x, float y, float width, float height) const = 0;
+		virtual void SetViewport(int x, int y, int width, int height) const = 0;
 		virtual void RenderIndexed(VertexArray& ar) = 0;
 		virtual void Clear() = 0;
 

@@ -59,7 +59,7 @@ void OpenGLRendererAPI::SetClearColor(float r, float g, float b, float a) const
 	glClearColor(r,g,b,a);
 }
 
-void OpenGLRendererAPI::SetViewport(float x, float y, float width, float height) const
+void OpenGLRendererAPI::SetViewport(int x, int y, int width, int height) const
 {
 	glViewport(x,y,width, height);
 }

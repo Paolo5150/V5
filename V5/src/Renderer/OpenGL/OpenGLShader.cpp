@@ -28,6 +28,7 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 		if (GL_FALSE == status)
 		{
 			V5CLOG_ERROR("Failed to load vertex shader");
+			V5LOG_ERROR("Failed to load vertex shader");
 		}
 
 	}
@@ -65,13 +66,8 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 	glGetProgramiv(m_shaderID, GL_LINK_STATUS, (int*)&isLinked);
 	if (isLinked == GL_FALSE)
 	{
-		int InfoLogLength;
-		glGetProgramiv(m_shaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-		std::vector<char> ProgramErrorMessage(InfoLogLength);
-		glGetProgramInfoLog(m_shaderID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-		printf("%s\n", &ProgramErrorMessage[0]);
-
-	
+		V5CLOG_ERROR("Failed to load fragment shader");
+		V5LOG_ERROR("Failed to load vertex shader");
 	}
 
 	glDeleteShader(vertShader);
