@@ -75,7 +75,7 @@ void Renderer::Render()
 	V5_PROFILE_FUNCTION();
 	m_renderAPI->Clear();
 	//Do rendering
-	texture->Bind(1);
+	texture->Bind(0);
 	m_renderAPI->RenderIndexed(*vao);
 
 }
