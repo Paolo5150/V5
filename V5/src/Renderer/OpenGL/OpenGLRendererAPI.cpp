@@ -44,7 +44,6 @@ void OpenGLRendererAPI::OnEvent(V5Core::Event& e)
 	if (e.GetType() == EventType::WindowResize)
 	{
 		WindowResizeEvent& ev = dynamic_cast<WindowResizeEvent&>(e);
-		V5CLOG_INFO("W {0} H {1}", ev.GetWidth(), ev.GetHeight());
 		glViewport(0, 0, ev.GetWidth(), ev.GetHeight());
 
 	}

@@ -60,6 +60,7 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 			data->m_eventListener(e);
 		}
 
+
 	});
 
 	glfwSetWindowFocusCallback(m_glfwWindow, [](GLFWwindow* win, int focused) {
