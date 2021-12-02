@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Dll.h"
 #include <GLFW/glfw3.h>
 #include "KeyCodes.h"
 #include <array>
@@ -10,7 +9,7 @@
 
 namespace V5Core
 {
-	class V5_API Input
+	class Input
 	{
 
 	public:

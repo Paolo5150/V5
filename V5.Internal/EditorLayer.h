@@ -15,6 +15,7 @@ public:
 
 	void OnUpdate(double dt) override;
 	void OnAttach() override;
+	void OnImGuiRender() override;
 
 	void OnEvent(V5Core::Event& e) override;
 

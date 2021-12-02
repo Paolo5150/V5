@@ -1,8 +1,7 @@
 #include "WindowsWindow.h"
-#include <ImGui/imgui.h>
-#include <ImGui/imgui_impl_opengl3.h>
-#include <ImGui/imgui_impl_opengl3_loader.h>
-#include <ImGui/imgui_impl_glfw.h>
+#include <V5/ImGui/imgui.h>
+#include <V5/ImGui/imgui_impl_opengl3.h>
+#include <V5/ImGui/imgui_impl_glfw.h>
 #include "CoreLogger.h"
 #include <V5/Core/Input.h>
 #include <Event/IEventListener.h>
@@ -39,7 +38,6 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 	m_data.Width = width;
 	m_data.Height = height;
 	m_data.VSync = false;
-
 
 	glfwSetWindowUserPointer(m_glfwWindow, &m_data);
 
@@ -156,12 +154,17 @@ void WindowsWindow::Update()
 
 void WindowsWindow::Refresh()
 {
+	V5_PROFILE_FUNCTION();
 	glfwSwapBuffers(m_glfwWindow);
 }
 
 void WindowsWindow::Destroy()
 {
 	V5_PROFILE_FUNCTION();
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	glfwDestroyWindow(m_glfwWindow);
 	glfwTerminate();

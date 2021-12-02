@@ -18,7 +18,6 @@
 #include <chrono>
 #include <algorithm>
 #include <fstream>
-#include "../Dll.h"
 #include <thread>
 
 namespace
@@ -30,19 +29,19 @@ namespace
 
 namespace V5Debug
 {
-	struct V5_API ProfileResult
+	struct ProfileResult
 	{
 		std::string Name;
 		long long Start, End;
 		uint32_t ThreadID;
 	};
 
-	struct V5_API InstrumentationSession
+	struct InstrumentationSession
 	{
 		std::string Name;
 	};
 
-	class V5_API Instrumentor
+	class Instrumentor
 	{
 	private:
 		InstrumentationSession* m_CurrentSession;
@@ -60,7 +59,7 @@ namespace V5Debug
 		static Instrumentor& Get();
 	};
 
-	class V5_API InstrumentationTimer
+	class InstrumentationTimer
 	{
 	public:
 		InstrumentationTimer(const char* name)

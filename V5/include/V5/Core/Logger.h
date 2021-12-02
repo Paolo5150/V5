@@ -1,7 +1,6 @@
 #pragma once
 #pragma warning(disable: 4251)
 
-#include "../Dll.h"
 #include <string>
 #include <fstream>
 #include "spdlog/spdlog.h"
@@ -11,7 +10,7 @@
 
 namespace V5Core
 {
-	class V5_API Logger
+	class Logger
 	{
 	public:
 		static void Init();

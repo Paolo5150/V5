@@ -1,12 +1,11 @@
 #pragma once
-#include "../Dll.h"
 #include "Layer.h"
 #include <vector>
 
 namespace V5Core
 {
 
-	class V5_API LayerStack
+	class LayerStack
 	{
 	public:
 		LayerStack() = default;

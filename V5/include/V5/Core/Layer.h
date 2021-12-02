@@ -1,5 +1,4 @@
 #pragma once
-#include "../Dll.h"
 #include <string>
 #include <V5/Event/Event.h>
 

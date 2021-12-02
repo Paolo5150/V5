@@ -1,4 +1,6 @@
 #include "OpenGLRendererAPI.h"
+#include <V5/Debugging/Intrumentor.h>
+
 #include <V5/Core/Logger.h>
 #include <Core/CoreLogger.h>
 #include <glad/glad.h>
@@ -65,6 +67,7 @@ void OpenGLRendererAPI::SetViewport(int x, int y, int width, int height) const
 
 void OpenGLRendererAPI::RenderIndexed(VertexArray& vao)
 {
+	V5_PROFILE_FUNCTION();
 	vao.Bind();
 	vao.GetIndexBuffer().Bind();
 	glDrawElements(GL_TRIANGLES, vao.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);

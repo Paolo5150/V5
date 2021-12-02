@@ -3,6 +3,9 @@
 #include <V5/Event/Event.h>
 #include <V5/Core/Layer.h>
 #include <V5/Debugging/Intrumentor.h>
+#include <V5/ImGui/imgui.h>
+#include <V5/ImGui/imgui_impl_opengl3.h>
+#include <V5/ImGui/imgui_impl_glfw.h>
 
 using namespace V5Core;
 
@@ -41,10 +44,13 @@ void Application::Update(double dt)
 
 void Application::UpdateImGuiLayers()
 {
-	V5_PROFILE_FUNCTION("LayerStack OnImGuiRender");
+	V5_PROFILE_FUNCTION();
 
 	for (Layer* layer : m_layerStack)
 		layer->OnImGuiRender();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void Application::OnQuit()

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Dll.h"
 #include <string>
 #include <V5/Core/LayerStack.h>
 
@@ -10,7 +9,7 @@ namespace V5Core
 	class Event;
 	class Layer;
 
-	class V5_API Application
+	class Application
 	{
 		friend class Core;
 

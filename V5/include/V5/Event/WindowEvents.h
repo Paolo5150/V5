@@ -1,10 +1,9 @@
 #pragma once
 #include "Event.h"
-#include "../Dll.h"
 
 namespace V5Core
 {
-	class V5_API WindowOpenEvent : public Event
+	class WindowOpenEvent : public Event
 	{
 	public:
 		WindowOpenEvent(int nWidth, int nHeight) : Event(EventType::WindowOpen),
@@ -20,14 +19,14 @@ namespace V5Core
 
 	};
 
-	class V5_API WindowCloseEvent : public Event
+	class WindowCloseEvent : public Event
 	{
 	public:
 		WindowCloseEvent() : Event(EventType::WindowClose) {}
 		
 	};
 
-	class V5_API WindowResizeEvent : public Event
+	class WindowResizeEvent : public Event
 	{
 	public:
 		WindowResizeEvent(int nWidth, int nHeight) : Event(EventType::WindowResize),
@@ -44,7 +43,7 @@ namespace V5Core
 		int m_height;
 	};
 
-	class V5_API WindowFocusEvent : public Event
+	class WindowFocusEvent : public Event
 	{
 	public:
 		WindowFocusEvent(bool isFocused) : Event(EventType::WindowFocus),

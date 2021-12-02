@@ -1,5 +1,4 @@
 #pragma once
-#include "../Dll.h"
 #include <string>
 #include <functional>
 
@@ -7,7 +6,7 @@ namespace V5Core
 {
 	class Event;
 
-	class V5_API IWindow
+	class IWindow
 	{
 
 	public:

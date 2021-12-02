@@ -1,14 +1,12 @@
 #pragma once
 
-#include "../Dll.h"
-
 namespace V5Core
 {
 	class IWindow;
 	class ICore;
 	class ITime;
 
-	class V5_API Factory
+	class Factory
 	{
 	public:
 		static Factory& Instance();

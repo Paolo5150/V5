@@ -51,9 +51,6 @@
     <ClInclude Include="include\V5\Debugging\Intrumentor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\V5\Dll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PCH.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -126,31 +123,31 @@
     <ClInclude Include="src\Renderer\OpenGL\OpenGLTexture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imconfig.h">
+    <ClInclude Include="include\V5\ImGui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imgui.h">
+    <ClInclude Include="include\V5\ImGui\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imgui_impl_glfw.h">
+    <ClInclude Include="include\V5\ImGui\imgui_impl_glfw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imgui_impl_opengl3.h">
+    <ClInclude Include="include\V5\ImGui\imgui_impl_opengl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imgui_internal.h">
+    <ClInclude Include="include\V5\ImGui\imgui_internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imstb_rectpack.h">
+    <ClInclude Include="include\V5\ImGui\imstb_rectpack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imstb_textedit.h">
+    <ClInclude Include="include\V5\ImGui\imstb_textedit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imstb_truetype.h">
+    <ClInclude Include="include\V5\ImGui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImGui\imgui_impl_opengl3_loader.h">
+    <ClInclude Include="include\V5\ImGui\imgui_impl_opengl3_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -227,25 +224,25 @@
     <ClCompile Include="src\Renderer\OpenGL\OpenGLTexture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\imgui.cpp">
+    <ClCompile Include="include\V5\ImGui\imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\imgui_demo.cpp">
+    <ClCompile Include="include\V5\ImGui\imgui_demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\imgui_draw.cpp">
+    <ClCompile Include="include\V5\ImGui\imgui_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\imgui_impl_glfw.cpp">
+    <ClCompile Include="include\V5\ImGui\imgui_impl_glfw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\imgui_impl_opengl3.cpp">
+    <ClCompile Include="include\V5\ImGui\imgui_impl_opengl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\imgui_tables.cpp">
+    <ClCompile Include="include\V5\ImGui\imgui_tables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImGui\imgui_widgets.cpp">
+    <ClCompile Include="include\V5\ImGui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

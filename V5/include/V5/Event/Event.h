@@ -14,7 +14,7 @@ namespace V5Core
 	/**
 	This type of Event (and subclasses) is intended to be used by a single listener, which will pass the event around accordingly
 	*/
-	class V5_API Event
+	class Event
 	{
 	public:
 		Event(EventType type) : m_type(type) {}
