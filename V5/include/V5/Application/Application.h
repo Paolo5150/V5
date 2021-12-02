@@ -33,6 +33,7 @@ namespace V5Core
 		void Update(double dt);
 		void OnQuit(); //Called by Core, no need to handle the WindowCloseEvent in this class
 		void OnEvent(Event& e);
+		void UpdateImGuiLayers(); // Special update for imgui, needs to be called after clear screen 
 		LayerStack m_layerStack;
 		std::string m_name;
 	};

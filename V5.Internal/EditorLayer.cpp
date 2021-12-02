@@ -5,6 +5,7 @@
 #include <V5/Renderer/Texture.h>
 #include <V5/Debugging/Intrumentor.h>
 
+
 using namespace V5Rendering;
 
 void EditorLayer::OnAttach()
@@ -18,6 +19,9 @@ void EditorLayer::OnAttach()
 void EditorLayer::OnUpdate(double dt) 
 {
 }
+
+
+
 
 void EditorLayer::OnEvent(V5Core::Event& e) 
 {

@@ -1,4 +1,8 @@
 #include "WindowsWindow.h"
+#include <ImGui/imgui.h>
+#include <ImGui/imgui_impl_opengl3.h>
+#include <ImGui/imgui_impl_opengl3_loader.h>
+#include <ImGui/imgui_impl_glfw.h>
 #include "CoreLogger.h"
 #include <V5/Core/Input.h>
 #include <Event/IEventListener.h>
@@ -135,6 +139,10 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 	});
 
 	glfwFocusWindow(m_glfwWindow);
+
+	ImGui::CreateContext();
+	ImGui_ImplGlfw_InitForOpenGL(m_glfwWindow, false);
+	ImGui_ImplOpenGL3_Init("#version 410");
 }
 
 WindowsWindow::~WindowsWindow()

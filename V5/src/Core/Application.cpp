@@ -37,14 +37,16 @@ void Application::Update(double dt)
 			layer->OnUpdate(dt);
 	}
 
-	/*m_ImGuiLayer->Begin();
-	{
-		HZ_PROFILE_SCOPE("LayerStack OnImGuiRender");
-
-		for (Layer* layer : m_LayerStack)
-			layer->OnImGuiRender();
-	}*/
 }
+
+void Application::UpdateImGuiLayers()
+{
+	V5_PROFILE_FUNCTION("LayerStack OnImGuiRender");
+
+	for (Layer* layer : m_layerStack)
+		layer->OnImGuiRender();
+}
+
 void Application::OnQuit()
 {
 	V5LOG_INFO("App {0} quit", m_name);

@@ -1,4 +1,9 @@
 #include "Core.h"
+#include <ImGui/imgui.h>
+#include <ImGui/imgui_impl_opengl3.h>
+#include <ImGui/imgui_impl_opengl3_loader.h>
+#include <ImGui/imgui_impl_glfw.h>
+
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
 #include "CoreLogger.h"
@@ -16,7 +21,7 @@ using namespace V5Core;
 
 namespace
 {
-	int FPS = 60;
+	int FPS = 6440;
 	double frameTime = 1.0 / FPS;
 }
 
@@ -93,7 +98,19 @@ void Core::Run()
 
 			Update(m_deltaTime);
 			//Render callback
+
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+			ImGui::SetNextWindowPos(ImVec2(0, 0));
+			ImGui::SetNextWindowSize(ImVec2(100, 100));
+			ImGui::Begin("Hello, world!");
+
+			ImGui::End();
+		
+		
 			Render();
+
 		}
 	
 	}
@@ -112,7 +129,7 @@ void Core::Run()
 void Core::Update(double dt)
 {
 	//V5CLOG_INFO("Delta {0}", dt);
-	//V5CLOG_INFO("FPS {0}", 1.0 / dt);
+	V5CLOG_INFO("FPS {0}", 1.0 / dt);
 	V5_PROFILE_FUNCTION();
 	m_window->Update(); //Poll events before application update
 	m_Application->Update(dt);
@@ -125,7 +142,9 @@ void Core::Render()
 	V5_PROFILE_FUNCTION();
 
 	V5Rendering::Renderer::Instance().Render();
-
+	m_Application->UpdateImGuiLayers();
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	m_window->Refresh();
 }
 
