@@ -97,6 +97,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -135,6 +136,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -148,6 +150,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\V5\Scene\Entity.h" />
     <ClInclude Include="include\V5\Core\PlatformDetection.h" />
     <ClInclude Include="include\V5\Event\InputEvents.h" />
     <ClInclude Include="include\V5\ImGui\imconfig.h" />
@@ -159,6 +162,8 @@
     <ClInclude Include="include\V5\ImGui\imstb_rectpack.h" />
     <ClInclude Include="include\V5\ImGui\imstb_textedit.h" />
     <ClInclude Include="include\V5\ImGui\imstb_truetype.h" />
+    <ClInclude Include="include\V5\Scene\entt.hpp" />
+    <ClInclude Include="include\V5\Scene\Scene.h" />
     <ClInclude Include="src\Renderer\Buffer.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLTexture2D.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLVertexArray.h" />
@@ -203,6 +208,7 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ForcedIncludeFiles>
     </ClCompile>
+    <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui_demo.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui_draw.cpp" />
@@ -210,6 +216,7 @@
     <ClCompile Include="include\V5\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui_tables.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLTexture2D.cpp" />
     <ClCompile Include="src\Renderer\OpenGL\OpenGLVertexArray.cpp" />

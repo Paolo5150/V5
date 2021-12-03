@@ -113,8 +113,6 @@ void Core::Run()
 
 void Core::Update(double dt)
 {
-	//V5CLOG_INFO("Delta {0}", dt);
-	V5CLOG_INFO("FPS {0}", 1.0 / dt);
 	V5_PROFILE_FUNCTION();
 	m_window->Update(); //Poll events before application update
 	m_Application->Update(dt);

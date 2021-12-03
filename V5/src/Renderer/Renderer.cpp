@@ -42,12 +42,12 @@ void Renderer::Init()
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
 
-	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
+	ShaderLibrary::Add("Texture", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
 	
 	texture = Texture2D::Create("Assets\\Textures\\wall.jpg");
 	texture2 = Texture2D::Create("Assets\\Textures\\smiley.png");
 
-	auto& r = ShaderLibrary::GetShader("ColorOnly");
+	auto& r = ShaderLibrary::GetShader("Texture");
 	r.Bind();
 
 	std::vector<Vertex> vertices = {
@@ -81,7 +81,7 @@ void Renderer::Render()
 {
 	V5_PROFILE_FUNCTION();
 	m_renderAPI->Clear();
-	ShaderLibrary::GetShader("ColorOnly").Bind();
+	ShaderLibrary::GetShader("Texture").Bind();
 	//Do rendering
 	texture2->Bind(0);
 	texture->Bind(1);

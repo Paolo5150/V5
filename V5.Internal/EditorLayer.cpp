@@ -7,19 +7,35 @@
 #include <V5/ImGui/imgui.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
+#include "V5/Scene/Scene.h"
+#include "V5/Scene/Entity.h"
+
 
 using namespace V5Rendering;
+using namespace V5Core;
+
+struct position
+{
+	float x;
+	float y;
+};
 
 void EditorLayer::OnAttach()
 {
 	V5_PROFILE_FUNCTION();
 
+	Scene scene;
+	auto ent = scene.CreateEntity();
 
+	ent.AddComponent<position>(3.3f, 4.0f);
+
+	V5CLOG_INFO("Has pos {0}", ent.HasComponent<position>());
 
 }
 
 void EditorLayer::OnUpdate(double dt) 
 {
+	m_frameTime = 1.0f / dt;
 }
 
 void EditorLayer::OnImGuiRender()
@@ -28,12 +44,9 @@ void EditorLayer::OnImGuiRender()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
-	ImGui::SetNextWindowSize(ImVec2(100, 100));
-	//ImGui::Begin("Hello, world!");
-	ImGui::ShowDemoWindow();
-	//ImGui::End();
-
-	
+	ImGui::Begin("FPS");
+	ImGui::Text("%f", m_frameTime);
+	ImGui::End();	
 }
 
 

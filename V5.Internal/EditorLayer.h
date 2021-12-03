@@ -19,4 +19,7 @@ public:
 
 	void OnEvent(V5Core::Event& e) override;
 
+private:
+	float m_frameTime;
+
 };
