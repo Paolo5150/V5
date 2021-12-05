@@ -48,21 +48,35 @@ static GLenum Texture2DSizeFormatToOpenGLType(Texture2DSizeFormat type)
 	return 0;
 }
 
-
-OpenGLTexture2D::OpenGLTexture2D(uint32_t w, uint32_t h, Texture2DSizeFormat format = Texture2DSizeFormat::RGBA8) :
-	m_width(w),
-	m_height(h),
-	m_sizeFormat(format)
+static GLenum Texture2DFilterToOpenGLType(Texture2DFilter type)
 {
-	glCreateTextures(GL_TEXTURE_2D, 1, &m_textureID);
-	glTextureStorage2D(m_textureID, 1, GL_RGB8, m_width, m_height);
+	switch (type)
+	{
+		case Texture2DFilter::LINEAR:   return GL_LINEAR;
+		case Texture2DFilter::NEAREST:   return GL_NEAREST;
+		case Texture2DFilter::LINEAR_MIPMAP_LINEAR:   return GL_LINEAR_MIPMAP_LINEAR;
+		case Texture2DFilter::LINEAR_MIPMAP_NEAREST:   return GL_LINEAR_MIPMAP_NEAREST;
+		case Texture2DFilter::NEAREST_MIPMAP_LINEAR:   return GL_NEAREST_MIPMAP_LINEAR;
+		case Texture2DFilter::NEAREST_MIPMAP_NEAREST:   return GL_NEAREST_MIPMAP_NEAREST;
+	}
+	throw std::runtime_error("Unknown texture filter");
 
-	glTextureParameteri(m_textureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTextureParameteri(m_textureID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	return 0;
 }
+
+static GLenum Texture2DWrapModeToOpenGLType(Texture2DWrapMode type)
+{
+	switch (type)
+	{
+		case Texture2DWrapMode::CLAMP_TO_BORDER:  return GL_CLAMP_TO_BORDER;
+		case Texture2DWrapMode::CLEAMP_TO_EDGE:  return GL_CLAMP_TO_EDGE;
+		case Texture2DWrapMode::REPEAT:  return GL_REPEAT;
+	}
+	throw std::runtime_error("Unknown texture wrap mode");
+
+	return 0;
+}
+
 
 OpenGLTexture2D::~OpenGLTexture2D()
 {

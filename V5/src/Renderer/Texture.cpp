@@ -89,14 +89,3 @@ std::shared_ptr<Texture2D> Texture2D::Create(std::string filePath)
 	return nullptr;
 }
 
-std::shared_ptr<Texture2D> Texture2D::Create(uint32_t w, uint32_t h, Texture2DSizeFormat format)
-{
-	switch (RendererAPI::GetAPI())
-	{
-	case RendererAPI::API::OpenGL:
-		return std::make_shared<OpenGLTexture2D>(w,h,format);
-	default:
-		break;
-	}
-	return nullptr;
-}

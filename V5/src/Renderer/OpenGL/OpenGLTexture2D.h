@@ -6,7 +6,6 @@ namespace V5Rendering
 	class OpenGLTexture2D : public Texture2D
 	{
 	public:
-		OpenGLTexture2D(uint32_t w, uint32_t h, Texture2DSizeFormat format);
 		OpenGLTexture2D(std::string filePath);
 		~OpenGLTexture2D();
 		uint32_t GetWidth() const override;
