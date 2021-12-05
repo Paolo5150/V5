@@ -150,6 +150,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\V5\Renderer\IRenderer.h" />
+    <ClInclude Include="include\V5\Renderer\IRenderer2D.h" />
     <ClInclude Include="include\V5\Scene\Entity.h" />
     <ClInclude Include="include\V5\Core\PlatformDetection.h" />
     <ClInclude Include="include\V5\Event\InputEvents.h" />

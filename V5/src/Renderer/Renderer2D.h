@@ -1,6 +1,7 @@
 #pragma once
 #include<glm/glm.hpp>
 #include "VertexArray.h"
+#include <V5/Renderer/IRenderer2D.h>
 #include <vector>
 
 struct QuadVertex
@@ -11,17 +12,17 @@ struct QuadVertex
 
 namespace V5Rendering
 {
-	class Renderer2D
+	class Renderer2D : public IRenderer2D
 	{
 	public:
 		Renderer2D();
 		void Shutdown();
-		void DrawQuad(const glm::vec3& position, const glm::vec3& color);
+		void DrawQuad(const glm::vec3& position, const glm::vec3& color) override;
 		void FlushBuffer();
+		void Begin() override;
+	private:
 		void StartBatch();
 		void NextBatch();
-	private:
-	
 		QuadVertex* m_currentVertexPtr;
 		uint32_t m_currentQuadCount;
 		std::vector<QuadVertex> m_quadVerticesArray;

@@ -14,6 +14,7 @@ public:
 	EditorLayer() : Layer("EditorLayer"){};
 
 	void OnUpdate(double dt) override;
+	void OnRender() override;
 	void OnAttach() override;
 	void OnImGuiRender() override;
 

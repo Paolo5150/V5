@@ -125,11 +125,10 @@ void Core::Render()
 	V5_PROFILE_FUNCTION();
 
 	V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
-	//V5Rendering::Renderer::Instance().Render();
 
 	//Test
-	V5Rendering::Renderer::Instance().GetRenderer2D().StartBatch();
-	V5Rendering::Renderer::Instance().GetRenderer2D().DrawQuad({ 0,0,-1 }, { 1,1,1 });
+	m_Application->Render();
+	//V5Rendering::Renderer::Instance().Render();
 
 	// Do all ImGUI stuff here, for all layers
 	m_Application->UpdateImGuiLayers();	

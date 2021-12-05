@@ -39,8 +39,14 @@ void Application::Update(double dt)
 		for (Layer* layer : m_layerStack)
 			layer->OnUpdate(dt);
 	}
-
 }
+
+void Application::Render()
+{
+	for (Layer* layer : m_layerStack)
+		layer->OnRender();
+}
+
 
 void Application::UpdateImGuiLayers()
 {

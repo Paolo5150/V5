@@ -1,10 +1,16 @@
 #pragma once
 
+namespace V5Rendering
+{
+	class IRenderer;
+	class IRenderer2D;
+}
+
 namespace V5Core
 {
 	class IWindow;
 	class ICore;
-	class ITime;
+
 
 	class Factory
 	{
@@ -13,7 +19,8 @@ namespace V5Core
 
 		IWindow& GetWindow();
 		ICore& GetCore();
-		ITime& GetTime();
+		V5Rendering::IRenderer& GetRenderer();
+		V5Rendering::IRenderer2D& GetRenderer2D();
 
 	private:
 		static std::unique_ptr<Factory> s_Instance;

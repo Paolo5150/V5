@@ -2,6 +2,7 @@
 
 #include "RendererAPI.h"
 #include "Renderer2D.h"
+#include <V5/Renderer/IRenderer.h>
 
 namespace V5Core
 {
@@ -11,7 +12,7 @@ namespace V5Core
 
 namespace V5Rendering
 {
-	class Renderer
+	class Renderer : public IRenderer
 	{
 		friend class Core;
 	public:
@@ -22,7 +23,7 @@ namespace V5Rendering
 		void Render();
 		void Shutdown();
 		void OnEvent(V5Core::Event& e);
-		Renderer2D& GetRenderer2D() { return *m_renderer2D; }
+		Renderer2D& GetRenderer2D() override { return *m_renderer2D; }
 
 	private:
 		static std::unique_ptr<Renderer> s_Instance;

@@ -1,6 +1,7 @@
 #include "EditorLayer.h"
 #include <V5/Renderer/RenderCommand.h>
 #include <V5/Core/Factory.h>
+#include <V5/Renderer/IRenderer2D.h>
 #include <V5/Core/IWindow.h>
 #include <V5/Renderer/Texture.h>
 #include <V5/Debugging/Intrumentor.h>
@@ -36,6 +37,12 @@ void EditorLayer::OnAttach()
 void EditorLayer::OnUpdate(double dt) 
 {
 	m_frameTime = 1.0f / dt;
+}
+
+void EditorLayer::OnRender()
+{
+	V5Core::Factory::Instance().GetRenderer2D().Begin();
+	V5Core::Factory::Instance().GetRenderer2D().DrawQuad({ 0,0,-0.5f }, { 1,0,0 });
 }
 
 void EditorLayer::OnImGuiRender()

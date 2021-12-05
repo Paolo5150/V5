@@ -14,6 +14,7 @@ namespace V5Core
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate(double dt) {}
+		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 

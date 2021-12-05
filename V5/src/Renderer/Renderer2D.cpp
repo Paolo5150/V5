@@ -47,6 +47,12 @@ void Renderer2D::StartBatch()
 	m_submittedQuads = 0;
 }
 
+void Renderer2D::Begin()
+{
+	StartBatch();
+}
+
+
 void Renderer2D::NextBatch()
 {
 
