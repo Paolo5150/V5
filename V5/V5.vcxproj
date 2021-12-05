@@ -192,6 +192,7 @@
     <ClInclude Include="src\Event\IEventListener.h" />
     <ClInclude Include="include\V5\Event\WindowEvents.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Renderer\RendererAPI.h" />
     <ClInclude Include="include\V5\Renderer\Shader.h" />
     <ClInclude Include="include\V5\Renderer\Texture.h" />
@@ -208,6 +209,7 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ForcedIncludeFiles>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui_demo.cpp" />

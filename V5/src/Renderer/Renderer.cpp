@@ -41,9 +41,12 @@ void Renderer::Init()
 
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
+	m_renderer2D = std::make_unique<Renderer2D>();
 
+	// Tests
 	ShaderLibrary::Add("Texture", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
-	
+	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\colorOnly.vert.spv", "Assets\\Shaders\\bin\\colorOnly.frag.spv"));
+
 	texture = Texture2D::Create("Assets\\Textures\\wall.jpg");
 	texture2 = Texture2D::Create("Assets\\Textures\\smiley.png");
 
@@ -80,14 +83,14 @@ void Renderer::Init()
 void Renderer::Render()
 {
 	V5_PROFILE_FUNCTION();
-	m_renderAPI->Clear();
-	ShaderLibrary::GetShader("Texture").Bind();
+
+	/*ShaderLibrary::GetShader("Texture").Bind();
 	//Do rendering
 	texture2->Bind(0);
 	texture->Bind(1);
 	ubo->Bind();
 
-	m_renderAPI->RenderIndexed(*vao);
+	m_renderAPI->RenderIndexed(*vao);*/
 
 }
 
