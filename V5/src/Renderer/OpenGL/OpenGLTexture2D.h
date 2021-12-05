@@ -12,6 +12,8 @@ namespace V5Rendering
 			Texture2DFilter minFilter,
 			Texture2DFilter magFilter);
 
+		OpenGLTexture2D(const TextureDescription& desc);
+
 		~OpenGLTexture2D();
 		uint32_t GetWidth() const override;
 		uint32_t GetHeight() const override;
