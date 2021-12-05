@@ -20,7 +20,7 @@ void TextureData::Delete()
 	}
 }
 
-TextureData Texture::LoadData(const std::string& filePath)
+TextureData Texture::LoadData(const std::string& filePath, bool flipVertical)
 {
 	TextureData d;
 
@@ -43,7 +43,7 @@ TextureData Texture::LoadData(const std::string& filePath)
 	else
 	{
 		int w, h, c;
-
+		stbi_set_flip_vertically_on_load(flipVertical);
 		auto data = stbi_load(filePath.c_str(), &w, &h, &c, 0);
 		if (data)
 		{
@@ -77,12 +77,16 @@ TextureData Texture::LoadData(const std::string& filePath)
 	return d;
 }
 
-std::shared_ptr<Texture2D> Texture2D::Create(std::string filePath)
+std::shared_ptr<Texture2D> Texture2D::Create(std::string filePath,
+											Texture2DWrapMode sWrap	,		
+											Texture2DWrapMode tWrap	,		
+											Texture2DFilter minFilter,		
+											Texture2DFilter magFilter)		
 {
 	switch (RendererAPI::GetAPI())
 	{
 	case RendererAPI::API::OpenGL:
-		return std::make_shared<OpenGLTexture2D>(filePath);
+		return std::make_shared<OpenGLTexture2D>(filePath, sWrap, tWrap, minFilter, magFilter);
 	default:
 		break;
 	}

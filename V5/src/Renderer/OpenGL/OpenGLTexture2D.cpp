@@ -83,7 +83,13 @@ OpenGLTexture2D::~OpenGLTexture2D()
 	glDeleteTextures(1, &m_textureID);
 }
 
-OpenGLTexture2D::OpenGLTexture2D(std::string filePath)
+OpenGLTexture2D::OpenGLTexture2D(std::string filePath,
+								Texture2DWrapMode sWrap,
+								Texture2DWrapMode tWrap,
+								Texture2DFilter minFilter,
+								Texture2DFilter magFilter) : 
+	m_sizeFormat(Texture2DSizeFormat::RGBA8)
+
 {
 	TextureData texture = V5Rendering::Texture::LoadData(filePath);
 
@@ -109,13 +115,18 @@ OpenGLTexture2D::OpenGLTexture2D(std::string filePath)
 	glCreateTextures(GL_TEXTURE_2D, 1, &m_textureID);
 	glTextureStorage2D(m_textureID, 1, internalFormat, m_width, m_height);
 
-	glTextureParameteri(m_textureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTextureParameteri(m_textureID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	auto minF = Texture2DFilterToOpenGLType(minFilter);
+	auto maxF = Texture2DFilterToOpenGLType(minFilter);
+
+	auto wrapS = Texture2DWrapModeToOpenGLType(sWrap);
+	auto wrapT = Texture2DWrapModeToOpenGLType(tWrap);
+
+	glTextureParameteri(m_textureID, GL_TEXTURE_MIN_FILTER, minF);
+	glTextureParameteri(m_textureID, GL_TEXTURE_MAG_FILTER, maxF);
+	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_S, wrapS);
+	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_T, wrapT);
 
 	auto dataType = Texture2DSizeFormatToOpenGLType(m_sizeFormat);
-
 
 	glTextureSubImage2D(m_textureID, 0, 0, 0, m_width, m_height, dataFormat, dataType, texture.Data);
 	texture.Delete();
