@@ -15,15 +15,11 @@ namespace V5Core
 	class Factory
 	{
 	public:
-		static Factory& Instance();
 
-		IWindow& GetWindow();
-		ICore& GetCore();
-		V5Rendering::IRenderer& GetRenderer();
-		V5Rendering::IRenderer2D& GetRenderer2D();
-
-	private:
-		static std::unique_ptr<Factory> s_Instance;
+		static IWindow& GetWindow();
+		static ICore& GetCore();
+		static V5Rendering::IRenderer& GetRenderer();
+		static V5Rendering::IRenderer2D& GetRenderer2D();
 
 	};
 }

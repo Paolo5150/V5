@@ -32,7 +32,7 @@ void OpenGLRendererAPI::Init()
 
 
 	glClearColor(0, 0, 0, 1);
-	glViewport(0, 0, Factory::Instance().GetWindow().GetWidth(), Factory::Instance().GetWindow().GetHeight());
+	glViewport(0, 0, Factory::GetWindow().GetWidth(), Factory::GetWindow().GetHeight());
 
 }
 
