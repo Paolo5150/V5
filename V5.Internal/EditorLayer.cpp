@@ -25,6 +25,10 @@ void EditorLayer::OnAttach()
 {
 	V5_PROFILE_FUNCTION();
 
+	m_editorCamera = std::make_unique<EditorCamera>(75, 
+		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.6f, 1000.0f);
+
+
 	Scene scene;
 	auto ent = scene.CreateEntity();
 
@@ -37,12 +41,15 @@ void EditorLayer::OnAttach()
 void EditorLayer::OnUpdate(double dt) 
 {
 	m_frameTime = 1.0f / dt;
+	m_editorCamera->OnUpdate(dt);
+
+
 }
 
 void EditorLayer::OnRender()
 {
-	V5Core::Factory::GetRenderer2D().Begin();
-	V5Core::Factory::GetRenderer2D().DrawQuad({ 0,0,-0.5f }, { 1,0,0 });
+	V5Core::Factory::GetRenderer2D().Begin(m_editorCamera->GetViewProjectionMatrix());
+	V5Core::Factory::GetRenderer2D().DrawQuad({ 0,0,0.5 }, { 1,0,0 });
 	V5Core::Factory::GetRenderer2D().End();
 }
 

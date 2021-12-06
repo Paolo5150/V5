@@ -5,6 +5,7 @@
 #include <V5/Event/Event.h>
 #include <V5/Core/Input.h>
 #include <V5/Event/InputEvents.h>
+#include <V5/Renderer/EditorCamera.h>
 #include <tuple>
 
 
@@ -22,5 +23,6 @@ public:
 
 private:
 	float m_frameTime;
+	std::unique_ptr<V5Rendering::EditorCamera> m_editorCamera;
 
 };

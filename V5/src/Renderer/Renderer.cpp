@@ -74,7 +74,7 @@ void Renderer::Init()
 
 	std::vector<float> color = { 1,0,0,1 };
 	//Test UBO
-	ubo = UniformBuffer::Create(0, color.data(), sizeof(float) * 4);
+	//ubo = UniformBuffer::Create(0, color.data(), sizeof(float) * 4);
 
 	auto time = V5Core::Time::StopTimer();
 	V5CLOG_INFO("Render init time: {0}", time);

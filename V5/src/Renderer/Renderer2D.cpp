@@ -4,6 +4,7 @@
 #include <V5/Renderer/Shader.h>
 #include "Renderer.h"
 #include <V5/Core/Logger.h>
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace V5Rendering;
 using namespace V5Core;
@@ -31,6 +32,7 @@ Renderer2D::Renderer2D()
 
 	ibo = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
 
+	m_cameraBuffer = UniformBuffer::Create(0,sizeof(glm::mat4));
 
 	m_quadVerticesArray.resize(4); // 1 quad for now
 
@@ -47,10 +49,9 @@ void Renderer2D::StartBatch()
 	m_submittedQuads = 0;
 }
 
-void Renderer2D::Begin()
+void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 {
-	ShaderLibrary::GetShader("ColorOnly").Bind();
-
+	m_cameraBuffer->SetData(&cameraViewProjection,sizeof(glm::mat4));
 	StartBatch();
 }
 
@@ -63,19 +64,19 @@ void Renderer2D::NextBatch()
 
 void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
 {
-	m_currentVertexPtr->Position = position - glm::vec3(-0.5f, -0.5, 0.0);
+	m_currentVertexPtr->Position = glm::vec3(position.x - 0.5f, position.y -0.5, position.z);
 	m_currentVertexPtr->Color = color;
 	m_currentVertexPtr++;
 
-	m_currentVertexPtr->Position = position - glm::vec3(0.5f, -0.5, 0.0);
+	m_currentVertexPtr->Position = glm::vec3(position.x + 0.5f, position.y - 0.5, position.z  );
 	m_currentVertexPtr->Color = color;
 	m_currentVertexPtr++;
 
-	m_currentVertexPtr->Position = position - glm::vec3(0.5f, 0.5, 0.0);
+	m_currentVertexPtr->Position =glm::vec3(position.x + 0.5f, position.y + 0.5, position.z );
 	m_currentVertexPtr->Color = color;
 	m_currentVertexPtr++;
 
-	m_currentVertexPtr->Position = position - glm::vec3(-0.5f, 0.5, 0.0);
+	m_currentVertexPtr->Position =  glm::vec3(position.x - 0.5f, position.y + 0.5, position.z);
 	m_currentVertexPtr->Color = color;
 	m_currentVertexPtr++;	
 
@@ -96,9 +97,13 @@ void Renderer2D::FlushBuffer()
 {
 	if (m_submittedQuads == 0) return;
 
+	ShaderLibrary::GetShader("ColorOnly").Bind();
 	vbo->SetData(m_quadVerticesArray.data(), sizeof(QuadVertex) * 4);
+	m_cameraBuffer->Bind();
+
 	V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexed(*vao);
 	m_submittedQuads = 0;
+	m_currentVertexPtr = &m_quadVerticesArray[0];
 
 }
 

@@ -6,9 +6,14 @@ layout( location = 1) in vec3 aColor;
 
 layout( location = 0) out vec3 color;
 
+layout (std140, binding = 0) uniform ViewProj
+{
+    mat4 viewProjection;
+};
+
 void main()
 {
 
-	gl_Position = vec4(aPosition, 1.0);
+	gl_Position = viewProjection * vec4(aPosition, 1.0);
 	color = aColor;
 }

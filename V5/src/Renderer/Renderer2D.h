@@ -3,6 +3,7 @@
 #include "VertexArray.h"
 #include <V5/Renderer/IRenderer2D.h>
 #include <vector>
+#include "Buffer.h"
 
 struct QuadVertex
 {
@@ -19,7 +20,7 @@ namespace V5Rendering
 		void Shutdown();
 		void DrawQuad(const glm::vec3& position, const glm::vec3& color) override;
 		void FlushBuffer();
-		void Begin() override;
+		void Begin(const glm::mat4& cameraViewProjection) override;
 		void End() override;
 	private:
 		void StartBatch();
@@ -29,6 +30,9 @@ namespace V5Rendering
 		std::vector<QuadVertex> m_quadVerticesArray;
 		std::vector<uint32_t> m_quadIndices;
 		uint32_t m_submittedQuads;
+		std::shared_ptr<UniformBuffer> m_cameraBuffer;
+
+		glm::mat4 const* m_currentViewProjection;
 
 	};
 }
