@@ -9,6 +9,7 @@ namespace V5Rendering
 
 		virtual void DrawQuad(const glm::vec3& position, const glm::vec3& color) = 0;
 		virtual void Begin() = 0;
+		virtual void End() = 0;
 
 	};
 }

@@ -43,6 +43,7 @@ void EditorLayer::OnRender()
 {
 	V5Core::Factory::GetRenderer2D().Begin();
 	V5Core::Factory::GetRenderer2D().DrawQuad({ 0,0,-0.5f }, { 1,0,0 });
+	V5Core::Factory::GetRenderer2D().End();
 }
 
 void EditorLayer::OnImGuiRender()

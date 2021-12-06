@@ -168,6 +168,12 @@
     <ClInclude Include="include\V5\Renderer\IRenderer2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\V5\Renderer\EditorCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Logger.cpp">

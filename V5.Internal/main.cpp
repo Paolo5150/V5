@@ -11,7 +11,7 @@
 void main()
 {
 	Editor editor;
-	V5Core::Factory::GetCore().Start(&editor, 800, 600, "V5 Editor");
+	V5Core::Factory::GetCore().Start(&editor, 1080, 540, "V5 Editor");
 
 
 

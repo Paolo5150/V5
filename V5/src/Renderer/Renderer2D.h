@@ -20,6 +20,7 @@ namespace V5Rendering
 		void DrawQuad(const glm::vec3& position, const glm::vec3& color) override;
 		void FlushBuffer();
 		void Begin() override;
+		void End() override;
 	private:
 		void StartBatch();
 		void NextBatch();

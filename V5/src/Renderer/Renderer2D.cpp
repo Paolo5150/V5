@@ -49,6 +49,8 @@ void Renderer2D::StartBatch()
 
 void Renderer2D::Begin()
 {
+	ShaderLibrary::GetShader("ColorOnly").Bind();
+
 	StartBatch();
 }
 
@@ -85,9 +87,15 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
 	}
 }
 
+void Renderer2D::End()
+{
+	FlushBuffer();
+}
+
 void Renderer2D::FlushBuffer()
 {
-	ShaderLibrary::GetShader("ColorOnly").Bind();
+	if (m_submittedQuads == 0) return;
+
 	vbo->SetData(m_quadVerticesArray.data(), sizeof(QuadVertex) * 4);
 	V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexed(*vao);
 	m_submittedQuads = 0;
