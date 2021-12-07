@@ -18,7 +18,7 @@ using namespace V5Core;
 
 namespace
 {
-	int FPS = 60;
+	int FPS = 100;
 	double frameTime = 1.0 / FPS;
 }
 

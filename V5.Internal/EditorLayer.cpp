@@ -43,13 +43,27 @@ void EditorLayer::OnUpdate(double dt)
 	m_frameTime = 1.0f / dt;
 	m_editorCamera->OnUpdate(dt);
 
+	static float timer = 0;
+	timer += dt;
+	if (timer > 0.5)
+	{
+		timer = 0;
+		V5CLOG_INFO("FPS {0}", 1.0 / dt);
+	}
 
 }
 
 void EditorLayer::OnRender()
 {
+	V5_PROFILE_FUNCTION();
 	V5Core::Factory::GetRenderer2D().Begin(m_editorCamera->GetViewProjectionMatrix());
-	V5Core::Factory::GetRenderer2D().DrawQuad({ 0,0,0.5 }, { 1,0,0 });
+
+	for (int i = 0; i < 100000; i++)
+	{
+		V5Core::Factory::GetRenderer2D().DrawQuad({ i * 2,0,0.5 }, { 1,0,0 });
+
+	}
+
 	V5Core::Factory::GetRenderer2D().End();
 }
 

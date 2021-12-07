@@ -5,16 +5,23 @@
 #include "Renderer.h"
 #include <V5/Core/Logger.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <V5/Debugging/Intrumentor.h>
 
 using namespace V5Rendering;
 using namespace V5Core;
 
 namespace
 {
-	uint32_t MaxQuads = 1;
+	constexpr uint32_t MaxQuads = 20000;
+	uint32_t MaxVertices = MaxQuads * 4;
+	uint32_t MaxIndices = MaxQuads * 6;
 	std::shared_ptr<VertexBuffer> vbo;
 	std::shared_ptr<IndexBuffer> ibo;
 	std::shared_ptr<VertexArray> vao;
+	std::vector<uint32_t> indices;
+	uint32_t IndexCount = 0;
+	QuadVertex vertices[MaxQuads * 4];
+	uint32_t DrawCall = 0;
 
 
 }
@@ -27,14 +34,26 @@ Renderer2D::Renderer2D()
 				BufferElement(ShaderDataType::Float3),  // Color
 		});
 
-	std::vector<uint32_t> indices = { 0,1,2, 2, 3, 0 };
-	vbo = VertexBuffer::Create(sizeof(QuadVertex) * 4);
+	
+	vbo = VertexBuffer::Create(sizeof(QuadVertex) * MaxVertices);
 
-	ibo = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
+	indices.resize(MaxIndices);
+	// All possible indices
+	int counter = 0;
+	for (size_t i= 0; i < MaxIndices; i+=6)
+	{
+		indices[i] = 0 + (counter * 4);
+		indices[i+1] = 1 + (counter * 4);
+		indices[i+2] = 2 + (counter * 4);
 
+		indices[i+3] = 2 + (counter * 4);
+		indices[i+4] = 3 + (counter * 4);
+		indices[i+5] = 0 + (counter * 4);
+		counter++;
+	}
+
+	ibo = IndexBuffer::Create(indices.data(),  static_cast<uint32_t>(indices.size()));
 	m_cameraBuffer = UniformBuffer::Create(0,sizeof(glm::mat4));
-
-	m_quadVerticesArray.resize(4); // 1 quad for now
 
 	vbo->SetLayout(layout);
 
@@ -45,14 +64,17 @@ Renderer2D::Renderer2D()
 
 void Renderer2D::StartBatch()
 {
-	m_currentVertexPtr = &m_quadVerticesArray[0];
+	m_currentVertexPtr = &vertices[0];
 	m_submittedQuads = 0;
 }
 
 void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 {
+	DrawCall = 0;
 	m_cameraBuffer->SetData(&cameraViewProjection,sizeof(glm::mat4));
 	StartBatch();
+	m_cameraBuffer->Bind();
+	ShaderLibrary::GetShader("ColorOnly").Bind();
 }
 
 
@@ -64,6 +86,7 @@ void Renderer2D::NextBatch()
 
 void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
 {
+	V5_PROFILE_FUNCTION();
 	m_currentVertexPtr->Position = glm::vec3(position.x - 0.5f, position.y -0.5, position.z);
 	m_currentVertexPtr->Color = color;
 	m_currentVertexPtr++;
@@ -78,8 +101,9 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
 
 	m_currentVertexPtr->Position =  glm::vec3(position.x - 0.5f, position.y + 0.5, position.z);
 	m_currentVertexPtr->Color = color;
-	m_currentVertexPtr++;	
+	m_currentVertexPtr++;
 
+	IndexCount += 6;
 	m_submittedQuads++;
 
 	if (m_submittedQuads >= MaxQuads)
@@ -90,20 +114,26 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
 
 void Renderer2D::End()
 {
+
 	FlushBuffer();
+	//V5CLOG_INFO("Draw calls {0}", DrawCall);
+
 }
 
 void Renderer2D::FlushBuffer()
 {
+	V5_PROFILE_FUNCTION();
 	if (m_submittedQuads == 0) return;
 
-	ShaderLibrary::GetShader("ColorOnly").Bind();
-	vbo->SetData(m_quadVerticesArray.data(), sizeof(QuadVertex) * 4);
-	m_cameraBuffer->Bind();
+	vbo->SetData(&vertices[0], sizeof(QuadVertex) * m_submittedQuads * 4);
 
-	V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexed(*vao);
+
+	V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexed(*vao, IndexCount);
+
 	m_submittedQuads = 0;
-	m_currentVertexPtr = &m_quadVerticesArray[0];
+	m_currentVertexPtr = vertices;
+	IndexCount = 0;
+	DrawCall++;
 
 }
 

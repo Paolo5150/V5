@@ -73,6 +73,15 @@ void OpenGLRendererAPI::RenderIndexed(VertexArray& vao)
 	glDrawElements(GL_TRIANGLES, vao.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
+void OpenGLRendererAPI::RenderIndexed(VertexArray& vao, uint32_t indexCount)
+{
+	V5_PROFILE_FUNCTION();
+	vao.Bind();
+	vao.GetIndexBuffer().Bind();
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
+}
+
+
 void OpenGLRendererAPI::Clear()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

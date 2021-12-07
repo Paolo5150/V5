@@ -68,6 +68,8 @@ void OpenGLVertexArray::AddVertexBuffer(std::shared_ptr<VertexBuffer> vb)
 		glEnableVertexArrayAttrib(m_vertexArrayID, m_locationIndex);// Need to precise vao, as there is no context binding in DSA style
 		glVertexArrayAttribFormat(m_vertexArrayID, m_locationIndex, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.DataType), element.Normalized, element.Offset);// Need to precise vao, as there is no context binding in DSA
 		glVertexArrayAttribBinding(m_vertexArrayID, m_locationIndex, m_vertexBuffers.size());
+		if (element.Instanced)
+			glVertexAttribDivisor(1, 1);
 		m_locationIndex++;
 	}
 

@@ -27,8 +27,6 @@ namespace V5Rendering
 		void NextBatch();
 		QuadVertex* m_currentVertexPtr;
 		uint32_t m_currentQuadCount;
-		std::vector<QuadVertex> m_quadVerticesArray;
-		std::vector<uint32_t> m_quadIndices;
 		uint32_t m_submittedQuads;
 		std::shared_ptr<UniformBuffer> m_cameraBuffer;
 

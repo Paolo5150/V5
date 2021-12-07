@@ -39,9 +39,10 @@ namespace V5Rendering
 		uint32_t Size;
 		bool Normalized;
 		size_t Offset;
+		bool Instanced;
 
-		BufferElement(ShaderDataType type, bool normalized = false)
-			: DataType(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
+		BufferElement(ShaderDataType type, bool normalized = false, bool instanced = false)
+			: DataType(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized), Instanced(instanced)
 		{
 		}
 

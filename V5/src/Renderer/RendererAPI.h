@@ -29,6 +29,8 @@ namespace V5Rendering
 		virtual void SetClearColor(float r, float g, float b, float a) const = 0;
 		virtual void SetViewport(int x, int y, int width, int height) const = 0;
 		virtual void RenderIndexed(VertexArray& ar) = 0;
+		virtual void RenderIndexed(VertexArray& aroverride, uint32_t indexCount) = 0;
+
 		virtual void Clear() = 0;
 
 
