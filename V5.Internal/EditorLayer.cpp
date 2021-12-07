@@ -6,6 +6,7 @@
 #include <V5/Renderer/Texture.h>
 #include <V5/Debugging/Intrumentor.h>
 #include <V5/ImGui/imgui.h>
+#include <V5/Utils/Random.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
 #include "V5/Scene/Scene.h"
@@ -14,6 +15,7 @@
 
 using namespace V5Rendering;
 using namespace V5Core;
+using namespace V5Utils;
 
 struct position
 {
@@ -58,9 +60,9 @@ void EditorLayer::OnRender()
 	V5_PROFILE_FUNCTION();
 	V5Core::Factory::GetRenderer2D().Begin(m_editorCamera->GetViewProjectionMatrix());
 
-	for (int i = 0; i < 2000000; i++)
+	for (int i = 0; i < 200000; i++)
 	{
-		V5Core::Factory::GetRenderer2D().DrawQuad({ i * 2,0,0.5 }, { 1,0,0 });
+		V5Core::Factory::GetRenderer2D().DrawQuad({ i * 2,0,0.5 }, Random::RandomUnitVec());
 
 	}
 

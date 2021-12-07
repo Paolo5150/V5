@@ -10,6 +10,12 @@
 using namespace V5Rendering;
 using namespace V5Core;
 
+struct InstanceData
+{
+	glm::vec3 Offset;
+	glm::vec3 Color;
+};
+
 namespace
 {
 	constexpr uint32_t MaxQuads = 100000;
@@ -23,8 +29,8 @@ namespace
 	QuadVertex vertices[MaxQuads * 4];
 	uint32_t DrawCall = 0;
 
-	glm::vec3 Positions[MaxQuads];
-	glm::vec3* CurrentPositionPtr;
+	InstanceData InstancedData[MaxQuads];
+	InstanceData* CurrentInstanceDataPtr;;
 	std::shared_ptr<VertexBuffer> instanceVBO;
 
 	bool UseInstancing = 1;
@@ -72,30 +78,32 @@ Renderer2D::Renderer2D()
 		auto layout = BufferLayout({
 						BufferElement(ShaderDataType::Float3), // Position
 						BufferElement(ShaderDataType::Float3),  // Color
+
 			});
 
 		auto instancedLayout = BufferLayout({
 						BufferElement(ShaderDataType::Float3, false, true), // Position
-			});
+						BufferElement(ShaderDataType::Float3, false, true)  // Color
 
+			});
 
 		QuadVertex quadVerts[4];
 		
 		quadVerts[0].Position = glm::vec3(-0.5, -0.5, 0.0);
-		quadVerts[0].Color = glm::vec3(1, 0, 0.0);
+		quadVerts[0].Color = glm::vec3(1, 1, 1);
 
 		quadVerts[1].Position = glm::vec3(0.5, -0.5, 0.0);
-		quadVerts[1].Color = glm::vec3(1, 0, 0.0);
+		quadVerts[1].Color = glm::vec3(1, 1, 1);
 
 		quadVerts[2].Position = glm::vec3(0.5, 0.5, 0.0);
-		quadVerts[2].Color = glm::vec3(1, 0, 0.0);
+		quadVerts[2].Color = glm::vec3(1, 1, 1);
 
 		quadVerts[3].Position = glm::vec3(-0.5, 0.5, 0.0);
-		quadVerts[3].Color = glm::vec3(1, 0, 0.0);
+		quadVerts[3].Color = glm::vec3(1, 1, 1);
 
 
 		vbo = VertexBuffer::Create(&quadVerts[0], sizeof(QuadVertex) * 4);
-		instanceVBO = VertexBuffer::Create(sizeof(glm::vec3) * MaxQuads);
+		instanceVBO = VertexBuffer::Create(sizeof(InstanceData) * MaxQuads);
 
 		indices.resize(6);
 		indices[0] = 0;
@@ -123,7 +131,7 @@ void Renderer2D::StartBatch()
 {
 	if (UseInstancing)
 	{
-		CurrentPositionPtr = &Positions[0];
+		CurrentInstanceDataPtr = &InstancedData[0];
 	}
 	else
 	{
@@ -152,8 +160,9 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
 {
 	if (UseInstancing)
 	{
-		*CurrentPositionPtr = position;
-		CurrentPositionPtr++;
+		(*CurrentInstanceDataPtr).Offset = position;
+		(*CurrentInstanceDataPtr).Color = color;
+		CurrentInstanceDataPtr++;
 	}
 	else
 	{
@@ -201,9 +210,9 @@ void Renderer2D::FlushBuffer()
 
 	if (UseInstancing)
 	{
-		instanceVBO->SetData(&Positions[0], sizeof(glm::vec3) * m_submittedQuads);
+		instanceVBO->SetData(&InstancedData[0], sizeof(InstanceData) * m_submittedQuads);
 		V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexedInstanced(*vao, m_submittedQuads);
-		CurrentPositionPtr = Positions;
+		CurrentInstanceDataPtr = InstancedData;
 	}
 	else
 	{

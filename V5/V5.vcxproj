@@ -167,6 +167,7 @@
     <ClInclude Include="include\V5\ImGui\imstb_truetype.h" />
     <ClInclude Include="include\V5\Scene\entt.hpp" />
     <ClInclude Include="include\V5\Scene\Scene.h" />
+    <ClInclude Include="include\V5\Utils\Random.h" />
     <ClInclude Include="src\Renderer\Buffer.h" />
     <ClInclude Include="include\V5\Renderer\Camera.h" />
     <ClInclude Include="src\Renderer\OpenGL\OpenGLTexture2D.h" />

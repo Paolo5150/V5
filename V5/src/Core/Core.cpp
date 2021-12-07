@@ -13,6 +13,7 @@
 #include <V5/Event/Event.h>
 #include <Renderer/Renderer.h>
 #include <V5/Debugging/Intrumentor.h>
+#include <time.h>
 
 using namespace V5Core;
 
@@ -48,6 +49,8 @@ Core::~Core()
 
 void Core::Start(Application* app, int winWidth, int winHeight, std::string wintitle)
 {
+	time_t t;
+	srand((unsigned)time(&t));
 
 	V5_PROFILE_BEGIN("Core", "CoreInit.json");
 	{
