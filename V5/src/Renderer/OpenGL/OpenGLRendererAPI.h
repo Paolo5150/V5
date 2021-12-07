@@ -14,6 +14,8 @@ namespace V5Rendering
 		void SetViewport(int x, int y, int width, int height) const override;
 		void RenderIndexed(VertexArray& aroverride) override;
 		void RenderIndexed(VertexArray& aroverride, uint32_t indexCount) override;
+		void RenderIndexedInstanced(VertexArray& vao, uint32_t instanceCount) override;
+
 		void Clear() override;
 
 

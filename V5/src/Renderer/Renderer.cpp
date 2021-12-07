@@ -53,7 +53,7 @@ void Renderer::Init()
 	auto& r = ShaderLibrary::GetShader("Texture");
 	r.Bind();
 
-	std::vector<Vertex> vertices = {
+	/*std::vector<Vertex> vertices = {
 		{{-0.5f, -0.5f, -0.5f}, {1,0,0}, {0,0}},
 		{{0.5f, -0.5f, -0.5f}, {0,1,0}, {1,0}},
 		{{0.5f, 0.5f, -0.5f }, {1,1,1} , {1,1}},
@@ -70,7 +70,7 @@ void Renderer::Init()
 
 	vao = VertexArray::Create();
 	vao->AddVertexBuffer(vbo);
-	vao->SetIndexBuffer(ibo);
+	vao->SetIndexBuffer(ibo);*/
 
 	std::vector<float> color = { 1,0,0,1 };
 	//Test UBO

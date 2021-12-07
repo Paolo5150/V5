@@ -55,21 +55,26 @@ void OpenGLVertexArray::AddVertexBuffer(std::shared_ptr<VertexBuffer> vb)
 	vb->Bind();
 	const auto& layout = vb->GetLayout();
 
-	glVertexArrayVertexBuffer(
-		m_vertexArrayID,             // vao to bind
-		m_vertexBuffers.size(),    // Could be 1, 2... if there were several vbo to source.
-		vb->GetID(),             // VBO to bound at "vaoBindingPoint".
-		0,                  // offset of the first element in the buffer hctVBO.
-		layout.GetStride());   // stride == 3 position floats + 3 color floats.
-
-
 	for (const auto& element : layout.GetBufferElements())
 	{
-		glEnableVertexArrayAttrib(m_vertexArrayID, m_locationIndex);// Need to precise vao, as there is no context binding in DSA style
-		glVertexArrayAttribFormat(m_vertexArrayID, m_locationIndex, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.DataType), element.Normalized, element.Offset);// Need to precise vao, as there is no context binding in DSA
-		glVertexArrayAttribBinding(m_vertexArrayID, m_locationIndex, m_vertexBuffers.size());
-		if (element.Instanced)
-			glVertexAttribDivisor(1, 1);
+		//glEnableVertexArrayAttrib(m_vertexArrayID, m_locationIndex);// Need to precise vao, as there is no context binding in DSA style
+		//glVertexArrayAttribFormat(m_vertexArrayID, m_locationIndex, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.DataType), element.Normalized, element.Offset);// Need to precise vao, as there is no context binding in DSA
+		//glVertexArrayAttribBinding(m_vertexArrayID, m_locationIndex, m_vertexBuffers.size());
+		//if (element.Instanced)
+		//	glVertexAttribDivisor(m_vertexBuffers.size(), 1);
+		//m_locationIndex++;
+
+		glEnableVertexAttribArray(m_locationIndex);
+		glVertexAttribPointer(m_locationIndex,
+			element.GetComponentCount(),
+			ShaderDataTypeToOpenGLBaseType(element.DataType),
+			element.Normalized ? GL_TRUE : GL_FALSE,
+			layout.GetStride(),
+			(const void*)element.Offset);
+
+		if(element.Instanced)
+			glVertexAttribDivisor(m_locationIndex, 1);
+
 		m_locationIndex++;
 	}
 

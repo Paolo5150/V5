@@ -84,6 +84,14 @@ void OpenGLRendererAPI::RenderIndexed(VertexArray& vao, uint32_t indexCount)
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 }
 
+void OpenGLRendererAPI::RenderIndexedInstanced(VertexArray& vao, uint32_t instanceCount)
+{
+	V5_PROFILE_FUNCTION();
+	vao.Bind();
+	vao.GetIndexBuffer().Bind();
+	glDrawElementsInstanced(GL_TRIANGLES, vao.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr, instanceCount);
+}
+
 
 void OpenGLRendererAPI::Clear()
 {
