@@ -34,6 +34,9 @@ void OpenGLRendererAPI::Init()
 	glClearColor(0, 0, 0, 1);
 	glViewport(0, 0, Factory::GetWindow().GetWidth(), Factory::GetWindow().GetHeight());
 
+	glEnable(GL_CULL_FACE);
+	glFrontFace(GL_CCW);
+	glCullFace(GL_BACK);
 }
 
 void OpenGLRendererAPI::Shutdown()

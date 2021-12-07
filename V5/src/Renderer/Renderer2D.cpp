@@ -74,7 +74,6 @@ void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 	m_cameraBuffer->SetData(&cameraViewProjection,sizeof(glm::mat4));
 	StartBatch();
 	m_cameraBuffer->Bind();
-	ShaderLibrary::GetShader("ColorOnly").Bind();
 }
 
 
@@ -126,6 +125,7 @@ void Renderer2D::FlushBuffer()
 	if (m_submittedQuads == 0) return;
 
 	vbo->SetData(&vertices[0], sizeof(QuadVertex) * m_submittedQuads * 4);
+	ShaderLibrary::GetShader("ColorOnly").Bind();
 
 
 	V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexed(*vao, IndexCount);
