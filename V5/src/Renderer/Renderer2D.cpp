@@ -18,22 +18,26 @@ struct InstanceData
 
 namespace
 {
+	bool UseInstancing = 1; // If 1, instancing, if 0, batching
 	constexpr uint32_t MaxQuads = 100000;
+	std::shared_ptr<VertexArray> vao;
+	uint32_t DrawCall = 0;
+
+
+	// Batching parameters
 	uint32_t MaxVertices = MaxQuads * 4;
 	uint32_t MaxIndices = MaxQuads * 6;
-	std::shared_ptr<VertexBuffer> vbo;
-	std::shared_ptr<IndexBuffer> ibo;
-	std::shared_ptr<VertexArray> vao;
+	std::shared_ptr<VertexBuffer> batchVBO;
+	std::shared_ptr<IndexBuffer> batchIBO;
 	std::vector<uint32_t> indices;
 	uint32_t IndexCount = 0;
 	QuadVertex vertices[MaxQuads * 4];
-	uint32_t DrawCall = 0;
 
+	// Instancing parameters
 	InstanceData InstancedData[MaxQuads];
 	InstanceData* CurrentInstanceDataPtr;;
 	std::shared_ptr<VertexBuffer> instanceVBO;
 
-	bool UseInstancing = 1;
 
 }
 
@@ -47,7 +51,7 @@ Renderer2D::Renderer2D()
 			});
 
 
-		vbo = VertexBuffer::Create(sizeof(QuadVertex) * MaxVertices);
+		batchVBO = VertexBuffer::Create(sizeof(QuadVertex) * MaxVertices);
 
 		indices.resize(MaxIndices);
 		// All possible indices
@@ -64,14 +68,14 @@ Renderer2D::Renderer2D()
 			counter++;
 		}
 
-		ibo = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
+		batchIBO = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
 		m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
 
-		vbo->SetLayout(layout);
+		batchVBO->SetLayout(layout);
 
 		vao = VertexArray::Create();
-		vao->AddVertexBuffer(vbo);
-		vao->SetIndexBuffer(ibo);
+		vao->AddVertexBuffer(batchVBO);
+		vao->SetIndexBuffer(batchIBO);
 	}
 	else
 	{
@@ -90,19 +94,19 @@ Renderer2D::Renderer2D()
 		QuadVertex quadVerts[4];
 		
 		quadVerts[0].Position = glm::vec3(-0.5, -0.5, 0.0);
-		quadVerts[0].Color = glm::vec3(1, 1, 1);
+		quadVerts[0].Color = glm::vec3(0,0,0);
 
 		quadVerts[1].Position = glm::vec3(0.5, -0.5, 0.0);
-		quadVerts[1].Color = glm::vec3(1, 1, 1);
+		quadVerts[1].Color = glm::vec3(0,0,0);
 
 		quadVerts[2].Position = glm::vec3(0.5, 0.5, 0.0);
-		quadVerts[2].Color = glm::vec3(1, 1, 1);
+		quadVerts[2].Color = glm::vec3(0,0,0);
 
 		quadVerts[3].Position = glm::vec3(-0.5, 0.5, 0.0);
-		quadVerts[3].Color = glm::vec3(1, 1, 1);
+		quadVerts[3].Color = glm::vec3(0,0,0);
 
 
-		vbo = VertexBuffer::Create(&quadVerts[0], sizeof(QuadVertex) * 4);
+		batchVBO = VertexBuffer::Create(&quadVerts[0], sizeof(QuadVertex) * 4);
 		instanceVBO = VertexBuffer::Create(sizeof(InstanceData) * MaxQuads);
 
 		indices.resize(6);
@@ -113,16 +117,16 @@ Renderer2D::Renderer2D()
 		indices[4] = 3;
 		indices[5] = 0;
 
-		ibo = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
+		batchIBO = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
 		m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
 
-		vbo->SetLayout(layout);
+		batchVBO->SetLayout(layout);
 		instanceVBO->SetLayout(instancedLayout);
 
 		vao = VertexArray::Create();
-		vao->AddVertexBuffer(vbo);
+		vao->AddVertexBuffer(batchVBO);
 		vao->AddVertexBuffer(instanceVBO);
-		vao->SetIndexBuffer(ibo);
+		vao->SetIndexBuffer(batchIBO);
 	}
 	
 }
@@ -135,8 +139,7 @@ void Renderer2D::StartBatch()
 	}
 	else
 	{
-
-	m_currentVertexPtr = &vertices[0];
+		m_currentVertexPtr = &vertices[0];
 	}
 	m_submittedQuads = 0;
 }
@@ -211,6 +214,7 @@ void Renderer2D::FlushBuffer()
 	if (UseInstancing)
 	{
 		instanceVBO->SetData(&InstancedData[0], sizeof(InstanceData) * m_submittedQuads);
+
 		V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexedInstanced(*vao, m_submittedQuads);
 		CurrentInstanceDataPtr = InstancedData;
 	}
@@ -218,7 +222,7 @@ void Renderer2D::FlushBuffer()
 	{
 		V5_PROFILE_FUNCTION();
 
-		vbo->SetData(&vertices[0], sizeof(QuadVertex) * m_submittedQuads * 4);
+		batchVBO->SetData(&vertices[0], sizeof(QuadVertex) * m_submittedQuads * 4);
 
 		V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexed(*vao, IndexCount);
 

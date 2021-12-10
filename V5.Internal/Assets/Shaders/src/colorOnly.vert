@@ -17,5 +17,5 @@ void main()
 {
 
 	gl_Position = viewProjection * vec4(aPosition + offset, 1.0);
-	color = aColor * iColor;
+	color = aColor + iColor;
 }
