@@ -25,7 +25,7 @@ namespace
 	std::string folderName = "Profiles\\";
 }
 
-#define ENABLE_PROFILING 0
+#define ENABLE_PROFILING 1
 
 namespace V5Debug
 {

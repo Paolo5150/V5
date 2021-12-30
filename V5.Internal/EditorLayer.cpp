@@ -60,7 +60,7 @@ void EditorLayer::OnRender()
 	V5_PROFILE_FUNCTION();
 	V5Core::Factory::GetRenderer2D().Begin(m_editorCamera->GetViewProjectionMatrix());
 
-	for (int i = 0; i < 90000; i++)
+	for (int i = 0; i < 100000; i++)
 	{
 		V5Core::Factory::GetRenderer2D().DrawQuad({ i * 2,0,0.5 },{0,1,0});
 
