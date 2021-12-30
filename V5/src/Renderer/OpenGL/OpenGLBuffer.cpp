@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <Core/CoreLogger.h>
+#include <V5/Debugging/Intrumentor.h>
 
 using namespace V5Rendering;
 
@@ -9,14 +10,16 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
 {
 	glCreateBuffers(1, &m_bufferID);//uses DSA. This is the way.
 
-	glNamedBufferStorage(m_bufferID, size, NULL, GL_DYNAMIC_STORAGE_BIT);
+	glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
+	glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
 }
 
 OpenGLVertexBuffer::OpenGLVertexBuffer(const void* data, uint32_t size)
 {
 	glCreateBuffers(1, &m_bufferID);//uses DSA. This is the way.
 
-	glNamedBufferStorage(m_bufferID, size, data, 0); // Flag 0 means static data, cannot be changed
+	glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
+	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
 OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -25,7 +28,7 @@ OpenGLVertexBuffer::~OpenGLVertexBuffer()
 }
 
 
-void OpenGLVertexBuffer::Bind() const 
+void OpenGLVertexBuffer::Bind() const
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
 }
@@ -46,6 +49,8 @@ const BufferLayout& OpenGLVertexBuffer::GetLayout()
 
 void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
 {
+	V5_PROFILE_FUNCTION();
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_bufferID);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 }
