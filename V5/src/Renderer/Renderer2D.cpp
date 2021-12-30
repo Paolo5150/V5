@@ -21,7 +21,7 @@ struct InstanceData
 namespace
 {
 	bool UseInstancing = 1; // If 1, instancing, if 0, batching
-	constexpr uint32_t MaxQuads = 100000;
+	constexpr uint32_t MaxQuads = 50000;
 	std::shared_ptr<VertexArray> vao;
 	uint32_t DrawCall = 0;
 
@@ -39,6 +39,11 @@ namespace
 	InstanceData InstancedData[MaxQuads];
 	InstanceData* CurrentInstanceDataPtr;;
 	std::shared_ptr<VertexBuffer> instanceVBO;
+
+	glm::vec4 bl = glm::vec4(-0.5, -0.5, 0.0, 1.0);
+	glm::vec4 br = glm::vec4(0.5, -0.5, 0.0, 1.0);
+	glm::vec4 tr = glm::vec4(0.5, 0.5, 0.0, 1.0);
+	glm::vec4 tl = glm::vec4(-0.5, 0.5, 0.0, 1.0);
 
 
 }
@@ -175,19 +180,19 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec3& c
 	else
 	{
 		V5_PROFILE_FUNCTION();
-		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(-0.5f, -0.5, 0.0, 0.0);
+		m_currentVertexPtr->Position = transform.GetMatrix() * bl;
 		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 
-		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(0.5f, 0.5, 0.0, 0.0);
+		m_currentVertexPtr->Position = transform.GetMatrix() * br;
 		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 
-		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(0.5f, 0.5, 0.0, 0.0);
+		m_currentVertexPtr->Position = transform.GetMatrix() * tr;
 		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 
-		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(-0.5f, 0.5, 0.0, 0.0);
+		m_currentVertexPtr->Position = transform.GetMatrix() * tl;
 		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 

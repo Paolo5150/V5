@@ -16,6 +16,12 @@ namespace V5Core
 		}
 
 		void SetPosition(const glm::vec3& p) { m_position = p; UpdateMatrix(); }
+		void SetScale(const glm::vec3& s) { m_scale = s; UpdateMatrix(); }
+		void SetRotation(const glm::vec3& r) { m_rotation = r; UpdateMatrix(); }
+
+		const glm::vec3& GetPosition() { return m_position; }
+		const glm::vec3& GetScale() { return m_scale; }
+		const glm::vec3& GetRotation() { return m_rotation; }
 
 		const glm::mat4& GetMatrix() const
 		{
