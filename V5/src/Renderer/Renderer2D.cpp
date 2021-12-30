@@ -258,6 +258,8 @@ void Renderer2D::FlushBuffer()
 
 	if (UseInstancing)
 	{
+		V5_PROFILE_FUNCTION();
+
 		instanceVBO->SetData(&InstancedData[0], sizeof(InstanceData) * m_submittedQuads);
 
 		V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexedInstanced(*vao, m_submittedQuads);
