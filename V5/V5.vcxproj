@@ -150,6 +150,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\V5\Components\Components.h" />
     <ClInclude Include="include\V5\Renderer\EditorCamera.h" />
     <ClInclude Include="include\V5\Renderer\IRenderer.h" />
     <ClInclude Include="include\V5\Renderer\IRenderer2D.h" />

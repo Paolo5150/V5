@@ -2,18 +2,20 @@
 #include "Buffer.h"
 #include "Vertex.h"
 #include <V5/Renderer/Shader.h>
+#include <V5/Components/Components.h>
 #include "Renderer.h"
 #include <V5/Core/Logger.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <V5/Debugging/Intrumentor.h>
+#include <glm/glm.hpp>
 
 using namespace V5Rendering;
 using namespace V5Core;
 
 struct InstanceData
 {
-	glm::vec3 Offset;
 	glm::vec3 Color;
+	glm::mat4 ModelMat;
 };
 
 namespace
@@ -85,9 +87,13 @@ Renderer2D::Renderer2D()
 
 			});
 
+		// Need to create 4 vec4s to pass a matrix to the shader via vertex buffer
 		auto instancedLayout = BufferLayout({
-						BufferElement(ShaderDataType::Float3, false, true), // Position
-						BufferElement(ShaderDataType::Float3, false, true)  // Color
+						BufferElement(ShaderDataType::Float3, false, true),  // Color
+						BufferElement(ShaderDataType::Float4, false, true), // Model matrix
+						BufferElement(ShaderDataType::Float4, false, true), 
+						BufferElement(ShaderDataType::Float4, false, true), 
+						BufferElement(ShaderDataType::Float4, false, true), 
 
 			});
 
@@ -158,12 +164,51 @@ void Renderer2D::NextBatch()
 
 }
 
+void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec3& color)
+{
+	if (UseInstancing)
+	{
+		(*CurrentInstanceDataPtr).ModelMat = transform.GetMatrix();
+		(*CurrentInstanceDataPtr).Color = color;
+		CurrentInstanceDataPtr++;
+	}
+	else
+	{
+		V5_PROFILE_FUNCTION();
+		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(-0.5f, -0.5, 0.0, 0.0);
+		m_currentVertexPtr->Color = color;
+		m_currentVertexPtr++;
+
+		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(0.5f, 0.5, 0.0, 0.0);
+		m_currentVertexPtr->Color = color;
+		m_currentVertexPtr++;
+
+		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(0.5f, 0.5, 0.0, 0.0);
+		m_currentVertexPtr->Color = color;
+		m_currentVertexPtr++;
+
+		m_currentVertexPtr->Position = transform.GetMatrix() * glm::vec4(-0.5f, 0.5, 0.0, 0.0);
+		m_currentVertexPtr->Color = color;
+		m_currentVertexPtr++;
+
+		IndexCount += 6;
+	}
+
+	m_submittedQuads++;
+
+	if (m_submittedQuads >= MaxQuads)
+	{
+		FlushBuffer();
+	}
+}
+
+
 
 void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
 {
 	if (UseInstancing)
 	{
-		(*CurrentInstanceDataPtr).Offset = position;
+		(*CurrentInstanceDataPtr).ModelMat = glm::translate(glm::mat4(1.0), position);
 		(*CurrentInstanceDataPtr).Color = color;
 		CurrentInstanceDataPtr++;
 	}

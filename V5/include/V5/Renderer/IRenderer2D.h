@@ -1,6 +1,11 @@
 #pragma once
 #include <glm/glm.hpp>
 
+namespace V5Core
+{
+	class Transform;
+}
+
 namespace V5Rendering
 {
 	class IRenderer2D
@@ -8,6 +13,8 @@ namespace V5Rendering
 	public:
 
 		virtual void DrawQuad(const glm::vec3& position, const glm::vec3& color) = 0;
+		virtual void DrawQuad(const V5Core::Transform& transform, const glm::vec3& color) = 0;
+
 		virtual void Begin(const glm::mat4& cameraViewProjection) = 0;
 		virtual void End() = 0;
 
