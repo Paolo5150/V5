@@ -2,6 +2,7 @@
 #include<glm/glm.hpp>
 #include "VertexArray.h"
 #include <V5/Renderer/IRenderer2D.h>
+#include <V5/Components/Components.h>
 #include <vector>
 #include "Buffer.h"
 
@@ -19,6 +20,7 @@ namespace V5Rendering
 		Renderer2D();
 		void Shutdown();
 		void DrawQuad(const glm::vec3& position, const glm::vec3& color) override;
+		void DrawQuad(const V5Core::Transform& transform, const glm::vec3& color) override;
 		void FlushBuffer();
 		void Begin(const glm::mat4& cameraViewProjection) override;
 		void End() override;

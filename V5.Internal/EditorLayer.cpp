@@ -5,6 +5,7 @@
 #include <V5/Core/IWindow.h>
 #include <V5/Renderer/Texture.h>
 #include <V5/Debugging/Intrumentor.h>
+#include <V5/Components/Components.h>
 #include <V5/ImGui/imgui.h>
 #include <V5/Utils/Random.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
@@ -16,6 +17,13 @@
 using namespace V5Rendering;
 using namespace V5Core;
 using namespace V5Utils;
+
+namespace
+{
+	constexpr int QUAD_COUNT = 500000;
+	Transform transforms[QUAD_COUNT];
+
+}
 
 struct position
 {
@@ -36,7 +44,11 @@ void EditorLayer::OnAttach()
 
 	ent.AddComponent<position>(3.3f, 4.0f);
 
-	V5CLOG_INFO("Has pos {0}", ent.HasComponent<position>());
+	for (int i = 0; i < QUAD_COUNT; i++)
+	{
+		transforms[i].SetPosition({ i * 2, 0, 0.5 });
+
+	}
 
 }
 
@@ -60,9 +72,10 @@ void EditorLayer::OnRender()
 	V5_PROFILE_FUNCTION();
 	V5Core::Factory::GetRenderer2D().Begin(m_editorCamera->GetViewProjectionMatrix());
 
-	for (int i = 0; i < 500000; i++)
+
+	for (int i = 0; i < QUAD_COUNT; i++)
 	{
-		V5Core::Factory::GetRenderer2D().DrawQuad({ i * 2,0,0.5 },{0,1,0});
+		V5Core::Factory::GetRenderer2D().DrawQuad(transforms[i], {0,1,0});
 
 	}
 
