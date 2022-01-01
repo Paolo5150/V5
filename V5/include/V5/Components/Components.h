@@ -59,4 +59,18 @@ namespace V5Core
 			std::shared_ptr<V5Rendering::Texture2D> m_texture;
 			glm::vec4 m_color;
 	};
+
+	struct TileRenderer
+	{
+	public:
+		std::shared_ptr<V5Rendering::Texture2D> Texture;
+		glm::vec4 Color = { 1,1,1,1 };
+
+		TileRenderer() = default;
+		TileRenderer(const TileRenderer&) = default;
+		TileRenderer(std::shared_ptr<V5Rendering::Texture2D> tex = nullptr, const glm::vec4& color = { 1,1,1,1 })
+			: Texture(tex), Color(color) {}
+
+		
+	};
 }

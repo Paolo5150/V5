@@ -203,6 +203,7 @@
     <ClInclude Include="include\V5\Renderer\Shader.h" />
     <ClInclude Include="include\V5\Renderer\Texture.h" />
     <ClInclude Include="include\V5\Renderer\stb_image.h" />
+    <ClInclude Include="src\Renderer\TileRenderer2D.h" />
     <ClInclude Include="src\Renderer\Vertex.h" />
     <ClInclude Include="src\Renderer\VertexArray.h" />
   </ItemGroup>
@@ -218,6 +219,7 @@
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\Renderer\TileRenderer2D.cpp" />
     <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui.cpp" />
     <ClCompile Include="include\V5\ImGui\imgui_demo.cpp" />

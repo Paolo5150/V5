@@ -10,21 +10,22 @@
 
 namespace V5Rendering
 {
-	class Renderer2D : public IRenderer2D
+	class TileRenderer2D
 	{
 	public:
-		Renderer2D();
+		TileRenderer2D();
 		void Shutdown();
-		void DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, std::shared_ptr<Texture2D> texture = nullptr) override;
+		void DrawQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, std::shared_ptr<Texture2D> texture);
 
 		void FlushBuffer();
-		void Begin(const glm::mat4& cameraViewProjection) override;
-		void End() override;
-	private:
+		void Begin(const glm::mat4& cameraViewProjection);
+		void End();
 		void StartBatch();
+
 		uint32_t m_submittedQuads;
 
 		glm::mat4 const* m_currentViewProjection;
+
 
 	};
 }

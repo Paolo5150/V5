@@ -13,6 +13,20 @@
 using namespace V5Rendering;
 using namespace V5Core;
 
+struct QuadVertex
+{
+	glm::vec3 Position;
+	glm::vec2 UV;
+};
+
+struct QuadVertexBatched
+{
+	glm::vec3 Position;
+	glm::vec2 UV;
+	glm::vec4 Color;
+	float TextureIndex;
+};
+
 struct InstanceData
 {
 	float TextureIndex;
@@ -22,7 +36,7 @@ struct InstanceData
 
 namespace
 {
-	bool UseInstancing = 1; // If 1, instancing, if 0, batching
+	bool UseInstancing = 0; // If 1, instancing, if 0, batching
 	constexpr uint32_t MaxQuads = 100000;
 	std::shared_ptr<VertexArray> vao;
 	uint32_t DrawCall = 0;
@@ -87,7 +101,6 @@ Renderer2D::Renderer2D()
 		}
 
 		batchIBO = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
-		m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
 
 		batchVBO->SetLayout(layout);
 
@@ -140,7 +153,6 @@ Renderer2D::Renderer2D()
 		indices[5] = 0;
 
 		batchIBO = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
-		m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
 
 		batchVBO->SetLayout(layout);
 		instanceVBO->SetLayout(instancedLayout);
@@ -168,9 +180,9 @@ void Renderer2D::StartBatch()
 void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 {
 	DrawCall = 0;
-	m_cameraBuffer->SetData(&cameraViewProjection,sizeof(glm::mat4));
+	Renderer::Instance().m_cameraBuffer->SetData(&cameraViewProjection,sizeof(glm::mat4));
 	StartBatch();
-	m_cameraBuffer->Bind();
+	Renderer::Instance().m_cameraBuffer->Bind();
 }
 
 

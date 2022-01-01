@@ -19,7 +19,7 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 30;
+	constexpr int QUAD_COUNT = 400000;
 	std::shared_ptr<Texture2D> tt;
 	std::vector<Entity> entities;
 }
@@ -36,8 +36,8 @@ void EditorLayer::OnAttach()
 	for (int i = 0; i < QUAD_COUNT; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
-		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0.5 });
-		e.AddComponent<SpriteRenderer>(tt);
+		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
+		e.AddComponent<TileRenderer>(tt);
 		entities.push_back(e);
 	}
 
@@ -53,10 +53,7 @@ void EditorLayer::OnUpdate(double dt)
 	m_frameTime = 1.0f / (float)dt;
 	m_editorCamera->OnUpdate(dt);
 
-	for (unsigned i = 0; i < entities.size(); i++)
-	{
-		entities[i].GetComponent<Transform>().SetRotation({ 0, 0 , timer2 * i });
-	}
+
 
 	switch (m_editorState)
 	{
@@ -97,18 +94,18 @@ void EditorLayer::OnRender()
 	}
 
 
-	V5Core::Factory::GetRenderer2D().End();
+
 }
 
 void EditorLayer::OnImGuiRender()
 {
-	ImGui_ImplOpenGL3_NewFrame();
+	/*ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 	ImGui::Begin("FPS");
 	ImGui::Text("%f", m_frameTime);
-	ImGui::End();	
+	ImGui::End();	*/
 }
 
 
