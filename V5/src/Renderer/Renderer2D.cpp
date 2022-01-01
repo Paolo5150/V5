@@ -3,6 +3,7 @@
 #include "Vertex.h"
 #include <V5/Renderer/Shader.h>
 #include <V5/Components/Components.h>
+#include <V5/Renderer/Texture.h>
 #include "Renderer.h"
 #include <V5/Core/Logger.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -14,16 +15,20 @@ using namespace V5Core;
 
 struct InstanceData
 {
-	glm::vec3 Color;
+	float TextureIndex;
+	glm::vec4 Color;
 	glm::mat4 ModelMat;
 };
 
 namespace
 {
 	bool UseInstancing = 1; // If 1, instancing, if 0, batching
-	constexpr uint32_t MaxQuads = 50000;
+	constexpr uint32_t MaxQuads = 100000;
 	std::shared_ptr<VertexArray> vao;
 	uint32_t DrawCall = 0;
+
+	std::vector<std::shared_ptr<Texture2D>> AllTextures;
+	int TextureIndex = 0;
 
 
 	// Batching parameters
@@ -50,11 +55,16 @@ namespace
 
 Renderer2D::Renderer2D()
 {
+	AllTextures.resize(32);
+	AllTextures[0] = Texture2D::Create(1, 1, 1);
+	TextureIndex++;
+
+
 	if (!UseInstancing)
 	{
 		auto layout = BufferLayout({
 				BufferElement(ShaderDataType::Float3), // Position
-				BufferElement(ShaderDataType::Float3),  // Color
+				BufferElement(ShaderDataType::Float2),  // UV
 			});
 
 
@@ -88,13 +98,14 @@ Renderer2D::Renderer2D()
 	{
 		auto layout = BufferLayout({
 						BufferElement(ShaderDataType::Float3), // Position
-						BufferElement(ShaderDataType::Float3),  // Color
+						BufferElement(ShaderDataType::Float2),  // UV
 
 			});
 
 		// Need to create 4 vec4s to pass a matrix to the shader via vertex buffer
 		auto instancedLayout = BufferLayout({
-						BufferElement(ShaderDataType::Float3, false, true),  // Color
+						BufferElement(ShaderDataType::Float, false, true),  // Texture index
+						BufferElement(ShaderDataType::Float4, false, true),  // Color
 						BufferElement(ShaderDataType::Float4, false, true), // Model matrix
 						BufferElement(ShaderDataType::Float4, false, true), 
 						BufferElement(ShaderDataType::Float4, false, true), 
@@ -105,16 +116,16 @@ Renderer2D::Renderer2D()
 		QuadVertex quadVerts[4];
 		
 		quadVerts[0].Position = glm::vec3(-0.5, -0.5, 0.0);
-		quadVerts[0].Color = glm::vec3(0,0,0);
+		quadVerts[0].UV = glm::vec2(0,0);
 
 		quadVerts[1].Position = glm::vec3(0.5, -0.5, 0.0);
-		quadVerts[1].Color = glm::vec3(0,0,0);
+		quadVerts[1].UV = glm::vec2(1, 0);
 
 		quadVerts[2].Position = glm::vec3(0.5, 0.5, 0.0);
-		quadVerts[2].Color = glm::vec3(0,0,0);
+		quadVerts[2].UV = glm::vec2(1, 1);
 
 		quadVerts[3].Position = glm::vec3(-0.5, 0.5, 0.0);
-		quadVerts[3].Color = glm::vec3(0,0,0);
+		quadVerts[3].UV = glm::vec2(0, 1);
 
 
 		batchVBO = VertexBuffer::Create(&quadVerts[0], sizeof(QuadVertex) * 4);
@@ -164,94 +175,64 @@ void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 }
 
 
-void Renderer2D::NextBatch()
-{
-
-}
-
-void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec3& color)
+void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, std::shared_ptr<Texture2D> texture)
 {
 	if (UseInstancing)
 	{
+		if (texture != nullptr)
+		{
+			bool found = 0;
+			for (unsigned i = 0; i < TextureIndex; i++)
+			{
+				if (texture == AllTextures[i])
+				{
+					found = 1;  
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				AllTextures[TextureIndex] = texture;
+				TextureIndex++;
+			}
+		}
 		(*CurrentInstanceDataPtr).ModelMat = transform.GetMatrix();
 		(*CurrentInstanceDataPtr).Color = color;
+		(*CurrentInstanceDataPtr).TextureIndex = texture == nullptr ? 0 : TextureIndex - 1;
 		CurrentInstanceDataPtr++;
 	}
 	else
 	{
 		V5_PROFILE_FUNCTION();
 		m_currentVertexPtr->Position = transform.GetMatrix() * bl;
-		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 
 		m_currentVertexPtr->Position = transform.GetMatrix() * br;
-		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 
 		m_currentVertexPtr->Position = transform.GetMatrix() * tr;
-		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 
 		m_currentVertexPtr->Position = transform.GetMatrix() * tl;
-		m_currentVertexPtr->Color = color;
 		m_currentVertexPtr++;
 
 		IndexCount += 6;
 	}
 
 	m_submittedQuads++;
-
-	if (m_submittedQuads >= MaxQuads)
+	if (m_submittedQuads >= MaxQuads || TextureIndex >= 32)
 	{
 		FlushBuffer();
-	}
-}
-
-
-
-void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec3& color)
-{
-	if (UseInstancing)
-	{
-		(*CurrentInstanceDataPtr).ModelMat = glm::translate(glm::mat4(1.0), position);
-		(*CurrentInstanceDataPtr).Color = color;
-		CurrentInstanceDataPtr++;
-	}
-	else
-	{
-		V5_PROFILE_FUNCTION();
-		m_currentVertexPtr->Position = glm::vec3(position.x - 0.5f, position.y - 0.5, position.z);
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr++;
-
-		m_currentVertexPtr->Position = glm::vec3(position.x + 0.5f, position.y - 0.5, position.z);
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr++;
-
-		m_currentVertexPtr->Position = glm::vec3(position.x + 0.5f, position.y + 0.5, position.z);
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr++;
-
-		m_currentVertexPtr->Position = glm::vec3(position.x - 0.5f, position.y + 0.5, position.z);
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr++;
-
-		IndexCount += 6;
-	}
-	
-	m_submittedQuads++;
-
-	if (m_submittedQuads >= MaxQuads)
-	{
-		FlushBuffer();
-	}
+	}	
 }
 
 void Renderer2D::End()
 {
 
 	FlushBuffer();
-	//V5CLOG_INFO("Draw calls {0}", DrawCall);
+	V5CLOG_INFO("Draw calls {0}", DrawCall);
+	DrawCall = 0;
 
 }
 
@@ -259,7 +240,12 @@ void Renderer2D::FlushBuffer()
 {
 	if (m_submittedQuads == 0) return;
 
-	ShaderLibrary::GetShader("ColorOnly").Bind();
+	ShaderLibrary::GetShader("TextureInstanced").Bind();
+
+	for (int i = 0; i < TextureIndex; i++)
+	{
+		AllTextures[i]->Bind(i);
+	}
 
 	if (UseInstancing)
 	{
@@ -282,6 +268,7 @@ void Renderer2D::FlushBuffer()
 	}
 		DrawCall++;
 		m_submittedQuads = 0;
+		TextureIndex = 1; //Reset to 1 (not 0, slot 0 is alwayys white texture)
 	
 
 }

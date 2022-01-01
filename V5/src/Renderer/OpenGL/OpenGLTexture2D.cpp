@@ -83,6 +83,40 @@ OpenGLTexture2D::~OpenGLTexture2D()
 	glDeleteTextures(1, &m_textureID);
 }
 
+OpenGLTexture2D::OpenGLTexture2D(float r, float g, float b)
+{
+	TextureData texture = V5Rendering::Texture::CreateColorTextureData(r, g, b);
+
+	GLenum internalFormat = 0, dataFormat = 0;
+	m_sizeFormat = Texture2DSizeFormat::RGBA8;
+
+	internalFormat = GL_RGBA8;
+	dataFormat = GL_RGBA;
+
+	m_width = texture.Width;
+	m_height = texture.Height;
+
+	glCreateTextures(GL_TEXTURE_2D, 1, &m_textureID);
+	glTextureStorage2D(m_textureID, 1, internalFormat, m_width, m_height);
+
+	auto minF = Texture2DFilterToOpenGLType(Texture2DFilter::LINEAR);
+	auto maxF = Texture2DFilterToOpenGLType(Texture2DFilter::LINEAR);
+
+	auto wrapS = Texture2DWrapModeToOpenGLType(Texture2DWrapMode::REPEAT);
+	auto wrapT = Texture2DWrapModeToOpenGLType(Texture2DWrapMode::REPEAT);
+
+	glTextureParameteri(m_textureID, GL_TEXTURE_MIN_FILTER, minF);
+	glTextureParameteri(m_textureID, GL_TEXTURE_MAG_FILTER, maxF);
+	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_S, wrapS);
+	glTextureParameteri(m_textureID, GL_TEXTURE_WRAP_T, wrapT);
+
+	auto dataType = Texture2DSizeFormatToOpenGLType(m_sizeFormat);
+
+	glTextureSubImage2D(m_textureID, 0, 0, 0, m_width, m_height, dataFormat, dataType, texture.Data);
+	texture.Delete();
+}
+
+
 OpenGLTexture2D::OpenGLTexture2D(const TextureDescription& desc) :
 	m_sizeFormat(desc.Format)
 {
@@ -166,7 +200,6 @@ uint32_t OpenGLTexture2D::GetHeight() const
 
 void OpenGLTexture2D::Bind(uint32_t slot) const
 {
-	V5_PROFILE_FUNCTION();
 	glBindTextureUnit(slot, m_textureID);
 }
 

@@ -8,12 +8,13 @@ namespace V5Core
 
 namespace V5Rendering
 {
+	class Texture2D;
+
 	class IRenderer2D
 	{
 	public:
 
-		virtual void DrawQuad(const glm::vec3& position, const glm::vec3& color) = 0;
-		virtual void DrawQuad(const V5Core::Transform& transform, const glm::vec3& color) = 0;
+		virtual void DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, std::shared_ptr<Texture2D> texture = nullptr) = 0;
 
 		virtual void Begin(const glm::mat4& cameraViewProjection) = 0;
 		virtual void End() = 0;

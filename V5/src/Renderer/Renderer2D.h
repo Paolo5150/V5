@@ -9,7 +9,7 @@
 struct QuadVertex
 {
 	glm::vec3 Position;
-	glm::vec3 Color;
+	glm::vec2 UV;
 };
 
 namespace V5Rendering
@@ -19,14 +19,13 @@ namespace V5Rendering
 	public:
 		Renderer2D();
 		void Shutdown();
-		void DrawQuad(const glm::vec3& position, const glm::vec3& color) override;
-		void DrawQuad(const V5Core::Transform& transform, const glm::vec3& color) override;
+		void DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, std::shared_ptr<Texture2D> texture = nullptr) override;
+
 		void FlushBuffer();
 		void Begin(const glm::mat4& cameraViewProjection) override;
 		void End() override;
 	private:
 		void StartBatch();
-		void NextBatch();
 		QuadVertex* m_currentVertexPtr;
 		uint32_t m_currentQuadCount;
 		uint32_t m_submittedQuads;

@@ -20,9 +20,9 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 500000;
+	constexpr int QUAD_COUNT = 200000;
 	Transform transforms[QUAD_COUNT];
-
+	std::shared_ptr<Texture2D> tt;
 }
 
 struct position
@@ -36,8 +36,9 @@ void EditorLayer::OnAttach()
 	V5_PROFILE_FUNCTION();
 
 	m_editorCamera = std::make_unique<EditorCamera>(75, 
-		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.6f, 1000.0f);
+		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.1f, 1000.0f);
 
+	tt = Texture2D::Create("Assets\\Textures\\smiley.png");
 
 	Scene scene;
 	auto ent = scene.CreateEntity();
@@ -75,7 +76,7 @@ void EditorLayer::OnRender()
 
 	for (int i = 0; i < QUAD_COUNT; i++)
 	{
-		V5Core::Factory::GetRenderer2D().DrawQuad(transforms[i], {0,1,0});
+		V5Core::Factory::GetRenderer2D().DrawQuad(transforms[i], {1,1,1,1}, i % 2 == 0 ? tt : nullptr);
 
 	}
 

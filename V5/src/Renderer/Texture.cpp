@@ -20,6 +20,29 @@ void TextureData::Delete()
 	}
 }
 
+TextureData Texture::CreateColorTextureData(float r, float g, float b)
+{
+	TextureData d;
+
+	unsigned char* t = (unsigned char*)malloc(4);
+
+	// Purple texture
+	t[0] = r * 255;
+	t[1] = g * 255;
+	t[2] = b * 255;
+	t[3] =  255;
+
+
+	d.Data = t;
+	d.Width = 1;
+	d.Height = 1;
+	d.Channels = 4;
+	d.m_loadingOK = true;
+	return d;
+}
+
+
+
 TextureData Texture::LoadData(const std::string& filePath, bool flipVertical)
 {
 	TextureData d;
@@ -88,6 +111,19 @@ std::shared_ptr<Texture2D> Texture2D::Create(const TextureDescription& desc)
 	}
 	return nullptr;
 }
+
+std::shared_ptr<Texture2D> Texture2D::Create(float r, float g, float b)
+{
+	switch (RendererAPI::GetAPI())
+	{
+	case RendererAPI::API::OpenGL:
+		return std::make_shared<OpenGLTexture2D>(r,g,b);
+	default:
+		break;
+	}
+	return nullptr;
+}
+
 
 
 std::shared_ptr<Texture2D> Texture2D::Create(std::string filePath,

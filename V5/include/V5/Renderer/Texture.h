@@ -66,6 +66,7 @@ namespace V5Rendering
 
 		//TODO: thils will probably move into a potential Asset manager class
 		static TextureData LoadData(const std::string& filePath, bool flipVertical = true);
+		static TextureData CreateColorTextureData(float r, float g, float b);
 
 	};
 
@@ -79,5 +80,6 @@ namespace V5Rendering
 													Texture2DFilter magFilter = Texture2DFilter::LINEAR);
 
 		 static std::shared_ptr<Texture2D> Create(const TextureDescription& desc);
+		 static std::shared_ptr<Texture2D> Create(float r, float g, float b);
 	};
 }

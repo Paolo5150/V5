@@ -44,14 +44,16 @@ void Renderer::Init()
 	m_renderer2D = std::make_unique<Renderer2D>();
 
 	// Tests
-	ShaderLibrary::Add("Texture", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
-	ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\colorOnly.vert.spv", "Assets\\Shaders\\bin\\colorOnly.frag.spv"));
+	//ShaderLibrary::Add("Texture", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
+	ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnlyInstanced.vert.spv", "Assets\\Shaders\\bin\\textureOnlyInstanced.frag.spv"));
 
-	texture = Texture2D::Create("Assets\\Textures\\wall.jpg");
-	texture2 = Texture2D::Create("Assets\\Textures\\smiley.png");
+	//ShaderLibrary::Add("ColorOnly", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\colorOnly.vert.spv", "Assets\\Shaders\\bin\\colorOnly.frag.spv"));
 
-	auto& r = ShaderLibrary::GetShader("Texture");
-	r.Bind();
+	//texture = Texture2D::Create("Assets\\Textures\\wall.jpg");
+	//texture2 = Texture2D::Create("Assets\\Textures\\smiley.png");
+
+	//auto& r = ShaderLibrary::GetShader("Texture");
+	//r.Bind();
 
 	/*std::vector<Vertex> vertices = {
 		{{-0.5f, -0.5f, -0.5f}, {1,0,0}, {0,0}},
