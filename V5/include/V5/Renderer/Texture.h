@@ -73,13 +73,13 @@ namespace V5Rendering
 	class Texture2D : public Texture
 	{
 	public:
-		 static std::shared_ptr<Texture2D> Create(	std::string filePath, 
+		 static std::unique_ptr<Texture2D> Create(	std::string filePath, 
 													Texture2DWrapMode sWrap = Texture2DWrapMode::REPEAT,
 													Texture2DWrapMode tWrap = Texture2DWrapMode::REPEAT,
 													Texture2DFilter minFilter = Texture2DFilter::LINEAR,
 													Texture2DFilter magFilter = Texture2DFilter::LINEAR);
 
-		 static std::shared_ptr<Texture2D> Create(const TextureDescription& desc);
-		 static std::shared_ptr<Texture2D> Create(float r, float g, float b);
+		 static std::unique_ptr<Texture2D> Create(const TextureDescription& desc);
+		 static std::unique_ptr<Texture2D> Create(float r, float g, float b);
 	};
 }

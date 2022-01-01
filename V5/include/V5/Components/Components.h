@@ -44,31 +44,26 @@ namespace V5Core
 	};
 
 
-	class SpriteRenderer
+	struct SpriteRenderer
 	{
-		public:
-			SpriteRenderer(std::shared_ptr<V5Rendering::Texture2D> texture = nullptr, const glm::vec4& color = { 1,1,1,1 }) :
-				m_texture(texture),
-				m_color(color)
-			{
-			}
+		V5Rendering::Texture2D* Texture;
+		glm::vec4 Color = { 1,1,1,1 };
 
-			std::shared_ptr<V5Rendering::Texture2D> GetTexture() { return m_texture; }
-			glm::vec4& GetColor() { return m_color; }
-		private:
-			std::shared_ptr<V5Rendering::Texture2D> m_texture;
-			glm::vec4 m_color;
+		SpriteRenderer() = default;
+		SpriteRenderer(const SpriteRenderer&) = default;
+		SpriteRenderer(V5Rendering::Texture2D * tex = nullptr, const glm::vec4 & color = { 1,1,1,1 })
+			: Texture(tex), Color(color) {}
 	};
 
 	struct TileRenderer
 	{
 	public:
-		std::shared_ptr<V5Rendering::Texture2D> Texture;
+		V5Rendering::Texture2D* Texture;
 		glm::vec4 Color = { 1,1,1,1 };
 
 		TileRenderer() = default;
 		TileRenderer(const TileRenderer&) = default;
-		TileRenderer(std::shared_ptr<V5Rendering::Texture2D> tex = nullptr, const glm::vec4& color = { 1,1,1,1 })
+		TileRenderer(V5Rendering::Texture2D* tex = nullptr, const glm::vec4& color = { 1,1,1,1 })
 			: Texture(tex), Color(color) {}
 
 		

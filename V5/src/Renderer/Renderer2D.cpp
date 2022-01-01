@@ -41,7 +41,7 @@ namespace
 	std::shared_ptr<VertexArray> vao;
 	uint32_t DrawCall = 0;
 
-	std::vector<std::shared_ptr<Texture2D>> AllTextures;
+	Texture2D* AllTextures[32];
 	int TextureIndex = 0;
 
 	// Batching parameters
@@ -65,12 +65,13 @@ namespace
 	glm::vec4 br = glm::vec4(0.5, -0.5, 0.0, 1.0);
 	glm::vec4 tr = glm::vec4(0.5, 0.5, 0.0, 1.0);
 	glm::vec4 tl = glm::vec4(-0.5, 0.5, 0.0, 1.0);
+	std::unique_ptr<Texture2D> whiteTexture;
 }
 
 Renderer2D::Renderer2D()
 {
-	AllTextures.resize(32);
-	AllTextures[0] = Texture2D::Create(1, 1, 1);
+	whiteTexture = Texture2D::Create(1, 1, 1);
+	AllTextures[0] = whiteTexture.get();
 	TextureIndex++;
 
 	if (!UseInstancing)
@@ -186,7 +187,7 @@ void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 }
 
 
-void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, std::shared_ptr<Texture2D> texture)
+void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, Texture2D* texture)
 {
 	if (texture != nullptr)
 	{

@@ -51,7 +51,7 @@ void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 		{
 			Transform& t = entities.get<Transform>(e);
 			SpriteRenderer& sr = entities.get<SpriteRenderer>(e);
-			Renderer::Instance().GetRenderer2D().DrawQuad(t, sr.GetColor(), sr.GetTexture());
+			Renderer::Instance().GetRenderer2D().DrawQuad(t, sr.Color, sr.Texture);
 		}
 
 		Renderer::Instance().GetRenderer2D().End();

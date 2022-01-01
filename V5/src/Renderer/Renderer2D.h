@@ -15,7 +15,7 @@ namespace V5Rendering
 	public:
 		Renderer2D();
 		void Shutdown();
-		void DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, std::shared_ptr<Texture2D> texture = nullptr) override;
+		void DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, Texture2D* texture = nullptr) override;
 
 		void FlushBuffer();
 		void Begin(const glm::mat4& cameraViewProjection) override;

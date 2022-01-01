@@ -100,24 +100,24 @@ TextureData Texture::LoadData(const std::string& filePath, bool flipVertical)
 	return d;
 }
 
-std::shared_ptr<Texture2D> Texture2D::Create(const TextureDescription& desc)
+std::unique_ptr<Texture2D> Texture2D::Create(const TextureDescription& desc)
 {
 	switch (RendererAPI::GetAPI())
 	{
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLTexture2D>(desc);
+			return std::make_unique<OpenGLTexture2D>(desc);
 		default:
 			break;
 	}
 	return nullptr;
 }
 
-std::shared_ptr<Texture2D> Texture2D::Create(float r, float g, float b)
+std::unique_ptr<Texture2D> Texture2D::Create(float r, float g, float b)
 {
 	switch (RendererAPI::GetAPI())
 	{
 	case RendererAPI::API::OpenGL:
-		return std::make_shared<OpenGLTexture2D>(r,g,b);
+		return std::make_unique<OpenGLTexture2D>(r,g,b);
 	default:
 		break;
 	}
@@ -126,7 +126,7 @@ std::shared_ptr<Texture2D> Texture2D::Create(float r, float g, float b)
 
 
 
-std::shared_ptr<Texture2D> Texture2D::Create(std::string filePath,
+std::unique_ptr<Texture2D> Texture2D::Create(std::string filePath,
 											Texture2DWrapMode sWrap	,		
 											Texture2DWrapMode tWrap	,		
 											Texture2DFilter minFilter,		
@@ -135,7 +135,7 @@ std::shared_ptr<Texture2D> Texture2D::Create(std::string filePath,
 	switch (RendererAPI::GetAPI())
 	{
 	case RendererAPI::API::OpenGL:
-		return std::make_shared<OpenGLTexture2D>(filePath, sWrap, tWrap, minFilter, magFilter);
+		return std::make_unique<OpenGLTexture2D>(filePath, sWrap, tWrap, minFilter, magFilter);
 	default:
 		break;
 	}

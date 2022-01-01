@@ -15,7 +15,7 @@ namespace V5Rendering
 	public:
 		TileRenderer2D();
 		void Shutdown();
-		void DrawQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, std::shared_ptr<Texture2D> texture);
+		void DrawQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, Texture2D* texture);
 
 		void FlushBuffer();
 		void Begin(const glm::mat4& cameraViewProjection);

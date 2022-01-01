@@ -34,7 +34,7 @@ namespace
 
 	std::shared_ptr<VertexArray> vao;
 
-	std::vector<std::shared_ptr<Texture2D>> AllTextures;
+	Texture2D* AllTextures[32];
 	int TextureIndex = 0;
 
 	// Batching parameters
@@ -53,12 +53,14 @@ namespace
 	glm::vec4 br = glm::vec4(0.5, -0.5, 0.0, 1.0);
 	glm::vec4 tr = glm::vec4(0.5, 0.5, 0.0, 1.0);
 	glm::vec4 tl = glm::vec4(-0.5, 0.5, 0.0, 1.0);
+	std::unique_ptr<Texture2D> t;
+
 }
 
 TileRenderer2D::TileRenderer2D()
 {
-	AllTextures.resize(32);
-	AllTextures[0] = Texture2D::Create(1, 1, 1);
+	t = Texture2D::Create(1, 1, 1);
+	AllTextures[0] = t.get();
 	TextureIndex++;
 
 	auto layout = BufferLayout({
@@ -127,7 +129,7 @@ void TileRenderer2D::Begin(const glm::mat4& cameraViewProjection)
 }
 
 
-void TileRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, std::shared_ptr<Texture2D> texture)
+void TileRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, Texture2D* texture)
 {
 	if (texture != nullptr)
 	{
@@ -188,7 +190,6 @@ void TileRenderer2D::FlushBuffer()
 	DrawCall++;
 	m_submittedQuads = 0;
 	TextureIndex = 1; //Reset to 1 (not 0, slot 0 is alwayys white texture)
-
 
 }
 
