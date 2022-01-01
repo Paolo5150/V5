@@ -23,12 +23,6 @@ namespace
 	std::shared_ptr<Texture2D> tt;
 }
 
-struct position
-{
-	float x;
-	float y;
-};
-
 void EditorLayer::OnAttach()
 {
 	V5_PROFILE_FUNCTION();
@@ -42,13 +36,14 @@ void EditorLayer::OnAttach()
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0.5 });
+		e.AddComponent<SpriteRenderer>(tt);
 	}
 
 }
 
 void EditorLayer::OnUpdate(double dt) 
 {
-	m_frameTime = 1.0f / dt;
+	m_frameTime = 1.0f / (float)dt;
 	m_editorCamera->OnUpdate(dt);
 
 	switch (m_editorState)

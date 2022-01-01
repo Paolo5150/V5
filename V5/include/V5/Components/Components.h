@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <V5/Renderer/Texture.h>
 
 
 namespace V5Core
@@ -40,5 +41,22 @@ namespace V5Core
 			glm::mat4 rotation = glm::toMat4(glm::quat(m_rotation));
 			m_matrix = glm::translate(glm::mat4(1.0), m_position) * rotation * glm::scale(glm::mat4(1.0), m_scale);
 		}
+	};
+
+
+	class SpriteRenderer
+	{
+		public:
+			SpriteRenderer(std::shared_ptr<V5Rendering::Texture2D> texture = nullptr, const glm::vec4& color = { 1,1,1,1 }) :
+				m_texture(texture),
+				m_color(color)
+			{
+			}
+
+			std::shared_ptr<V5Rendering::Texture2D> GetTexture() { return m_texture; }
+			glm::vec4& GetColor() { return m_color; }
+		private:
+			std::shared_ptr<V5Rendering::Texture2D> m_texture;
+			glm::vec4 m_color;
 	};
 }

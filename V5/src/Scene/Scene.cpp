@@ -29,12 +29,13 @@ void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 {
 	Renderer::Instance().GetRenderer2D().Begin(camera.GetViewProjectionMatrix());
 
-	auto entities = m_enttRegistry.view<Transform>();
+	auto entities = m_enttRegistry.group<Transform>(entt::get<SpriteRenderer>);
 
 	for (const auto& e : entities)
 	{
 		Transform& t = entities.get<Transform>(e);
-		Renderer::Instance().GetRenderer2D().DrawQuad(t, { 1,1,1,1 },  nullptr);
+		SpriteRenderer& sr = entities.get<SpriteRenderer>(e);
+		Renderer::Instance().GetRenderer2D().DrawQuad(t, sr.GetColor(), sr.GetTexture());
 	}
 	
 	Renderer::Instance().GetRenderer2D().End();
