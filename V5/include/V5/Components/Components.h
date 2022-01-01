@@ -12,6 +12,7 @@ namespace V5Core
 		Transform()
 		{
 			m_scale = glm::vec3(1, 1, 1 );
+			m_rotation = glm::vec3(0,0,0 );
 			UpdateMatrix();
 		}
 

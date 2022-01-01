@@ -6,12 +6,20 @@
 #include <V5/Core/Input.h>
 #include <V5/Event/InputEvents.h>
 #include <V5/Renderer/EditorCamera.h>
+#include <V5/Scene/Scene.h>
+
 #include <tuple>
 
 
 class EditorLayer : public V5Core::Layer
 {
 public:
+	enum EditorState
+	{
+		EDIT,
+		PLAY
+	};
+
 	EditorLayer() : Layer("EditorLayer"){};
 
 	void OnUpdate(double dt) override;
@@ -24,5 +32,6 @@ public:
 private:
 	float m_frameTime;
 	std::unique_ptr<V5Rendering::EditorCamera> m_editorCamera;
-
+	V5Core::Scene m_activeScene;
+	EditorState m_editorState = EditorState::EDIT;
 };

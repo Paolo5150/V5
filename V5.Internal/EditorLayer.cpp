@@ -10,7 +10,6 @@
 #include <V5/Utils/Random.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
-#include "V5/Scene/Scene.h"
 #include "V5/Scene/Entity.h"
 
 
@@ -21,7 +20,6 @@ using namespace V5Utils;
 namespace
 {
 	constexpr int QUAD_COUNT = 30;
-	Transform transforms[QUAD_COUNT];
 	std::shared_ptr<Texture2D> tt;
 }
 
@@ -40,14 +38,10 @@ void EditorLayer::OnAttach()
 
 	tt = Texture2D::Create("Assets\\Textures\\smiley.png");
 
-	Scene scene;
-	auto ent = scene.CreateEntity();
-
-	ent.AddComponent<position>(3.3f, 4.0f);
-
 	for (int i = 0; i < QUAD_COUNT; i++)
 	{
-		transforms[i].SetPosition({ i * 2, 0, 0.5 });
+		auto e = m_activeScene.CreateEntity();
+		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0.5 });
 	}
 
 }
@@ -56,6 +50,18 @@ void EditorLayer::OnUpdate(double dt)
 {
 	m_frameTime = 1.0f / dt;
 	m_editorCamera->OnUpdate(dt);
+
+	switch (m_editorState)
+	{
+		case EditorState::EDIT:
+			m_activeScene.UpdateEditor(dt);
+
+			break;
+
+		case EditorState::PLAY:
+			m_activeScene.UpdateRuntime(dt);
+			break;
+	}
 
 	static float timer = 0;
 	static float timer2 = 0;
@@ -74,14 +80,18 @@ void EditorLayer::OnUpdate(double dt)
 void EditorLayer::OnRender()
 {
 	V5_PROFILE_FUNCTION();
-	V5Core::Factory::GetRenderer2D().Begin(m_editorCamera->GetViewProjectionMatrix());
 
-
-	for (int i = 0; i < QUAD_COUNT; i++)
+	switch (m_editorState)
 	{
-		V5Core::Factory::GetRenderer2D().DrawQuad(transforms[i], {1,1,1,1}, i % 2 == 0 ? tt : nullptr);
+	case EditorState::EDIT:
+		m_activeScene.RenderEditor(*m_editorCamera);
 
+		break;
+
+	case EditorState::PLAY:
+		break;
 	}
+
 
 	V5Core::Factory::GetRenderer2D().End();
 }

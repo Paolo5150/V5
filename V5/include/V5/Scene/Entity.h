@@ -33,6 +33,12 @@ namespace V5Core
 			return m_scene->m_enttRegistry.any_of<T>(m_enttHandle);
 		}
 
+		template <typename T>
+		T& GetComponent()
+		{
+			return m_scene->m_enttRegistry.get<T>(m_enttHandle);
+		}
+
 	private:
 		Scene* m_scene;
 		entt::entity m_enttHandle;
