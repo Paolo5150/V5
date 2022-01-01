@@ -21,6 +21,7 @@ namespace
 {
 	constexpr int QUAD_COUNT = 30;
 	std::shared_ptr<Texture2D> tt;
+	std::vector<Entity> entities;
 }
 
 void EditorLayer::OnAttach()
@@ -37,14 +38,25 @@ void EditorLayer::OnAttach()
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0.5 });
 		e.AddComponent<SpriteRenderer>(tt);
+		entities.push_back(e);
 	}
 
 }
 
 void EditorLayer::OnUpdate(double dt) 
 {
+	static float timer = 0;
+	static float timer2 = 0;
+	timer += dt;
+	timer2 += dt;
+
 	m_frameTime = 1.0f / (float)dt;
 	m_editorCamera->OnUpdate(dt);
+
+	for (unsigned i = 0; i < entities.size(); i++)
+	{
+		entities[i].GetComponent<Transform>().SetRotation({ 0, 0 , timer2 * i });
+	}
 
 	switch (m_editorState)
 	{
@@ -58,10 +70,7 @@ void EditorLayer::OnUpdate(double dt)
 			break;
 	}
 
-	static float timer = 0;
-	static float timer2 = 0;
-	timer += dt;
-	timer2 += dt;
+
 
 
 	if (timer > 0.5)
