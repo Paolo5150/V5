@@ -2,7 +2,7 @@
 
 layout(location = 0) in vec4 color;
 layout( location = 1) in vec2 textCoords;
-layout( location = 2) in float iTextureIndex;
+layout( location = 2) in flat float iTextureIndex;
 
 layout(location = 0) out vec4 fragColor;
 

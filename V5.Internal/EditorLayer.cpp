@@ -59,7 +59,11 @@ void EditorLayer::OnUpdate(double dt)
 	m_editorCamera->OnUpdate(dt);
 
 	static float timer = 0;
+	static float timer2 = 0;
 	timer += dt;
+	timer2 += dt;
+
+
 	if (timer > 0.5)
 	{
 		timer = 0;

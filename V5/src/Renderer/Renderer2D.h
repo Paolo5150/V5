@@ -12,6 +12,14 @@ struct QuadVertex
 	glm::vec2 UV;
 };
 
+struct QuadVertexBatched
+{
+	glm::vec3 Position;
+	glm::vec2 UV;
+	glm::vec4 Color;
+	float TextureIndex;
+};
+
 namespace V5Rendering
 {
 	class Renderer2D : public IRenderer2D
@@ -26,7 +34,7 @@ namespace V5Rendering
 		void End() override;
 	private:
 		void StartBatch();
-		QuadVertex* m_currentVertexPtr;
+		QuadVertexBatched* m_currentVertexPtr;
 		uint32_t m_currentQuadCount;
 		uint32_t m_submittedQuads;
 		std::shared_ptr<UniformBuffer> m_cameraBuffer;
