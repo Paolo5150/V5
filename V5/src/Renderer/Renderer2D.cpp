@@ -38,6 +38,8 @@ namespace
 	std::vector<uint32_t> indices;
 	uint32_t IndexCount = 0;
 	QuadVertexBatched verticesBatched[MaxQuads * 4];
+	QuadVertexBatched* CurrentVertexPtr;
+
 
 	// Instancing parameters
 	InstanceData InstancedData[MaxQuads];
@@ -126,7 +128,6 @@ Renderer2D::Renderer2D()
 		quadVerts[3].Position = glm::vec3(-0.5, 0.5, 0.0);
 		quadVerts[3].UV = glm::vec2(0, 1);
 
-
 		batchVBO = VertexBuffer::Create(&quadVerts[0], sizeof(QuadVertex) * 4);
 		instanceVBO = VertexBuffer::Create(sizeof(InstanceData) * MaxQuads);
 
@@ -148,8 +149,7 @@ Renderer2D::Renderer2D()
 		vao->AddVertexBuffer(batchVBO);
 		vao->AddVertexBuffer(instanceVBO);
 		vao->SetIndexBuffer(batchIBO);
-	}
-	
+	}	
 }
 
 void Renderer2D::StartBatch()
@@ -160,7 +160,7 @@ void Renderer2D::StartBatch()
 	}
 	else
 	{
-		m_currentVertexPtr = &verticesBatched[0];
+		CurrentVertexPtr = &verticesBatched[0];
 	}
 	m_submittedQuads = 0;
 }
@@ -179,9 +179,9 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 	if (texture != nullptr)
 	{
 		bool found = 0;
-		for (unsigned i = 0; i < TextureIndex; i++)
+		for (float i = 0; i < TextureIndex; i++)
 		{
-			if (texture == AllTextures[i])
+			if (texture == AllTextures[(int)i])
 			{
 				found = 1;
 				break;
@@ -196,43 +196,42 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 	}
 
 	if (UseInstancing)
-	{
-		
+	{		
 		(*CurrentInstanceDataPtr).ModelMat = transform.GetMatrix();
 		(*CurrentInstanceDataPtr).Color = color;
-		(*CurrentInstanceDataPtr).TextureIndex = texture == nullptr ? 0 : TextureIndex - 1;
+		(*CurrentInstanceDataPtr).TextureIndex = texture == nullptr ? 0.0f : TextureIndex - 1.0f;
 		CurrentInstanceDataPtr++;
 	}
 	else
 	{
 		V5_PROFILE_FUNCTION();
-		m_currentVertexPtr->Position = transform.GetMatrix() * bl;
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr->UV.x = 0;
-		m_currentVertexPtr->UV.y = 0;
-		m_currentVertexPtr->TextureIndex = texture == nullptr ? 0 : TextureIndex - 1;
-		m_currentVertexPtr++;
+		CurrentVertexPtr->Position = transform.GetMatrix() * bl;
+		CurrentVertexPtr->Color = color;
+		CurrentVertexPtr->UV.x = 0;
+		CurrentVertexPtr->UV.y = 0;
+		CurrentVertexPtr->TextureIndex = texture == nullptr ? 0.0f : TextureIndex - 1.0f;
+		CurrentVertexPtr++;
 
-		m_currentVertexPtr->Position = transform.GetMatrix() * br;
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr->UV.x = 1;
-		m_currentVertexPtr->UV.y = 0;
-		m_currentVertexPtr->TextureIndex = texture == nullptr ? 0 : TextureIndex - 1;
-		m_currentVertexPtr++;
+		CurrentVertexPtr->Position = transform.GetMatrix() * br;
+		CurrentVertexPtr->Color = color;
+		CurrentVertexPtr->UV.x = 1;
+		CurrentVertexPtr->UV.y = 0;
+		CurrentVertexPtr->TextureIndex = texture == nullptr ? 0.0f : TextureIndex - 1.0f;
+		CurrentVertexPtr++;
 
-		m_currentVertexPtr->Position = transform.GetMatrix() * tr;
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr->UV.x = 1;
-		m_currentVertexPtr->UV.y = 1;
-		m_currentVertexPtr->TextureIndex = texture == nullptr ? 0 : TextureIndex - 1;
-		m_currentVertexPtr++;
+		CurrentVertexPtr->Position = transform.GetMatrix() * tr;
+		CurrentVertexPtr->Color = color;
+		CurrentVertexPtr->UV.x = 1;
+		CurrentVertexPtr->UV.y = 1;
+		CurrentVertexPtr->TextureIndex = texture == nullptr ? 0.0f : TextureIndex - 1.0f;
+		CurrentVertexPtr++;
 
-		m_currentVertexPtr->Position = transform.GetMatrix() * tl;
-		m_currentVertexPtr->Color = color;
-		m_currentVertexPtr->UV.x = 0;
-		m_currentVertexPtr->UV.y = 1;
-		m_currentVertexPtr->TextureIndex = texture == nullptr ? 0 : TextureIndex - 1;
-		m_currentVertexPtr++;
+		CurrentVertexPtr->Position = transform.GetMatrix() * tl;
+		CurrentVertexPtr->Color = color;
+		CurrentVertexPtr->UV.x = 0;
+		CurrentVertexPtr->UV.y = 1;
+		CurrentVertexPtr->TextureIndex = texture == nullptr ? 0.0f : TextureIndex - 1.0f;
+		CurrentVertexPtr++;
 
 		IndexCount += 6;
 	}
@@ -246,11 +245,9 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 
 void Renderer2D::End()
 {
-
 	FlushBuffer();
 	//V5CLOG_INFO("Draw calls {0}", DrawCall);
 	DrawCall = 0;
-
 }
 
 void Renderer2D::FlushBuffer()
@@ -280,7 +277,7 @@ void Renderer2D::FlushBuffer()
 
 		V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexed(*vao, IndexCount);
 
-		m_currentVertexPtr = verticesBatched;
+		CurrentVertexPtr = verticesBatched;
 		IndexCount = 0;
 	}
 		DrawCall++;

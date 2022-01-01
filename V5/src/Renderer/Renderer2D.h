@@ -34,8 +34,6 @@ namespace V5Rendering
 		void End() override;
 	private:
 		void StartBatch();
-		QuadVertexBatched* m_currentVertexPtr;
-		uint32_t m_currentQuadCount;
 		uint32_t m_submittedQuads;
 		std::shared_ptr<UniformBuffer> m_cameraBuffer;
 

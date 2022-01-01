@@ -20,7 +20,7 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 200000;
+	constexpr int QUAD_COUNT = 30;
 	Transform transforms[QUAD_COUNT];
 	std::shared_ptr<Texture2D> tt;
 }
@@ -48,7 +48,6 @@ void EditorLayer::OnAttach()
 	for (int i = 0; i < QUAD_COUNT; i++)
 	{
 		transforms[i].SetPosition({ i * 2, 0, 0.5 });
-
 	}
 
 }
