@@ -19,7 +19,7 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 400000;
+	constexpr int QUAD_COUNT = 500000;
 	std::unique_ptr<Texture2D> tt;
 	std::vector<Entity> entities;
 }
@@ -37,7 +37,7 @@ void EditorLayer::OnAttach()
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
-		e.AddComponent<TileRenderer>(tt.get());
+		e.AddComponent<SpriteRenderer>(tt.get());
 		entities.push_back(e);
 	}
 

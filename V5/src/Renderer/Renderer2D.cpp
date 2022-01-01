@@ -36,7 +36,7 @@ struct InstanceData
 
 namespace
 {
-	bool UseInstancing = 0; // If 1, instancing, if 0, batching
+	bool UseInstancing = 1; // If 1, instancing, if 0, batching
 	constexpr uint32_t MaxQuads = 100000;
 	std::shared_ptr<VertexArray> vao;
 	uint32_t DrawCall = 0;
