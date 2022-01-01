@@ -189,6 +189,8 @@ void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 
 void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& color, Texture2D* texture)
 {
+	float tIndex = 0.0f;
+
 	if (texture != nullptr)
 	{
 		bool found = 0;
@@ -197,6 +199,7 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 			if (texture == AllTextures[(int)i])
 			{
 				found = 1;
+				tIndex = i;
 				break;
 			}
 		}
@@ -212,7 +215,7 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 	{		
 		(*CurrentInstanceDataPtr).ModelMat = transform.GetMatrix();
 		(*CurrentInstanceDataPtr).Color = color;
-		(*CurrentInstanceDataPtr).TextureIndex = texture == nullptr ? 0.0f : TextureIndex - 1.0f;
+		(*CurrentInstanceDataPtr).TextureIndex = tIndex;
 		CurrentInstanceDataPtr++;
 	}
 	else
@@ -276,7 +279,6 @@ void Renderer2D::FlushBuffer()
 
 	if (UseInstancing)
 	{
-
 		instanceVBO->SetData(&InstancedData[0], sizeof(InstanceData) * m_submittedQuads);
 
 		V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexedInstanced(*vao, m_submittedQuads);

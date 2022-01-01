@@ -131,6 +131,8 @@ void TileRenderer2D::Begin(const glm::mat4& cameraViewProjection)
 
 void TileRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale, const glm::vec4& color, Texture2D* texture)
 {
+	float tIndex = 0.0f;
+
 	if (texture != nullptr)
 	{
 		bool found = 0;
@@ -139,6 +141,7 @@ void TileRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale,
 			if (texture == AllTextures[(int)i])
 			{
 				found = 1;
+				tIndex = i;
 				break;
 			}
 		}
@@ -153,7 +156,7 @@ void TileRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale,
 	(*CurrentInstanceDataPtr).Position = position;
 	(*CurrentInstanceDataPtr).Scale = scale;
 	(*CurrentInstanceDataPtr).Color = color;
-	(*CurrentInstanceDataPtr).TextureIndex = texture == nullptr ? 0.0f : TextureIndex - 1.0f;
+	(*CurrentInstanceDataPtr).TextureIndex = tIndex;
 	CurrentInstanceDataPtr++;
 	
 

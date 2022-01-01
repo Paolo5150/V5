@@ -32,7 +32,7 @@ void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 	{
 		Renderer::Instance().GetTileRenderer2D().Begin(camera.GetViewProjectionMatrix());
 
-		auto view = m_enttRegistry.view<Transform, TileRenderer>();
+		auto view = m_enttRegistry.group<Transform>(entt::get<TileRenderer>);
 		for (auto e : view)
 		{
 			auto [t, rend] = view.get<Transform, TileRenderer>(e);
@@ -43,14 +43,12 @@ void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 	}
 	
 	{
-
 		Renderer::Instance().GetRenderer2D().Begin(camera.GetViewProjectionMatrix());
 
 		auto entities = m_enttRegistry.group<SpriteRenderer>(entt::get<Transform>);
 		for (const auto& e : entities)
 		{
-			Transform& t = entities.get<Transform>(e);
-			SpriteRenderer& sr = entities.get<SpriteRenderer>(e);
+			auto [t, sr] = entities.get<Transform, SpriteRenderer>(e);
 			Renderer::Instance().GetRenderer2D().DrawQuad(t, sr.Color, sr.Texture);
 		}
 

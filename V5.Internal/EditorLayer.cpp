@@ -19,8 +19,9 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 500000;
+	constexpr int QUAD_COUNT = 800000;
 	std::unique_ptr<Texture2D> tt;
+	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;
 }
 
@@ -32,12 +33,17 @@ void EditorLayer::OnAttach()
 		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.1f, 1000.0f);
 
 	tt = Texture2D::Create("Assets\\Textures\\smiley.png");
+	tt2 = Texture2D::Create("Assets\\Textures\\wall.jpg");
 
 	for (int i = 0; i < QUAD_COUNT; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
-		e.AddComponent<SpriteRenderer>(tt.get());
+		if(i % 2 == 0)
+			e.AddComponent<TileRenderer>(tt.get());
+		else
+			e.AddComponent<TileRenderer>(tt2.get());
+
 		entities.push_back(e);
 	}
 
