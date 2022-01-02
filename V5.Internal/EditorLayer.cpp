@@ -21,7 +21,7 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 2;
+	constexpr int QUAD_COUNT = 200000;
 	std::unique_ptr<Texture2D> tt;
 	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;
@@ -38,7 +38,7 @@ void EditorLayer::OnAttach()
 	tt = Texture2D::Create("Assets\\Textures\\smiley.png");
 	tt2 = Texture2D::Create("Assets\\Textures\\wall.jpg");
 
-	/*for (int i = 0; i < QUAD_COUNT; i++)
+	for (int i = 0; i < QUAD_COUNT; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
@@ -47,14 +47,11 @@ void EditorLayer::OnAttach()
 
 		e.GetComponent<Transform>().UpdateMatrix();
 		entities.push_back(e);
-	}*/
+	}
 
 	// Try cube
 	par = m_activeScene.CreateEntity();
 	par.AddComponent<SpriteRenderer>(tt.get());
-
-
-
 
 	auto e = m_activeScene.CreateEntity();
 	e.GetComponent<Transform>().SetPosition({ 0,0,0.5 });
@@ -165,8 +162,6 @@ void EditorLayer::OnImGuiRender()
 	ImGui::Text("%f", m_frameTime);
 
 	ImGui::EndMainMenuBar();
-
-
 	
 }
 
@@ -181,5 +176,11 @@ void EditorLayer::OnEvent(V5Core::Event& e)
 	else if (e.GetType() == V5Core::EventType::WindowClose)
 	{
 		//V5CLOG_INFO("closing");
+	}
+	else if (e.GetType() == V5Core::EventType::WindowResize)
+	{
+		//V5CLOG_INFO("closing");
+		WindowResizeEvent& ev = dynamic_cast<WindowResizeEvent&>(e);
+		m_editorCamera->UpdateProjectionMatrix(75, (float)ev.GetWidth() / ev.GetHeight(), 0.1f, 1000.0f);
 	}
 }

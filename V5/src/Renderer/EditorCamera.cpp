@@ -8,7 +8,7 @@ using namespace V5Core;
 namespace
 {
 	float MoveSpeed = 5.0f;
-	float RotationSpeed = 30.0f;
+	float RotationSpeed = 40.0f;
 }
 
 EditorCamera::EditorCamera(float fov, float aspect, float n, float f) : Camera(fov, aspect, n, f),
