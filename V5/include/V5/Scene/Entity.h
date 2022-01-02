@@ -16,6 +16,7 @@ namespace V5Core
 
 		operator entt::entity() const { return m_enttHandle; }
 		operator bool() const { return m_enttHandle != entt::null; }
+		operator uint32_t() const { return (uint32_t)m_enttHandle; }
 
 		bool operator ==(const Entity& other) const { return m_enttHandle == other.m_enttHandle && m_scene == other.m_scene; }
 		bool operator !=(const Entity& other) const { return !(*this == other); }

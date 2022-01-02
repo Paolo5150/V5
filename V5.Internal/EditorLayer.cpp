@@ -19,7 +19,7 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 400000;
+	constexpr int QUAD_COUNT = 100000;
 	std::unique_ptr<Texture2D> tt;
 	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;
@@ -39,12 +39,9 @@ void EditorLayer::OnAttach()
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
-		e.GetComponent<Transform>().SetRotation({ 0, 0, 90});
-		if(i % 2 == 0)
-			e.AddComponent<TileRenderer>(tt.get(), glm::vec4(1,1,1,1));
-		else
-			e.AddComponent<TileRenderer>(tt.get(), glm::vec4(1, 0, 0, 1));
+		e.AddComponent<TileRenderer>(tt.get(), glm::vec4(1, 0, 0, 1));
 
+		e.GetComponent<Transform>().UpdateMatrix();
 		entities.push_back(e);
 	}
 
@@ -59,14 +56,6 @@ void EditorLayer::OnUpdate(double dt)
 
 	m_frameTime = 1.0f / (float)dt;
 	m_editorCamera->OnUpdate(dt);
-
-	for (int i = 0; i < QUAD_COUNT; i++)
-	{
-		auto& transform = entities[i].GetComponent<Transform>();
-		transform.SetPosition({ i * 2, glm::sin(timer2 + i * 0.2f), 1});
-		//transform.SetRotation({ 0,0, timer2});
-		transform.UpdateMatrix();
-	}
 
 	switch (m_editorState)
 	{

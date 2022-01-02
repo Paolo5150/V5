@@ -9,7 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <V5/Debugging/Intrumentor.h>
 #include <glm/glm.hpp>
-
+#include "Core/Time.h"
 using namespace V5Rendering;
 using namespace V5Core;
 
@@ -29,7 +29,7 @@ struct TileInstanceData
 
 namespace
 {
-	constexpr uint32_t MaxQuads = 100000;
+	constexpr uint32_t MaxQuads = 200000;
 	uint32_t DrawCall = 0;
 
 	std::shared_ptr<VertexArray> vao;
@@ -184,7 +184,7 @@ void TileRenderer2D::FlushBuffer()
 	{
 		AllTextures[i]->Bind(i);
 	}
-
+	
 	instanceVBO->SetData(&InstancedData[0], sizeof(TileInstanceData) * m_submittedQuads);
 
 	V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexedInstanced(*vao, m_submittedQuads);
