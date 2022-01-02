@@ -9,7 +9,15 @@
 
 namespace V5Core
 {
-	class Transform
+	class Component
+	{
+	public:
+		Entity* entity;
+		virtual void OnComponentAttached(Entity* e) { entity = e; }
+		bool Active = true;
+	};
+
+	class Transform : public Component
 	{
 	public:
 		Transform(bool ignoreRotation = false);
@@ -22,7 +30,6 @@ namespace V5Core
 		const glm::vec3& GetPosition();
 		const glm::vec3& GetScale();
 		const glm::vec3& GetRotation();
-		void OnComponentAttached(Entity* e) {}
 
 		void UpdateMatrix();
 
@@ -42,11 +49,11 @@ namespace V5Core
 		Sprite renderer and tile renderer are basically identical, but they are used by 2 different renderers (Renderer2D and TileRenderer2D)
 		Tiles ignore rotation entirely, making them more performant
 	*/
-	struct SpriteRenderer
+	class SpriteRenderer : public Component
 	{
+	public:
 		V5Rendering::Texture2D* Texture;
 		glm::vec4 Color = { 1,1,1,1 };
-		void OnComponentAttached(Entity* e) {}
 
 		SpriteRenderer() = default;
 		SpriteRenderer(const SpriteRenderer&) = default;
@@ -54,12 +61,15 @@ namespace V5Core
 			: Texture(tex), Color(color) {}
 	};
 
-	struct TileRenderer
+	class TileRenderer : public Component
 	{
 	public:
 		V5Rendering::Texture2D* Texture;
 		glm::vec4 Color = { 1,1,1,1 };
-		void OnComponentAttached(Entity* e) { e->GetComponent<Transform>().SetIgnoreRotation(true); }
+		void OnComponentAttached(Entity* e) { 
+			Component::OnComponentAttached(e);
+			e->GetComponent<Transform>().SetIgnoreRotation(true);
+		}
 
 		TileRenderer() = default;
 		TileRenderer(const TileRenderer&) = default;

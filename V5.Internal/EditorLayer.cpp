@@ -19,7 +19,7 @@ using namespace V5Utils;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 100000;
+	constexpr int QUAD_COUNT = 2;
 	std::unique_ptr<Texture2D> tt;
 	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;
@@ -35,15 +35,25 @@ void EditorLayer::OnAttach()
 	tt = Texture2D::Create("Assets\\Textures\\smiley.png");
 	tt2 = Texture2D::Create("Assets\\Textures\\wall.jpg");
 
-	for (int i = 0; i < QUAD_COUNT; i++)
+	/*for (int i = 0; i < QUAD_COUNT; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
-		e.AddComponent<TileRenderer>(tt.get(), glm::vec4(1, 0, 0, 1));
+		e.GetComponent<Transform>().SetRotation({ 0,0,90});
+		e.AddComponent<SpriteRenderer>(tt.get());
 
 		e.GetComponent<Transform>().UpdateMatrix();
 		entities.push_back(e);
-	}
+	}*/
+
+	// Try cube
+	auto e = m_activeScene.CreateEntity();
+	e.GetComponent<Transform>().SetPosition({ 0,0,-1 });
+	e.GetComponent<Transform>().SetRotation({ 0,-90,0 });
+	e.AddComponent<SpriteRenderer>(tt.get());
+	e.GetComponent<Transform>().UpdateMatrix();
+
+
 
 }
 

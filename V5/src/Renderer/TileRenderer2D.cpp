@@ -149,6 +149,7 @@ void TileRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale,
 		if (!found)
 		{
 			AllTextures[TextureIndex] = texture;
+			tIndex = TextureIndex;
 			TextureIndex++;
 		}
 	}

@@ -28,7 +28,7 @@ void Transform::SetRotation(const glm::vec3& r, bool updateMatrix)
 	if (!m_ignoreRotation)
 	{
 		m_rotation = r;
-		m_rotationMatrix = glm::eulerAngleYXZ(glm::radians(m_rotation.x), glm::radians(m_rotation.y), glm::radians(m_rotation.z));
+		m_rotationMatrix = glm::eulerAngleYXZ(glm::radians(m_rotation.y), glm::radians(m_rotation.x), glm::radians(m_rotation.z));
 	}
 }
 

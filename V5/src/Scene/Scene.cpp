@@ -35,7 +35,8 @@ void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 		auto view = m_enttRegistry.view<Transform, TileRenderer>();
 
 		view.each([](auto entity, auto& t, auto& rend) {
-			Renderer::Instance().GetTileRenderer2D().DrawQuad(t.GetPosition(), t.GetScale(), rend.Color, rend.Texture);
+			if(rend.Active)
+				Renderer::Instance().GetTileRenderer2D().DrawQuad(t.GetPosition(), t.GetScale(), rend.Color, rend.Texture);
 			});
 		Renderer::Instance().GetTileRenderer2D().End();
 	}
@@ -46,7 +47,8 @@ void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 		auto view = m_enttRegistry.view<Transform, SpriteRenderer>();
 
 		view.each([](auto entity, auto& t, auto& sr) {
-			Renderer::Instance().GetRenderer2D().DrawQuad(t, sr.Color, sr.Texture);
+			if(sr.Active)
+				Renderer::Instance().GetRenderer2D().DrawQuad(t, sr.Color, sr.Texture);
 
 			});
 

@@ -207,6 +207,7 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 		if (!found)
 		{
 			AllTextures[TextureIndex] = texture;
+			tIndex = TextureIndex;
 			TextureIndex++;
 		}
 	}
