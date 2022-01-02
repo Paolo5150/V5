@@ -23,6 +23,7 @@ namespace
 	std::unique_ptr<Texture2D> tt;
 	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;
+	Entity par;
 }
 
 void EditorLayer::OnAttach()
@@ -47,10 +48,17 @@ void EditorLayer::OnAttach()
 	}*/
 
 	// Try cube
+	par = m_activeScene.CreateEntity();
+	par.AddComponent<SpriteRenderer>(tt.get());
+
+
+
+
 	auto e = m_activeScene.CreateEntity();
 	e.GetComponent<Transform>().SetPosition({ 0,0,0.5 });
 	e.AddComponent<SpriteRenderer>(tt2.get());
 	e.GetComponent<Transform>().UpdateMatrix();
+	e.GetComponent<Transform>().SetParent(par.GetComponent<Transform>());
 
 	auto e2 = m_activeScene.CreateEntity();
 	e2.GetComponent<Transform>().SetPosition({ 0,0.5,0 });
@@ -95,6 +103,10 @@ void EditorLayer::OnUpdate(double dt)
 
 	m_frameTime = 1.0f / (float)dt;
 	m_editorCamera->OnUpdate(dt);
+
+	par.GetComponent<Transform>().SetPosition({ timer2 * 0.2f,0,0 });
+
+	par.GetComponent<Transform>().UpdateMatrix();
 
 	switch (m_editorState)
 	{

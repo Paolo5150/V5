@@ -10,6 +10,7 @@ Transform::Transform(bool ignoreRotation) :
 {
 	m_scale = glm::vec3(1, 1, 1);
 	SetRotation({ 0,0,0 });
+	SetPosition({ 0,0,0 });
 	UpdateMatrix();
 }
 
@@ -36,12 +37,30 @@ const glm::vec3& Transform::GetPosition() { return m_position; }
 const glm::vec3& Transform::GetScale() { return m_scale; }
 const glm::vec3& Transform::GetRotation() { return m_rotation; }
 
+void Transform::SetParent(Transform& transform)
+{
+	m_parent = &transform;
+	transform.m_children.insert(this);
+}
+
+
 void Transform::UpdateMatrix()
 {
+	
 	if(m_ignoreRotation)
 		m_matrix = glm::translate(glm::mat4(1.0), m_position) * glm::scale(glm::mat4(1.0), m_scale);
 	else
 		m_matrix = glm::translate(glm::mat4(1.0), m_position) * m_rotationMatrix * glm::scale(glm::mat4(1.0), m_scale);
+
+	if (m_parent != nullptr)
+	{
+		m_matrix = m_parent->GetMatrix() * m_matrix;
+	}
+
+	for (auto m : m_children)
+	{
+		m->UpdateMatrix();
+	}
 
 }
 

@@ -4,6 +4,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <V5/Renderer/Texture.h>
+#include <set>
 #include <V5/Scene/Entity.h>
 
 
@@ -32,6 +33,7 @@ namespace V5Core
 		const glm::vec3& GetRotation();
 
 		void UpdateMatrix();
+		void SetParent(Transform& transform);
 
 		const glm::mat4& GetMatrix() const;
 
@@ -42,6 +44,8 @@ namespace V5Core
 		glm::mat4 m_matrix;
 		glm::mat4 m_rotationMatrix;
 		bool m_ignoreRotation = false;
+		Transform* m_parent = nullptr;
+		std::set<Transform*> m_children;
 		
 	};
 
