@@ -48,10 +48,39 @@ void EditorLayer::OnAttach()
 
 	// Try cube
 	auto e = m_activeScene.CreateEntity();
-	e.GetComponent<Transform>().SetPosition({ 0,0,-1 });
-	e.GetComponent<Transform>().SetRotation({ 0,-90,0 });
-	e.AddComponent<SpriteRenderer>(tt.get());
+	e.GetComponent<Transform>().SetPosition({ 0,0,0.5 });
+	e.AddComponent<SpriteRenderer>(tt2.get());
 	e.GetComponent<Transform>().UpdateMatrix();
+
+	auto e2 = m_activeScene.CreateEntity();
+	e2.GetComponent<Transform>().SetPosition({ 0,0.5,0 });
+	e2.GetComponent<Transform>().SetRotation({ -90,0,0 });
+	e2.AddComponent<SpriteRenderer>(tt2.get());
+	e2.GetComponent<Transform>().UpdateMatrix();
+
+	auto e3 = m_activeScene.CreateEntity();
+	e3.GetComponent<Transform>().SetPosition({ 0,-0.5,0 });
+	e3.GetComponent<Transform>().SetRotation({ 90,0,0 });
+	e3.AddComponent<SpriteRenderer>(tt2.get());
+	e3.GetComponent<Transform>().UpdateMatrix();
+
+	auto e4 = m_activeScene.CreateEntity();
+	e4.GetComponent<Transform>().SetPosition({ 0,0,-0.5 });
+	e4.GetComponent<Transform>().SetRotation({ 0,180,0 });
+	e4.AddComponent<SpriteRenderer>(tt2.get());
+	e4.GetComponent<Transform>().UpdateMatrix();
+
+	auto e5 = m_activeScene.CreateEntity();
+	e5.GetComponent<Transform>().SetPosition({ 0.5,0,0 });
+	e5.GetComponent<Transform>().SetRotation({ 0,90,0 });
+	e5.AddComponent<SpriteRenderer>(tt2.get());
+	e5.GetComponent<Transform>().UpdateMatrix();
+
+	auto e6 = m_activeScene.CreateEntity();
+	e6.GetComponent<Transform>().SetPosition({ -0.5,0,0 });
+	e6.GetComponent<Transform>().SetRotation({ 0,-90,0 });
+	e6.AddComponent<SpriteRenderer>(tt2.get());
+	e6.GetComponent<Transform>().UpdateMatrix();
 
 
 
