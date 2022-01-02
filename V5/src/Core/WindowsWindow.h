@@ -28,6 +28,8 @@ namespace V5Core
 		std::string GetTitle() override { return m_data.Title; }
 		void MaximizeWindow() override;
 		void Destroy() override;
+		virtual void* GetNative() override { return m_glfwWindow; }
+
 	private:
 		GLFWwindow* m_glfwWindow;
 

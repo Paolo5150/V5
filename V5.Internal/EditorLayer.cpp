@@ -145,9 +145,7 @@ void EditorLayer::OnRender()
 
 void EditorLayer::OnImGuiRender()
 {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
+	
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
 
 	ImGui::BeginMainMenuBar();
@@ -167,7 +165,6 @@ void EditorLayer::OnImGuiRender()
 	ImGui::Text("%f", m_frameTime);
 
 	ImGui::EndMainMenuBar();
-
 
 
 	

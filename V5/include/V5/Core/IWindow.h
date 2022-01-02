@@ -17,6 +17,7 @@ namespace V5Core
 		virtual int GetHeight() = 0;
 		virtual std::string GetTitle() = 0;
 		virtual void SetTitle(std::string title) = 0;
+		virtual void* GetNative() = 0;
 
 		// Accessed by core only
 	private:

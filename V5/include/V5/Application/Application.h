@@ -2,7 +2,7 @@
 
 #include <string>
 #include <V5/Core/LayerStack.h>
-
+#include "ImGuiLayer.h"
 
 namespace V5Core
 {
@@ -33,8 +33,11 @@ namespace V5Core
 		void Render();
 		void OnQuit(); //Called by Core, no need to handle the WindowCloseEvent in this class
 		void OnEvent(Event& e);
-		void UpdateImGuiLayers(); // Special update for imgui, needs to be called after clear screen 
 		LayerStack m_layerStack;
 		std::string m_name;
+
+		//Special layer
+		ImGuiLayer* m_imGuiLayer; //Use pointers as they are deleted in Appliocaiton on quit, when layers are cleared
+
 	};
 }

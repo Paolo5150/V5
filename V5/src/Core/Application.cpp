@@ -12,7 +12,6 @@ using namespace V5Core;
 Application::Application(std::string name) :
 	m_name(name)
 {
-
 }
 
 void Application::PushLayer(Layer* layer)
@@ -31,39 +30,35 @@ void Application::PushOverlay(Layer* layer)
 void Application::OnStart()
 {
 	V5LOG_INFO("App {0} start", m_name);
+	m_imGuiLayer = new ImGuiLayer();
+	PushOverlay(m_imGuiLayer);
+
 
 }
 void Application::Update(double dt)
 {
-	{
-		for (Layer* layer : m_layerStack)
-			layer->OnUpdate(dt);
-	}
+	for (Layer* layer : m_layerStack)
+		layer->OnUpdate(dt);
 }
 
 void Application::Render()
 {
 	for (Layer* layer : m_layerStack)
 		layer->OnRender();
-}
 
-
-void Application::UpdateImGuiLayers()
-{
-	V5_PROFILE_FUNCTION();
-
+	m_imGuiLayer->Begin();
 	for (Layer* layer : m_layerStack)
 		layer->OnImGuiRender();
-
-	ImGui::Render();
-	auto data = ImGui::GetDrawData();
-	ImGui_ImplOpenGL3_RenderDrawData(data);
+	m_imGuiLayer->End();
 }
+
+
 
 void Application::OnQuit()
 {
 	V5LOG_INFO("App {0} quit", m_name);
 	V5_PROFILE_FUNCTION();
+	m_layerStack.ClearLayers();
 
 }
 

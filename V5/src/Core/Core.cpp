@@ -133,8 +133,7 @@ void Core::Render()
 	m_Application->Render();
 	//V5Rendering::Renderer::Instance().Render();
 
-	// Do all ImGUI stuff here, for all layers
-	m_Application->UpdateImGuiLayers();	
+
 
 	m_window->Refresh();
 }

@@ -4,12 +4,18 @@ using namespace V5Core;
 
 LayerStack::~LayerStack()
 {
+	
+}
+
+void LayerStack::ClearLayers()
+{
 	for (Layer* layer : m_Layers)
 	{
 		layer->OnDetach();
 		delete layer;
 	}
 }
+
 
 void LayerStack::PushLayer(Layer* layer)
 {
