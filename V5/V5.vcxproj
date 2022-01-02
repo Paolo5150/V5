@@ -216,6 +216,7 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ForcedIncludeFiles>
     </ClCompile>
+    <ClCompile Include="src\Components\Components.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Renderer\Renderer2D.cpp" />

@@ -32,25 +32,23 @@ void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 	{
 		Renderer::Instance().GetTileRenderer2D().Begin(camera.GetViewProjectionMatrix());
 
-		auto view = m_enttRegistry.group<Transform>(entt::get<TileRenderer>);
-		for (auto e : view)
-		{
-			auto [t, rend] = view.get<Transform, TileRenderer>(e);
-			Renderer::Instance().GetTileRenderer2D().DrawQuad(t.GetPosition(), t.GetScale(), rend.Color, rend.Texture);
-		}
+		auto view = m_enttRegistry.view<Transform, TileRenderer>();
 
+		view.each([](auto entity, auto& t, auto& rend) {
+			Renderer::Instance().GetTileRenderer2D().DrawQuad(t.GetPosition(), t.GetScale(), rend.Color, rend.Texture);
+			});
 		Renderer::Instance().GetTileRenderer2D().End();
 	}
 	
 	{
 		Renderer::Instance().GetRenderer2D().Begin(camera.GetViewProjectionMatrix());
 
-		auto entities = m_enttRegistry.group<SpriteRenderer>(entt::get<Transform>);
-		for (const auto& e : entities)
-		{
-			auto [t, sr] = entities.get<Transform, SpriteRenderer>(e);
+		auto view = m_enttRegistry.view<Transform, SpriteRenderer>();
+
+		view.each([](auto entity, auto& t, auto& sr) {
 			Renderer::Instance().GetRenderer2D().DrawQuad(t, sr.Color, sr.Texture);
-		}
+
+			});
 
 		Renderer::Instance().GetRenderer2D().End();
 	}

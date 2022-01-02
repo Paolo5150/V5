@@ -24,6 +24,7 @@ namespace V5Core
 		T AddComponent(Args&&... args)
 		{
 			T& component = m_scene->m_enttRegistry.emplace<T>(m_enttHandle, std::forward<Args>(args)...);
+			component.OnComponentAttached(this);
 			return component;
 		}
 
