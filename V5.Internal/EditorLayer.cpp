@@ -1,6 +1,8 @@
 #include "EditorLayer.h"
 #include <V5/Renderer/RenderCommand.h>
 #include <V5/Core/Factory.h>
+#include <V5/Core/ICore.h>
+#include <V5/Event/WindowEvents.h>
 #include <V5/Renderer/IRenderer2D.h>
 #include <V5/Core/IWindow.h>
 #include <V5/Renderer/Texture.h>
@@ -90,8 +92,6 @@ void EditorLayer::OnAttach()
 	e6.AddComponent<SpriteRenderer>(tt2.get());
 	e6.GetComponent<Transform>().UpdateMatrix();
 
-
-
 }
 
 void EditorLayer::OnUpdate(double dt) 
@@ -101,7 +101,6 @@ void EditorLayer::OnUpdate(double dt)
 	timer += dt;
 	timer2 += dt;
 
-	m_frameTime = 1.0f / (float)dt;
 	m_editorCamera->OnUpdate(dt);
 
 	par.GetComponent<Transform>().SetPosition({ timer2 * 0.2f,0,0 });
@@ -123,7 +122,8 @@ void EditorLayer::OnUpdate(double dt)
 	if (timer > 0.5)
 	{
 		timer = 0;
-		V5CLOG_INFO("FPS {0}", 1.0 / dt);
+		m_frameTime = 1.0f / (float)dt;
+		//V5CLOG_INFO("FPS {0}", 1.0 / dt);
 	}
 }
 
@@ -145,13 +145,32 @@ void EditorLayer::OnRender()
 
 void EditorLayer::OnImGuiRender()
 {
-	/*ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 	ImGui::SetNextWindowPos(ImVec2(0, 0));
-	ImGui::Begin("FPS");
+
+	ImGui::BeginMainMenuBar();
+	if (ImGui::BeginMenu("File"))
+	{
+		if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
+		if (ImGui::MenuItem("Save", "Ctrl+S")) { /* Do stuff */ }
+		if (ImGui::MenuItem("Quit")) 
+		{
+			WindowCloseEvent wce;
+			Factory::GetCore().TriggerEvent(wce);
+		}
+		ImGui::EndMenu();
+	}
+
+	ImGui::NextColumn();
 	ImGui::Text("%f", m_frameTime);
-	ImGui::End();	*/
+
+	ImGui::EndMainMenuBar();
+
+
+
+	
 }
 
 

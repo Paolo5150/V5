@@ -52,11 +52,12 @@ void Application::UpdateImGuiLayers()
 {
 	V5_PROFILE_FUNCTION();
 
-//	for (Layer* layer : m_layerStack)
-	//	layer->OnImGuiRender();
+	for (Layer* layer : m_layerStack)
+		layer->OnImGuiRender();
 
-	//ImGui::Render();
-	//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	ImGui::Render();
+	auto data = ImGui::GetDrawData();
+	ImGui_ImplOpenGL3_RenderDrawData(data);
 }
 
 void Application::OnQuit()

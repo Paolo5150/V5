@@ -129,7 +129,7 @@ void Core::Render()
 
 	V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
 
-	//Test
+
 	m_Application->Render();
 	//V5Rendering::Renderer::Instance().Render();
 
@@ -138,6 +138,12 @@ void Core::Render()
 
 	m_window->Refresh();
 }
+
+void  Core::TriggerEvent(Event& event)
+{
+	OnEvent(event);
+}
+
 
 void Core::OnEvent(Event& e)
 {
