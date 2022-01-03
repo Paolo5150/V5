@@ -94,7 +94,7 @@ void EditorLayer::OnAttach()
 void EditorLayer::OnUpdate(double dt) 
 {
 	static float timer = 0;
-	static float timer2 = 0;
+	static double timer2 = 0.0;
 	timer += dt;
 	timer2 += dt;
 
@@ -120,7 +120,6 @@ void EditorLayer::OnUpdate(double dt)
 	{
 		timer = 0;
 		m_frameTime = 1.0f / (float)dt;
-		//V5CLOG_INFO("FPS {0}", 1.0 / dt);
 	}
 }
 

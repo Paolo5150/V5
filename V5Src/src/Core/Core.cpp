@@ -87,11 +87,11 @@ void Core::Run()
 
 	V5_PROFILE_BEGIN("Core", "CoreUpdate.json");
 
+	m_prevTime = Time::Now();
 	while (m_isEngineRunning)
 	{
 		double now = Time::Now();
 		m_looseDeltaTime = (now - m_prevTime) / 1e9;
-		V5CLOG_INFO("Delta {0}", m_looseDeltaTime);
 		m_prevTime = now;
 
 		auto delta = m_looseDeltaTime;

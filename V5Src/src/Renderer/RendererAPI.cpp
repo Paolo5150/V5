@@ -25,8 +25,11 @@ std::unique_ptr<RendererAPI> RendererAPI::Create()
 	case RendererAPI::API::Vulkan:
 		throw std::runtime_error("Vulkan API not implemented!");
 #endif
+#ifdef V5_PLATFORM_ANDROID
+
 	case RendererAPI::API::OpenGLES:
 		return std::make_unique<OpenGLES_3RendererAPI>();
+#endif
 	default:
 		break;
 	}

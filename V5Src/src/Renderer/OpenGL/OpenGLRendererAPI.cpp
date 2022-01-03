@@ -1,5 +1,3 @@
-#ifdef 1
-
 #include "OpenGLRendererAPI.h"
 #include <V5/Debugging/Intrumentor.h>
 
@@ -104,5 +102,4 @@ void OpenGLRendererAPI::Clear()
 
 
 
-#endif
 

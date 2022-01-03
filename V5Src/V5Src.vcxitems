@@ -14,7 +14,10 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Dependencies\glad\src\glad.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Dependencies\glad\src\glad.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)include\V5\Application\ImGuiLayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Components\Components.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Application.cpp" />

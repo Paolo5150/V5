@@ -43,17 +43,16 @@ void Renderer::Init()
 	m_renderAPI->Init();
 
 
-	//// Use for all shaders
-	//m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
+	// Use for all shaders
+	m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
 
-	//m_renderer2D = std::make_unique<Renderer2D>();
-	//m_tileRenderer2D = std::make_unique<TileRenderer2D>();
+	m_renderer2D = std::make_unique<Renderer2D>();
+	m_tileRenderer2D = std::make_unique<TileRenderer2D>();
 
-	//// Tests
-	////ShaderLibrary::Add("Texture", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnly.vert.spv", "Assets\\Shaders\\bin\\textureOnly.frag.spv"));
-	//ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnlyInstanced.vert.spv", "Assets\\Shaders\\bin\\textureOnlyInstanced.frag.spv"));
-	//ShaderLibrary::Add("TileTextureInstanced", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\tileTextureOnlyInstanced.vert.spv", "Assets\\Shaders\\bin\\tileTextureOnlyInstanced.frag.spv"));
-	//ShaderLibrary::Add("TextureBatched", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnlyBatched.vert.spv", "Assets\\Shaders\\bin\\textureOnlyBatched.frag.spv"));
+	// Tests
+	ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnlyInstanced.vert.spv", "Assets\\Shaders\\bin\\textureOnlyInstanced.frag.spv"));
+	ShaderLibrary::Add("TileTextureInstanced", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\tileTextureOnlyInstanced.vert.spv", "Assets\\Shaders\\bin\\tileTextureOnlyInstanced.frag.spv"));
+	ShaderLibrary::Add("TextureBatched", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnlyBatched.vert.spv", "Assets\\Shaders\\bin\\textureOnlyBatched.frag.spv"));
 
 
 }
