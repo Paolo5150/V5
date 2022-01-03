@@ -3,9 +3,11 @@
 #include <V5/Event/Event.h>
 #include <V5/Core/Layer.h>
 #include <V5/Debugging/Intrumentor.h>
+#ifdef V5_PLATFORM_WINDOWS
 #include <V5/ImGui/imgui.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
+#endif
 
 using namespace V5Core;
 

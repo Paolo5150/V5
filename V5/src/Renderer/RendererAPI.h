@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 
-#define G_API VULKAN
-
 namespace V5Core
 {
 	class Event;

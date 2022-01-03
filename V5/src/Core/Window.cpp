@@ -1,12 +1,14 @@
 #include "Window.h"
 #include "CoreLogger.h"
-#include <V5/Core/Input.h>
 #include <Event/IEventListener.h>
 #include <V5/Event/WindowEvents.h>
 #include <V5/Event/InputEvents.h>
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Debugging/Intrumentor.h>
+#ifdef V5_PLATFORM_WINDOWS
+#include <V5/Core/Input.h>
 #include "WindowsWindow.h"
+#endif
 
 using namespace V5Core;
 

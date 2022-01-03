@@ -5,7 +5,6 @@
 #include <Event/IEventListener.h>
 #include <V5/Event/WindowEvents.h>
 #include <V5/Event/InputEvents.h>
-#include <glad/glad.h>
 #include <V5/Debugging/Intrumentor.h>
 
 using namespace V5Core;

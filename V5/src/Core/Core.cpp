@@ -119,7 +119,9 @@ void Core::Update(double dt)
 	V5_PROFILE_FUNCTION();
 	m_window->Update(); //Poll events before application update
 	m_Application->Update(dt);
+#ifdef V5_PLATFORM_WINDOWS
 	Input::ResetDownKeys();
+#endif
 
 }
 
@@ -129,11 +131,8 @@ void Core::Render()
 
 	V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
 
-
 	m_Application->Render();
 	//V5Rendering::Renderer::Instance().Render();
-
-
 
 	m_window->Refresh();
 }
