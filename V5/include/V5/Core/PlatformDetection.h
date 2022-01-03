@@ -4,9 +4,7 @@
 #ifdef _WIN64
 	/* Windows x64  */
 #define V5_PLATFORM_WINDOWS
-#else
-	/* Windows x86 */
-#error "x86 Builds are not supported!"
+
 #endif
 #elif defined(__APPLE__) || defined(__MACH__)
 #include <TargetConditionals.h>

@@ -1,10 +1,13 @@
 #include "ImGuiLayer.h"
+#include <V5/Core/PlatformDetection.h>
+#ifdef V5_PLATFORM_WINDOWS
 #include <V5/ImGui/imgui.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
 #include <V5/Core/Factory.h>
 #include <V5/Core/ICore.h>
 #include <V5/Core/IWindow.h>
+#endif
 
 void ImGuiLayer::OnAttach()
 {	

@@ -1,6 +1,5 @@
 #pragma once
 #include <chrono>
-#include <GLFW/glfw3.h>
 #include <iostream>
 #include <V5/Core/ITime.h>
 #include <functional>

@@ -5,8 +5,8 @@
 #include <V5/Event/InputEvents.h>
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Debugging/Intrumentor.h>
-#ifdef V5_PLATFORM_WINDOWS
 #include <V5/Core/Input.h>
+#ifdef V5_PLATFORM_WINDOWS
 #include "WindowsWindow.h"
 #endif
 

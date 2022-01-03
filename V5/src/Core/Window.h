@@ -1,5 +1,4 @@
 #pragma once
-#include <GLFW/glfw3.h>
 #include <string>
 #include <vector>
 #include <V5/Core/IWindow.h>

@@ -78,9 +78,11 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 		auto data = (WindowData*)glfwGetWindowUserPointer(win);
 
+#ifdef V5_PLATFORM_WINDOWS
+
 		//Update input
 		Input::KeyCallback(win, key, scancode, action, mods);
-
+#endif
 		//The KeyHold event is triggered with the OS delay (delay when you hold a key before is considered held)
 
 		//Also, send event
