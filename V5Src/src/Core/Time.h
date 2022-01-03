@@ -17,6 +17,11 @@ namespace V5Core
 		*/
 		static double StopTimer();
 
+		/**
+		* Returns the difference beteen now and the last StartTimer called, in nanoseconds
+		*/
+		static double Now();
+
 	private:
 
 		static std::chrono::high_resolution_clock::time_point m_timeStart;

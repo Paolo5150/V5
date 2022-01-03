@@ -1,4 +1,5 @@
 // Platform detection using predefined macros
+
 #ifdef _WIN32
 	/* Windows x64/x86 */
 #ifdef _WIN64
@@ -28,7 +29,7 @@
   * it has __linux__ defined */
 #elif defined(__ANDROID__)
 #define V5_PLATFORM_ANDROID
-#error "Android is not supported!"
+
 #elif defined(__linux__)
 #define V5_PLATFORM_LINUX
 #error "Linux is not supported!"

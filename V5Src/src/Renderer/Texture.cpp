@@ -1,10 +1,12 @@
 #include <V5/Renderer/Texture.h>
-#include <filesystem>
 #include <Renderer/RendererAPI.h>
 #include <Core/CoreLogger.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <V5/Renderer/stb_image.h>
+
+#ifdef V5_PLATFORM_WINDOWS
 #include <Renderer/OpenGL/OpenGLTexture2D.h>
+#endif
 
 using namespace V5Rendering;
 
@@ -27,9 +29,9 @@ TextureData Texture::CreateColorTextureData(float r, float g, float b)
 	unsigned char* t = (unsigned char*)malloc(4);
 
 	// Purple texture
-	t[0] = r * 255;
-	t[1] = g * 255;
-	t[2] = b * 255;
+	t[0] = (unsigned char)(r * 255);
+	t[1] = (unsigned char)(g * 255);
+	t[2] = (unsigned char)(b * 255);
 	t[3] =  255;
 
 
@@ -46,8 +48,9 @@ TextureData Texture::CreateColorTextureData(float r, float g, float b)
 TextureData Texture::LoadData(const std::string& filePath, bool flipVertical)
 {
 	TextureData d;
+	FILE* file = fopen(filePath.c_str(), "r");
 
-	if (!std::filesystem::exists(filePath))
+	if (file == NULL)
 	{
 		V5CORE_LOG_CRITICAL("File {0} does not exist!", filePath);
 		V5CLOG_CRITICAL("File {0} does not exist!", filePath);
@@ -104,8 +107,11 @@ std::unique_ptr<Texture2D> Texture2D::Create(const TextureDescription& desc)
 {
 	switch (RendererAPI::GetAPI())
 	{
+#ifdef V5_PLATFORM_WINDOWS
+
 		case RendererAPI::API::OpenGL:
 			return std::make_unique<OpenGLTexture2D>(desc);
+#endif
 		default:
 			break;
 	}
@@ -116,8 +122,11 @@ std::unique_ptr<Texture2D> Texture2D::Create(float r, float g, float b)
 {
 	switch (RendererAPI::GetAPI())
 	{
+#ifdef V5_PLATFORM_WINDOWS
+
 	case RendererAPI::API::OpenGL:
 		return std::make_unique<OpenGLTexture2D>(r,g,b);
+#endif
 	default:
 		break;
 	}
@@ -134,8 +143,11 @@ std::unique_ptr<Texture2D> Texture2D::Create(std::string filePath,
 {
 	switch (RendererAPI::GetAPI())
 	{
+#ifdef V5_PLATFORM_WINDOWS
+
 	case RendererAPI::API::OpenGL:
 		return std::make_unique<OpenGLTexture2D>(filePath, sWrap, tWrap, minFilter, magFilter);
+#endif
 	default:
 		break;
 	}

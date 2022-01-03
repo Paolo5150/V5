@@ -14,5 +14,6 @@ namespace V5Core
 		virtual void Start(Application* app, int winWidth, int winHeight, std::string wintitle) = 0;
 		virtual IWindow& GetWindow() = 0;
 		virtual void TriggerEvent(Event& event) = 0;
+		virtual void CreateRenderAPI() = 0; //TODO nuke
 	};
 }

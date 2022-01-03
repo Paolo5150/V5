@@ -1,7 +1,10 @@
 #include <V5/Renderer/Shader.h>
 #include "Renderer.h"
-#include "OpenGL/OpenGLShader.h"
 #include "Core/CoreLogger.h"
+#ifdef V5_PLATFORM_WINDOWS
+#include "OpenGL/OpenGLShader.h"
+#endif
+
 
 using namespace V5Rendering;
 
@@ -11,8 +14,11 @@ std::unique_ptr<Shader> Shader::CreateFromSPIRV(const std::string vert, const st
 {
 	switch (RendererAPI::GetAPI())
 	{
+#ifdef V5_PLATFORM_WINDOWS
 	case RendererAPI::API::OpenGL:
 		return std::make_unique< OpenGLShader>(vert, frag);
+#endif
+
 	default:
 		break;
 	}

@@ -19,6 +19,8 @@ namespace V5Core
 		void Start(Application* app, int winWidth, int winHeight, std::string wintitle) override;
 		IWindow& GetWindow() override { return *m_window; };
 		void TriggerEvent(Event& event) override;
+		void CreateRenderAPI() override;
+
 
 	private:
 

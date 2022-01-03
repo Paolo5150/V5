@@ -46,6 +46,12 @@ Core::~Core()
 {
 }
 
+void Core::CreateRenderAPI()
+{
+	V5Rendering::Renderer::Instance().Init();
+
+}
+
 
 void Core::Start(Application* app, int winWidth, int winHeight, std::string wintitle)
 {
@@ -83,8 +89,9 @@ void Core::Run()
 
 	while (m_isEngineRunning)
 	{
-		double now = glfwGetTime();
-		m_looseDeltaTime = now - m_prevTime;
+		double now = Time::Now();
+		m_looseDeltaTime = (now - m_prevTime) / 1e9;
+		V5CLOG_INFO("Delta {0}", m_looseDeltaTime);
 		m_prevTime = now;
 
 		auto delta = m_looseDeltaTime;

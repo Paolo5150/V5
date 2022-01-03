@@ -16,6 +16,7 @@ namespace V5Rendering
 		enum class API
 		{
 			OpenGL,
+			OpenGLES,
 			Vulkan
 		};
 
