@@ -187,8 +187,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
 	if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
 		engine->state.x = AMotionEvent_getX(event, 0);
 		engine->state.y = AMotionEvent_getY(event, 0);
-		awb.OnAcceleratorChange(engine->state.x, engine->state.x);
-		engine_draw_frame(engine); //TODO nuke
+		awb.OnAcceleratorChange(engine->state.x, engine->state.y);
 
 		return 1;
 	}

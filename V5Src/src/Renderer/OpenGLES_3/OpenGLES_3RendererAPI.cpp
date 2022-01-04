@@ -1,5 +1,6 @@
 #include "OpenGLES_3RendererAPI.h"
 #include <V5/Core/PlatformDetection.h>
+#include <V5/Core/Logger.h>
 #include <glad/gles2.h>
 
 
@@ -11,6 +12,13 @@ void OpenGLES_3RendererAPI::Init()
 	{
 		throw std::runtime_error("failed to initialize GLAD");
 	}
+
+	const GLubyte* gpu = glGetString(GL_RENDERER);
+	const GLubyte* version = glGetString(GL_VERSION);
+	const GLubyte* glsl = glGetString(GL_SHADING_LANGUAGE_VERSION);
+	V5LOG_INFO("\t GPU: {0}", gpu);
+	V5LOG_INFO("\t OpenGL: {0}", version);
+	V5LOG_INFO("\t GLSL: {0}", glsl);
 }
 void OpenGLES_3RendererAPI::Shutdown()
 {
