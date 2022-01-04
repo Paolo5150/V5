@@ -43,7 +43,7 @@ void EditorLayer::OnAttach()
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
 		e.GetComponent<Transform>().SetRotation({ 0,0,90});
-		e.AddComponent<SpriteRenderer>(tt.get());
+		e.AddComponent<TileRenderer>(tt.get());
 
 		e.GetComponent<Transform>().UpdateMatrix();
 		entities.push_back(e);
@@ -100,9 +100,9 @@ void EditorLayer::OnUpdate(double dt)
 
 	m_editorCamera->OnUpdate(dt);
 
-	par.GetComponent<Transform>().SetPosition({ timer2 * 0.2f,0,0 });
+	//par.GetComponent<Transform>().SetPosition({ timer2 * 0.2f,0,0 });
 
-	par.GetComponent<Transform>().UpdateMatrix();
+	//par.GetComponent<Transform>().UpdateMatrix();
 
 	switch (m_editorState)
 	{

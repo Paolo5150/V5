@@ -22,6 +22,8 @@
 #include <V5/Core/ICore.h>
 #include <V5/Renderer/IRenderer.h>
 #include <V5/Renderer/RenderCommand.h>
+#include <glad/gles2.h>
+#include <glad/egl.h>
 /**
 * Our saved state data.
 */
@@ -55,6 +57,9 @@ struct engine {
 */
 static int engine_init_display(struct engine* engine) {
 	// initialize OpenGL ES and EGL
+	if (!gladLoaderLoadEGL(NULL)) {
+		LOGW("Unable to eglMakeCurrent");
+	};
 
 	/*
 	* Here specify the attributes of the desired configuration.
@@ -63,6 +68,7 @@ static int engine_init_display(struct engine* engine) {
 	*/
 	const EGLint attribs[] = {
 		EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+		EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
 		EGL_BLUE_SIZE, 8,
 		EGL_GREEN_SIZE, 8,
 		EGL_RED_SIZE, 8,
@@ -92,12 +98,25 @@ static int engine_init_display(struct engine* engine) {
 	ANativeWindow_setBuffersGeometry(engine->app->window, 0, 0, format);
 
 	surface = eglCreateWindowSurface(display, config, engine->app->window, NULL);
-	context = eglCreateContext(display, config, NULL, NULL);
 
+	EGLint contextAttrs[] = {
+		EGL_CONTEXT_CLIENT_VERSION,2,EGL_NONE
+	};
+
+	context = eglCreateContext(display, config, NULL, contextAttrs);
+	
 	if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
 		LOGW("Unable to eglMakeCurrent");
 		return -1;
 	}
+
+
+
+	V5Core::Factory().GetCore().CreateRenderAPI();
+
+	const GLubyte* gpu = glGetString(GL_RENDERER);
+	const GLubyte* version = glGetString(GL_VERSION);
+	const GLubyte* glsl = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
 	eglQuerySurface(display, surface, EGL_WIDTH, &w);
 	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
@@ -109,10 +128,11 @@ static int engine_init_display(struct engine* engine) {
 	engine->height = h;
 	engine->state.angle = 0;
 
+	
 	// Initialize GL state.
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
 	glEnable(GL_CULL_FACE);
-	glShadeModel(GL_SMOOTH);
+	//glShadeModel(GL_SMOOTH);
 	glDisable(GL_DEPTH_TEST);
 
 	return 0;
@@ -127,11 +147,10 @@ static void engine_draw_frame(struct engine* engine) {
 		return;
 	}
 
-	V5Rendering::RenderCommand::SetClearColor(1, 0, 0, 1);
 
 	//// Just fill the screen with a color.
-	//glClearColor(((float)engine->state.x) / engine->width, engine->state.angle,
-	//	((float)engine->state.y) / engine->height, 1);
+	//glClearColor(1,0,0,1);
+	V5Rendering::RenderCommand::SetClearColor(0, 1, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	eglSwapBuffers(engine->display, engine->surface);
@@ -242,7 +261,6 @@ void android_main(struct android_app* state) {
 		// We are starting with a previous saved state; restore from it.
 		engine.state = *(struct saved_state*)state->savedState;
 	}
-	V5Core::Factory().GetCore().CreateRenderAPI();
 	engine.animating = 1;
 
 	// loop waiting for stuff to do.
@@ -262,7 +280,7 @@ void android_main(struct android_app* state) {
 			// Process this event.
 			if (source != NULL) {
 				source->process(state, source);
-			}
+			}		
 
 			// If a sensor has data, process it now.
 			if (ident == LOOPER_ID_USER) {
@@ -283,17 +301,18 @@ void android_main(struct android_app* state) {
 				return;
 			}
 		}
+		engine_draw_frame(&engine);
 
-		if (engine.animating) {
-			// Done with events; draw next animation frame.
-			engine.state.angle += .01f;
-			if (engine.state.angle > 1) {
-				engine.state.angle = 0;
-			}
+		//if (engine.animating) {
+		//	// Done with events; draw next animation frame.
+		//	engine.state.angle += .01f;
+		//	if (engine.state.angle > 1) {
+		//		engine.state.angle = 0;
+		//	}
 
-			// Drawing is throttled to the screen update rate, so there
-			// is no need to do timing here.
-			engine_draw_frame(&engine);
-		}
+		//	// Drawing is throttled to the screen update rate, so there
+		//	// is no need to do timing here.
+		//	engine_draw_frame(&engine);
+		//}
 	}
 }

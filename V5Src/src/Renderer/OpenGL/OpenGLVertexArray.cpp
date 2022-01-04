@@ -1,5 +1,5 @@
 #include "OpenGLVertexArray.h"
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include "Renderer/Buffer.h"
 #include <V5/Debugging/Intrumentor.h>
 using namespace V5Rendering;

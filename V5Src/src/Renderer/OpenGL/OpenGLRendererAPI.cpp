@@ -3,7 +3,7 @@
 
 #include <V5/Core/Logger.h>
 #include <Core/CoreLogger.h>
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <V5/Event/WindowEvents.h>
 #include <V5/Core/Factory.h>
@@ -17,7 +17,7 @@ using namespace V5Rendering;
 void OpenGLRendererAPI::Init()
 {
 	V5CORE_LOG_INFO("Initializing OpenGL");
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (!gladLoaderLoadGL())
 	{
 		V5CLOG_CRITICAL("Failed to initialize GLAD");
 		throw std::runtime_error("ailed to initialize GLAD");

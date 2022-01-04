@@ -31,6 +31,7 @@ std::unique_ptr<RendererAPI> RendererAPI::Create()
 		return std::make_unique<OpenGLES_3RendererAPI>();
 #endif
 	default:
+		throw std::runtime_error("Graphics API unknown!");
 		break;
 	}
 	throw std::runtime_error("Graphics API unknown!");

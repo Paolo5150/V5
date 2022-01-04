@@ -28,7 +28,7 @@ void EditorCamera::UpdateViewMatrix()
 {
 	auto up = GetUp();
 	m_viewMatrix = glm::lookAt(m_position, m_position + GetForward(), GetUp());
-
+	m_viewProjectionMatrix = m_projectionMatrix * m_viewMatrix;
 }
 
 void EditorCamera::OnUpdate(double dt)
