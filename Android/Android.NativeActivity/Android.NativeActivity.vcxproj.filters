@@ -3,9 +3,13 @@
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="android_native_app_glue.h" />
+    <ClInclude Include="GameApp.h" />
+    <ClInclude Include="GameLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="android_native_app_glue.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="GameLayer.cpp" />
   </ItemGroup>
 </Project>

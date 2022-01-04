@@ -48,6 +48,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)include\V5\Application\ImGuiLayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Components\Components.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\AndroidWindow.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Core.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Factory.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\entt.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Utils\Random.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\AndroidWindow.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Core.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\CoreLogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Time.h" />

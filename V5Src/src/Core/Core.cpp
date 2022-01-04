@@ -64,12 +64,15 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 
 		m_Application = app;
 
+#ifdef V5_PLATFORM_WINDOWS
 		Logger::Init();
-
+#endif
 		//This will call OnWindowOpen
-		m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);	
-		m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));	
+		m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);
 
+#ifdef V5_PLATFORM_WINDOWS
+		m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));	
+#endif
 		//Renderer must be inintialized here, after context is set up
 		V5Rendering::Renderer::Instance().Init();
 		m_Application->OnStart();

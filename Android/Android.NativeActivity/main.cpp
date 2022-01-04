@@ -24,6 +24,7 @@
 #include <V5/Renderer/RenderCommand.h>
 #include <glad/gles2.h>
 #include <glad/egl.h>
+#include "GameApp.h"
 /**
 * Our saved state data.
 */
@@ -32,6 +33,9 @@ struct saved_state {
 	int32_t x;
 	int32_t y;
 };
+
+GameApp app;
+
 
 /**
 * Shared state for our app.
@@ -50,6 +54,7 @@ struct engine {
 	int32_t width;
 	int32_t height;
 	struct saved_state state;
+	bool ready = false;
 };
 
 /**
@@ -110,14 +115,6 @@ static int engine_init_display(struct engine* engine) {
 		return -1;
 	}
 
-
-
-	V5Core::Factory().GetCore().CreateRenderAPI();
-
-	const GLubyte* gpu = glGetString(GL_RENDERER);
-	const GLubyte* version = glGetString(GL_VERSION);
-	const GLubyte* glsl = glGetString(GL_SHADING_LANGUAGE_VERSION);
-
 	eglQuerySurface(display, surface, EGL_WIDTH, &w);
 	eglQuerySurface(display, surface, EGL_HEIGHT, &h);
 
@@ -127,13 +124,13 @@ static int engine_init_display(struct engine* engine) {
 	engine->width = w;
 	engine->height = h;
 	engine->state.angle = 0;
-
+	engine->ready = 1;
 	
 	// Initialize GL state.
 	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 	//glShadeModel(GL_SMOOTH);
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 
 	return 0;
 }
@@ -142,7 +139,7 @@ static int engine_init_display(struct engine* engine) {
 * Just the current frame in the display.
 */
 static void engine_draw_frame(struct engine* engine) {
-	if (engine->display == NULL) {
+	if (engine->display == NULL || !engine->ready) {
 		// No display.
 		return;
 	}
@@ -150,8 +147,8 @@ static void engine_draw_frame(struct engine* engine) {
 
 	//// Just fill the screen with a color.
 	//glClearColor(1,0,0,1);
-	V5Rendering::RenderCommand::SetClearColor(0, 1, 0.5f, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
+//	V5Rendering::RenderCommand::SetClearColor(0, 1, 0.5f, 1);
+//	glClear(GL_COLOR_BUFFER_BIT);
 
 	eglSwapBuffers(engine->display, engine->surface);
 }
@@ -262,10 +259,15 @@ void android_main(struct android_app* state) {
 		engine.state = *(struct saved_state*)state->savedState;
 	}
 	engine.animating = 1;
-
 	// loop waiting for stuff to do.
 
+
+
 	while (1) {
+		if (engine.ready)
+		{
+			break;
+		}
 		// Read all pending events.
 		int ident;
 		int events;
@@ -282,26 +284,28 @@ void android_main(struct android_app* state) {
 				source->process(state, source);
 			}		
 
-			// If a sensor has data, process it now.
-			if (ident == LOOPER_ID_USER) {
-				if (engine.accelerometerSensor != NULL) {
-					ASensorEvent event;
-					while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
-						&event, 1) > 0) {
-						LOGI("accelerometer: x=%f y=%f z=%f",
-							event.acceleration.x, event.acceleration.y,
-							event.acceleration.z);
-					}
-				}
-			}
+			//// If a sensor has data, process it now.
+			//if (ident == LOOPER_ID_USER) {
+			//	if (engine.accelerometerSensor != NULL) {
+			//		ASensorEvent event;
+			//		while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
+			//			&event, 1) > 0) {
+			//			LOGI("accelerometer: x=%f y=%f z=%f",
+			//				event.acceleration.x, event.acceleration.y,
+			//				event.acceleration.z);
+			//		}
+			//	}
+			//}
 
 			// Check if we are exiting.
 			if (state->destroyRequested != 0) {
 				engine_term_display(&engine);
 				return;
 			}
+
+			
 		}
-		engine_draw_frame(&engine);
+		//engine_draw_frame(&engine);
 
 		//if (engine.animating) {
 		//	// Done with events; draw next animation frame.
@@ -315,4 +319,5 @@ void android_main(struct android_app* state) {
 		//	engine_draw_frame(&engine);
 		//}
 	}
+	V5Core::Factory().GetCore().Start(&app, 0, 0, "asd");
 }
