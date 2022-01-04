@@ -46,14 +46,9 @@ Core::~Core()
 {
 }
 
-void Core::CreateRenderAPI()
-{
-	V5Rendering::Renderer::Instance().Init();
-
-}
 
 
-void Core::Start(Application* app, int winWidth, int winHeight, std::string wintitle)
+void Core::Start(Application* app, int winWidth, int winHeight, std::string wintitle, void* windowCallback )
 {
 	time_t t;
 	srand((unsigned)time(&t));
@@ -65,10 +60,11 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 		m_Application = app;
 
 #ifdef V5_PLATFORM_WINDOWS
-		Logger::Init();
 #endif
+		Logger::Init();
+
 		//This will call OnWindowOpen
-		m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle);
+		m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle, windowCallback);
 
 #ifdef V5_PLATFORM_WINDOWS
 		m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));	
@@ -139,12 +135,12 @@ void Core::Render()
 {
 	V5_PROFILE_FUNCTION();
 
-	V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
+	//V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
 
 	m_Application->Render();
 	//V5Rendering::Renderer::Instance().Render();
 
-	m_window->Refresh();
+	//m_window->Refresh();
 }
 
 void  Core::TriggerEvent(Event& event)

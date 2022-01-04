@@ -5,7 +5,7 @@
 #include <fstream>
 #include "spdlog/spdlog.h"
 
-#define ENABLE_FILE_LOGS 0
+#define ENABLE_FILE_LOGS 1
 #define ENABLE_CONSOLE_LOGS 0
 
 namespace V5Core

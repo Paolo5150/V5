@@ -115,6 +115,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Event\Event.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Event\InputEvents.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Event\WindowEvents.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\PlatformSpecific\AndroidWindowCallbacks.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\Camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\EditorCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\IRenderer.h" />

@@ -11,9 +11,8 @@ namespace V5Core
 	class ICore
 	{
 	public:
-		virtual void Start(Application* app, int winWidth, int winHeight, std::string wintitle) = 0;
+		virtual void Start(Application* app, int winWidth, int winHeight, std::string wintitle, void* windowCallback = nullptr) = 0;
 		virtual IWindow& GetWindow() = 0;
 		virtual void TriggerEvent(Event& event) = 0;
-		virtual void CreateRenderAPI() = 0; //TODO nuke
 	};
 }

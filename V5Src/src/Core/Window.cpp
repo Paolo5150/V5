@@ -9,9 +9,9 @@
 #ifdef V5_PLATFORM_WINDOWS
 #include "WindowsWindow.h"
 #endif
+#include "AndroidWindow.h"
 
 #ifdef V5_PLATFORM_ANDROID
-#include "AndroidWindow.h"
 #endif
 
 
@@ -37,17 +37,15 @@ Window::Window()
 
 
 
-std::unique_ptr<IWindow> Window::OpenWindow(int width, int height, std::string title)
+std::unique_ptr<IWindow> Window::OpenWindow(int width, int height, std::string title, void* windowCallback)
 {
 	V5_PROFILE_FUNCTION();
 #ifdef V5_PLATFORM_WINDOWS
 	auto w = std::make_unique<WindowsWindow>(width, height, title);
 	return std::move(w);
 #endif
-#ifdef V5_PLATFORM_ANDROID
-	auto w = std::make_unique<AndroidWindow>(width, height, title);
+	auto w = std::make_unique<AndroidWindow>(width, height, title, windowCallback);
 	return std::move(w);
-#endif
 
 
 }

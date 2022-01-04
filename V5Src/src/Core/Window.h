@@ -16,7 +16,7 @@ namespace V5Core
 		static Window& Instance();
 		Window();
 		
-		std::unique_ptr<IWindow> OpenWindow(int width, int height, std::string title);
+		std::unique_ptr<IWindow> OpenWindow(int width, int height, std::string title, void* windowCallback = nullptr);
 
 
 	private:	
