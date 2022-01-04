@@ -7,7 +7,5 @@
   <ItemGroup>
     <ClCompile Include="android_native_app_glue.c" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\..\Dependencies\glad\src\egl.c" />
-    <ClCompile Include="..\..\Dependencies\glad\src\gles2.c" />
   </ItemGroup>
 </Project>

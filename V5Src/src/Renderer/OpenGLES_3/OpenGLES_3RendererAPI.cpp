@@ -7,14 +7,10 @@ using namespace V5Rendering;
 
 void OpenGLES_3RendererAPI::Init()
 {
-
 	if (!gladLoaderLoadGLES2())
 	{
 		throw std::runtime_error("failed to initialize GLAD");
 	}
-
-
-
 }
 void OpenGLES_3RendererAPI::Shutdown()
 {

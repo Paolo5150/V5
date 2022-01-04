@@ -150,7 +150,7 @@ static void engine_draw_frame(struct engine* engine) {
 
 	//// Just fill the screen with a color.
 	//glClearColor(1,0,0,1);
-	V5Rendering::RenderCommand::SetClearColor(0, 1, 0, 1);
+	V5Rendering::RenderCommand::SetClearColor(0, 1, 0.5f, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	eglSwapBuffers(engine->display, engine->surface);

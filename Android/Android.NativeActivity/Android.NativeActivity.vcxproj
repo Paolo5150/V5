@@ -211,8 +211,6 @@
     <ClInclude Include="android_native_app_glue.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Dependencies\glad\src\egl.c" />
-    <ClCompile Include="..\..\Dependencies\glad\src\gles2.c" />
     <ClCompile Include="android_native_app_glue.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
