@@ -4,7 +4,9 @@
 #ifdef V5_PLATFORM_WINDOWS
 #include "OpenGL/OpenGLRendererAPI.h"
 #endif
-#include "OpenGLES_3/OpenGLES_3RendererAPI.h"
+#ifdef V5_PLATFORM_ANDROID
+#include "OpenGLES2/OpenGLES2RendererAPI.h"
+#endif
 
 using namespace V5Rendering;
 
@@ -25,9 +27,10 @@ std::unique_ptr<RendererAPI> RendererAPI::Create()
 	case RendererAPI::API::Vulkan:
 		throw std::runtime_error("Vulkan API not implemented!");
 #endif
-
+#ifdef V5_PLATFORM_ANDROID
 	case RendererAPI::API::OpenGLES:
-		return std::make_unique<OpenGLES_3RendererAPI>();
+		return std::make_unique<OpenGLES2RendererAPI>();
+#endif
 	default:
 		throw std::runtime_error("Graphics API unknown!");
 		break;

@@ -1,5 +1,4 @@
 #include <V5/Core/Logger.h>
-#define __ANDROID__
 #include <V5/Core/PlatformDetection.h>
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"

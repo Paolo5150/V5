@@ -4,6 +4,11 @@
 #ifdef V5_PLATFORM_WINDOWS
 #include "OpenGL/OpenGLBuffer.h"
 #endif
+#include "OpenGLES2/OpenGLES2Buffer.h"
+
+#ifdef V5_PLATFORM_ANROID
+
+#endif
 using namespace V5Rendering;
 
 std::shared_ptr<VertexBuffer> VertexBuffer::Create(uint32_t size)
@@ -64,6 +69,11 @@ std::shared_ptr<UniformBuffer> UniformBuffer::Create(uint32_t binding, const voi
 	case RendererAPI::API::OpenGL:
 		return std::make_shared<OpenGLUniformBuffer>(binding, data, size);
 #endif
+#ifdef V5_PLATFORM_ANDROID
+	case RendererAPI::API::OpenGLES:
+		return std::make_shared<OpenGLES2UniformBuffer>(binding, data, size);
+
+#endif
 	default:
 		break;
 	}
@@ -80,6 +90,11 @@ std::shared_ptr<UniformBuffer> UniformBuffer::Create(uint32_t binding, uint32_t 
 	case RendererAPI::API::OpenGL:
 		return std::make_shared<OpenGLUniformBuffer>(binding, size);
 #endif
+#ifdef V5_PLATFORM_ANDROID
+	case RendererAPI::API::OpenGLES:
+		return std::make_shared<OpenGLES2UniformBuffer>(binding, size);
+#endif
+
 	default:
 		break;
 	}

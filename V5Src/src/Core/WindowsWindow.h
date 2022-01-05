@@ -1,6 +1,7 @@
 #pragma once
-
+#ifdef V5_PLATFORM_WINDOWS
 #include <GLFW/glfw3.h>
+#endif
 #include <string>
 #include <vector>
 #include <V5/Core/IWindow.h>

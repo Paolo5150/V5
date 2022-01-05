@@ -3,7 +3,7 @@
 
 namespace V5Rendering
 {
-	class OpenGLES_3RendererAPI : public RendererAPI
+	class OpenGLES2RendererAPI : public RendererAPI
 	{
 	public:
 		void Init() override;

@@ -1,5 +1,4 @@
 
-#ifdef V5_PLATFORM_WINDOWS
 #include "WindowsWindow.h"
 
 #include "CoreLogger.h"
@@ -186,4 +185,3 @@ void WindowsWindow::MaximizeWindow()
 }
 
 
-#endif

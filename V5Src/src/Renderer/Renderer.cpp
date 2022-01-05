@@ -40,11 +40,11 @@ void Renderer::Init()
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
 
+	// Use for all shaders
+	m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
+
 	if (m_renderAPI->GetAPI() == RendererAPI::API::OpenGL)
 	{
-		// Use for all shaders
-		m_cameraBuffer = UniformBuffer::Create(0, sizeof(glm::mat4));
-
 		m_renderer2D = std::make_unique<Renderer2D>();
 		m_tileRenderer2D = std::make_unique<TileRenderer2D>();
 

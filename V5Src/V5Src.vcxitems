@@ -58,11 +58,22 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Logger.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Time.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Window.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\WindowsWindow.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\WindowsWindow.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Buffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Camera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\EditorCamera.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES_3\OpenGLES_3RendererAPI.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Buffer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2RendererAPI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -133,10 +144,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\CoreLogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Time.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Window.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\WindowsWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\WindowsWindow.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Event\IEventListener.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\Buffer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES_3\OpenGLES_3RendererAPI.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Buffer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2RendererAPI.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>

@@ -59,8 +59,6 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 
 		m_Application = app;
 
-#ifdef V5_PLATFORM_WINDOWS
-#endif
 		Logger::Init();
 
 		//This will call OnWindowOpen
