@@ -117,7 +117,9 @@ void Core::Run()
 	Shutdown();
 	V5_PROFILE_END();
 
+#ifdef V5_PLATFORM_WINDOWS
 	system("pause");
+#endif
 }
 
 void Core::Update(double dt)
@@ -135,12 +137,12 @@ void Core::Render()
 {
 	V5_PROFILE_FUNCTION();
 
-	//V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
+	V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
 
 	m_Application->Render();
 	//V5Rendering::Renderer::Instance().Render();
 
-	//m_window->Refresh();
+	m_window->Refresh();
 }
 
 void  Core::TriggerEvent(Event& event)
@@ -174,7 +176,7 @@ void Core::Shutdown()
 	m_Application->OnQuit();
 
 	V5Rendering::Renderer::Instance().Shutdown();
-	V5CORE_LOG_INFO("Engine successfully shutdown");
+	V5LOG_INFO("Engine successfully shutdown");
 }
 
 

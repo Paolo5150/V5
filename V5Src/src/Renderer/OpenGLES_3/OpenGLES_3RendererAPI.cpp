@@ -51,6 +51,6 @@ void OpenGLES_3RendererAPI::SetClearColor(float r, float g, float b, float a) co
 
 void OpenGLES_3RendererAPI::Clear()
 {
-
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 

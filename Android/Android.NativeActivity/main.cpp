@@ -131,52 +131,8 @@ static int engine_init_display(struct engine* engine) {
 	engine->height = h;
 	engine->state.angle = 0;
 	engine->ready = 1;
-	
-	// Initialize GL state.
-	//glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-	//glEnable(GL_CULL_FACE);
-	//glShadeModel(GL_SMOOTH);
-	//glDisable(GL_DEPTH_TEST);
 
 	return 0;
-}
-
-/**
-* Just the current frame in the display.
-*/
-static void engine_draw_frame(struct engine* engine) {
-	if (engine->display == NULL || !engine->ready) {
-		// No display.
-		return;
-	}
-
-
-	//// Just fill the screen with a color.
-	//glClearColor(1,0,0,1);
-//	V5Rendering::RenderCommand::SetClearColor(0, 1, 0.5f, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	eglSwapBuffers(engine->display, engine->surface);
-}
-
-/**
-* Tear down the EGL context currently associated with the display.
-*/
-static void engine_term_display(struct engine* engine) {
-	if (engine->display != EGL_NO_DISPLAY) {
-		eglMakeCurrent(engine->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-		if (engine->context != EGL_NO_CONTEXT) {
-			eglDestroyContext(engine->display, engine->context);
-		}
-		if (engine->surface != EGL_NO_SURFACE) {
-			eglDestroySurface(engine->display, engine->surface);
-		}
-		eglTerminate(engine->display);
-	}
-	engine->animating = 0;
-	engine->display = EGL_NO_DISPLAY;
-	engine->context = EGL_NO_CONTEXT;
-	engine->surface = EGL_NO_SURFACE;
 }
 
 /**
@@ -211,12 +167,11 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 		if (engine->app->window != NULL) {
 			engine_init_display(engine);
 
-			//engine_draw_frame(engine);
 		}
 		break;
 	case APP_CMD_TERM_WINDOW:
 		// The window is being hidden or closed, clean it up.
-		engine_term_display(engine);
+		awb.OnWindowClose();
 		break;
 	case APP_CMD_GAINED_FOCUS:
 		// When our app gains focus, we start monitoring the accelerometer.
@@ -237,7 +192,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 		}
 		// Also stop animating.
 		engine->animating = 0;
-		engine_draw_frame(engine);
+		//engine_draw_frame(engine);
 		break;
 	}
 }
@@ -251,12 +206,38 @@ static void PollEvents()
 	while ((ident = ALooper_pollAll(engine.animating ? 0 : -1, NULL, &events,
 		(void**)&source)) >= 0) {
 
+		if (engine.app->destroyRequested != 0) {
+			break;
+		}
 		// Process this event.
 		if (source != NULL) {
 			source->process(engine.app, source);
 		}
 
 	}
+}
+
+static void Refresh()
+{
+	eglSwapBuffers(engine.display, engine.surface);
+}
+
+static void CloseDisplay()
+{
+	if (engine.display != EGL_NO_DISPLAY) {
+		eglMakeCurrent(engine.display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		if (engine.context != EGL_NO_CONTEXT) {
+			eglDestroyContext(engine.display, engine.context);
+		}
+		if (engine.surface != EGL_NO_SURFACE) {
+			eglDestroySurface(engine.display, engine.surface);
+		}
+		eglTerminate(engine.display);
+	}
+	engine.animating = 0;
+	engine.display = EGL_NO_DISPLAY;
+	engine.context = EGL_NO_CONTEXT;
+	engine.surface = EGL_NO_SURFACE;
 }
 
 /**
@@ -287,12 +268,13 @@ void android_main(struct android_app* state) {
 	// loop waiting for stuff to do.
 
 	awb.PollEvents = PollEvents;
+	awb.Refresh = Refresh;
+	awb.CloseWindow = CloseDisplay;
 
-	while (1) {
-		if (engine.ready)
-		{
-			break;
-		}
+	// This while loop is done to get the event of the screen being ready.
+	// That will set engine.ready to true, so we justmp out of this while loop and start the Core loop
+	while (!engine.ready) {
+
 		// Read all pending events.
 		int ident;
 		int events;
@@ -307,42 +289,10 @@ void android_main(struct android_app* state) {
 			// Process this event.
 			if (source != NULL) {
 				source->process(state, source);
-			}		
-
-			//// If a sensor has data, process it now.
-			//if (ident == LOOPER_ID_USER) {
-			//	if (engine.accelerometerSensor != NULL) {
-			//		ASensorEvent event;
-			//		while (ASensorEventQueue_getEvents(engine.sensorEventQueue,
-			//			&event, 1) > 0) {
-			//			LOGI("accelerometer: x=%f y=%f z=%f",
-			//				event.acceleration.x, event.acceleration.y,
-			//				event.acceleration.z);
-			//		}
-			//	}
-			//}
-
-			// Check if we are exiting.
-			if (state->destroyRequested != 0) {
-				engine_term_display(&engine);
-				return;
-			}
-
-			
+			}				
 		}
-		//engine_draw_frame(&engine);
 
-		//if (engine.animating) {
-		//	// Done with events; draw next animation frame.
-		//	engine.state.angle += .01f;
-		//	if (engine.state.angle > 1) {
-		//		engine.state.angle = 0;
-		//	}
-
-		//	// Drawing is throttled to the screen update rate, so there
-		//	// is no need to do timing here.
-		//	engine_draw_frame(&engine);
-		//}
 	}
 	V5Core::Factory().GetCore().Start(&gameApp, 0, 0, "asd", &awb);
+
 }
