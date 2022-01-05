@@ -1,0 +1,5 @@
+[2022-01-05 22:50:49.429] [Generic] [info] ------------------ START OF LOG ----------------------
+
+[2022-01-05 22:50:56.108] [Generic] [info] App V5Editor start
+[2022-01-05 22:51:03.544] [Generic] [info] App V5Editor quit
+[2022-01-05 22:51:03.565] [Generic] [info] Engine successfully shutdown

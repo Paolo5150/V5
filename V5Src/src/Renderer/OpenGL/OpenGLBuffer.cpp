@@ -60,9 +60,9 @@ void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
 
 OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* data, uint32_t count) : m_count(count)
 {
-	glCreateBuffers(1, &m_bufferID);
-
-	glNamedBufferStorage(m_bufferID, count * sizeof(uint32_t), data, 0);
+	glGenBuffers(1, &m_bufferID);
+	Bind();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW);
 }
 
 OpenGLIndexBuffer::~OpenGLIndexBuffer()
