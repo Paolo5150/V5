@@ -37,6 +37,7 @@ std::unique_ptr<Shader> Shader::CreateFromSource(const std::string vert, const s
 	auto vertSource = AssetManager::Instance().ReadTextFile(vert.c_str());
 	auto fragSource = AssetManager::Instance().ReadTextFile(frag.c_str());
 
+
 	switch (RendererAPI::GetAPI())
 	{
 #ifdef V5_PLATFORM_ANDROID
@@ -45,6 +46,7 @@ std::unique_ptr<Shader> Shader::CreateFromSource(const std::string vert, const s
 #endif
 
 	default:
+		return nullptr;
 		break;
 	}
 }

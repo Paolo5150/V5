@@ -46,9 +46,13 @@ namespace V5Rendering
 	public:
 		OpenGLUniformBuffer(uint32_t binding, uint32_t size);
 		OpenGLUniformBuffer(uint32_t binding, const void* data, uint32_t size);
+		OpenGLUniformBuffer(std::string name, uint32_t size) {};
+		OpenGLUniformBuffer(std::string name, const void* data, uint32_t size){};
 		~OpenGLUniformBuffer();
 
 		void Bind() const override;
+		void Bind(uint32_t shaderID) const override {};
+
 		void Unbind() const override;
 		void SetData(const void* data, uint32_t size) override;
 		uint32_t GetBinding() const { return m_binding; }

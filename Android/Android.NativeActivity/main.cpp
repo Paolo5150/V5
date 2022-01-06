@@ -205,9 +205,8 @@ static void PollEvents()
 	int ident;
 	int events;
 	struct android_poll_source* source;
-
-	while ((ident = ALooper_pollAll(engine.animating ? 0 : -1, NULL, &events,
-		(void**)&source)) >= 0) {
+	while ( (ident = ALooper_pollAll(0, NULL, &events, (void**)(&source))) >= 0)
+	{
 
 		if (engine.app->destroyRequested != 0) {
 			break;
@@ -215,10 +214,13 @@ static void PollEvents()
 		// Process this event.
 		if (source != NULL) {
 			source->process(engine.app, source);
+			continue;
 		}
-
+		break;
 	}
+
 }
+
 
 static void Refresh()
 {
@@ -293,7 +295,7 @@ void android_main(struct android_app* state) {
 	V5Core::AssetManager::Instance().Initialize(state->activity->obbPath + std::string("/Assets"));
 	// Test reading using plain C++
 
-
+	LOGI("Size %d", sizeof(float));
 	// This while loop is done to get the event of the screen being ready.
 	// That will set engine.ready to true, so we justmp out of this while loop and start the Core loop
 	while (!engine.ready) {
@@ -313,6 +315,6 @@ void android_main(struct android_app* state) {
 		}
 
 	}
-	V5Core::Factory().GetCore().Start(&gameApp, 0, 0, "asd", &awb);
+	V5Core::Factory().GetCore().Start(&gameApp, engine.width, engine.height, "asd", &awb);
 
 }

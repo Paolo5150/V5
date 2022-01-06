@@ -1,0 +1,12 @@
+[2022-01-06 18:32:36.866] [Generic] [info] ------------------ START OF LOG ----------------------
+
+[2022-01-06 18:32:37.183] [Generic] [info] App V5Editor start
+[2022-01-06 18:32:38.281] [Generic] [info] App V5Editor event 7
+[2022-01-06 18:32:38.492] [Generic] [info] App V5Editor event 5
+[2022-01-06 18:32:38.821] [Generic] [info] App V5Editor event 5
+[2022-01-06 18:32:38.933] [Generic] [info] App V5Editor event 5
+[2022-01-06 18:32:39.530] [Generic] [info] App V5Editor event 5
+[2022-01-06 18:32:39.868] [Generic] [info] App V5Editor event 5
+[2022-01-06 18:32:40.251] [Generic] [info] App V5Editor event 5
+[2022-01-06 18:32:41.447] [Generic] [info] App V5Editor quit
+[2022-01-06 18:32:41.466] [Generic] [info] Engine successfully shutdown

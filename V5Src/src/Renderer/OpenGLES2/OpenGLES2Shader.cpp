@@ -92,6 +92,17 @@ std::unique_ptr<OpenGLES2Shader> OpenGLES2Shader::FromSource(const std::string& 
 	return theShader;
 }
 
+int OpenGLES2Shader::GetAttribLocation(std::string attribName)
+{
+	return glGetAttribLocation(m_shaderID, attribName.c_str());
+}
+
+int OpenGLES2Shader::GetUBOLocation(std::string attribName)
+{
+	return glGetUniformBlockIndex(m_shaderID, attribName.c_str());
+}
+
+
 void OpenGLES2Shader::Bind() const
 {
 	glUseProgram(m_shaderID);

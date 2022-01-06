@@ -23,8 +23,8 @@ namespace V5Core
 
 		void RegisterEventListener(std::function<void(Event&)> listener) override;
 		void Refresh() override;
-		int GetWidth() override { return 0; }
-		int GetHeight() override { return 0; }
+		int GetWidth() override { return m_width; }
+		int GetHeight() override { return m_height; }
 		void SetTitle(std::string title) override {}
 		std::string GetTitle() override { return ""; }
 		void MaximizeWindow() override;
@@ -33,5 +33,7 @@ namespace V5Core
 
 	private:
 		AndroidWindowCallbacks* m_androidWindowCallback = nullptr;
+		int m_width;
+		int m_height;
 	};
 }

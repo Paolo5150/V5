@@ -5,13 +5,14 @@
 #include <V5/Event/WindowEvents.h>
 using namespace V5Core;
 
-void OnAccelerometerChange(int32_t& x, int32_t& y)
-{
-}
 
 AndroidWindow::AndroidWindow(int width, int height, const std::string& title, void* windowCallback) :
-	m_androidWindowCallback((AndroidWindowCallbacks*)windowCallback)
+	m_androidWindowCallback((AndroidWindowCallbacks*)windowCallback) ,
+	m_width(width),
+	m_height(height)
 {
+	V5LOG_INFO("Init display {0} {1}", m_width, m_height);
+
 	m_androidWindowCallback->OnAcceleratorChange = [](int32_t& x, int32_t& y) 
 	{
 		V5LOG_INFO("Tap {0} {1}", x, y);

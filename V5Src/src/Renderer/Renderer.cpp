@@ -56,6 +56,24 @@ void Renderer::Init()
 	else if(m_renderAPI->GetAPI() == RendererAPI::API::OpenGLES)
 	{
 		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSource("Shaders/textureOnly.vert", "Shaders/textureOnly.frag"));
+		ShaderLibrary::Add("TileTextureInstanced", Shader::CreateFromSource("Shaders/tileTextureOnlyInstanced.vert", "Shaders/tileTextureOnlyInstanced.frag"));
+
+		int pos = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("aPosition");
+		int uv = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("aUV");
+		int textureIndex = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("textureIndex");
+		int pos2 = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("position");
+		int sca = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("scale");
+		int col = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("iColor");
+		int ubo = ShaderLibrary::GetShader("TileTextureInstanced").GetUBOLocation("ViewProj");
+
+		V5LOG_INFO("Pos {0}", pos);
+		V5LOG_INFO("uv {0}", uv);
+		V5LOG_INFO("textureIndex {0}", textureIndex);
+		V5LOG_INFO("pos2 {0}", pos2);
+		V5LOG_INFO("sca {0}", sca);
+		V5LOG_INFO("col {0}", col);
+		V5LOG_INFO("UBO {0}", ubo);
+
 	}
 	
 

@@ -89,7 +89,8 @@ OpenGLES2UniformBuffer::OpenGLES2UniformBuffer(uint32_t binding, uint32_t size) 
 	glGenBuffers(1, &m_bufferID);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_bufferID);
 	glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, m_binding, m_bufferID);
+	glBindBufferRange(GL_UNIFORM_BUFFER, binding, m_bufferID, 0, size);
+
 
 }
 
@@ -98,13 +99,19 @@ OpenGLES2UniformBuffer::OpenGLES2UniformBuffer(uint32_t binding, const void* dat
 {
 	glGenBuffers(1, &m_bufferID);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_bufferID);
-	glBufferData(m_bufferID, size, data, GL_STATIC_DRAW); // Flag 0 means static data, cannot be changed
-	glBindBufferBase(GL_UNIFORM_BUFFER, m_binding, m_bufferID);
+	glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
+	glBindBufferRange(GL_UNIFORM_BUFFER, binding, m_bufferID, 0, size);
 }
 
 OpenGLES2UniformBuffer::~OpenGLES2UniformBuffer()
 {
 	glDeleteBuffers(1, &m_bufferID);
+}
+
+void OpenGLES2UniformBuffer::Bind(uint32_t shaderID) const
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, m_bufferID);
+	glUniformBlockBinding(shaderID, 0, 0); //TODO, set appropriate bindings
 }
 
 void OpenGLES2UniformBuffer::Bind() const
@@ -121,4 +128,14 @@ void OpenGLES2UniformBuffer::SetData(const void* data, uint32_t size)
 {
 	Bind();
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, size, data);
+
+}
+
+OpenGLES2UniformBuffer::OpenGLES2UniformBuffer(std::string uniformName, uint32_t size)
+{
+
+}
+OpenGLES2UniformBuffer::OpenGLES2UniformBuffer(std::string uniformName, const void* data, uint32_t size)
+{
+
 }

@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include "spdlog/spdlog.h"
+#include <V5/Core/PlatformDetection.h>
 
 #define ENABLE_FILE_LOGS 1
 #define ENABLE_CONSOLE_LOGS 1
@@ -41,15 +42,22 @@ namespace V5Core
 	#define V5LOG_CRITICAL(...)
 #endif
 
-#if ENABLE_CONSOLE_LOGS
 
-#define V5CLOG_TRACE(...)         ::V5Core::Logger::GetConsoleLogger()->trace(__VA_ARGS__)
-#define V5CLOG_INFO(...)          ::V5Core::Logger::GetConsoleLogger()->info(__VA_ARGS__)
-#define V5CLOG_WARN(...)          ::V5Core::Logger::GetConsoleLogger()->warn(__VA_ARGS__)
-#define V5CLOG_ERROR(...)         ::V5Core::Logger::GetConsoleLogger()->error(__VA_ARGS__)
-#define V5CLOG_CRITICAL(...)      ::V5Core::Logger::GetConsoleLogger()->critical(__VA_ARGS__)
-#else
- 
+#if ENABLE_CONSOLE_LOGS
+	#ifdef V5_PLATFORM_WINDOWS
+		#define V5CLOG_TRACE(...)         ::V5Core::Logger::GetConsoleLogger()->trace(__VA_ARGS__)
+		#define V5CLOG_INFO(...)          ::V5Core::Logger::GetConsoleLogger()->info(__VA_ARGS__)
+		#define V5CLOG_WARN(...)          ::V5Core::Logger::GetConsoleLogger()->warn(__VA_ARGS__)
+		#define V5CLOG_ERROR(...)         ::V5Core::Logger::GetConsoleLogger()->error(__VA_ARGS__)
+		#define V5CLOG_CRITICAL(...)      ::V5Core::Logger::GetConsoleLogger()->critical(__VA_ARGS__)
+		#elif defined V5_PLATFORM_ANDROID
+		#define V5CLOG_TRACE(...)         ::V5Core::Logger::GetLogger()->trace(__VA_ARGS__)
+		#define V5CLOG_INFO(...)          ::V5Core::Logger::GetLogger()->info(__VA_ARGS__)
+		#define V5CLOG_WARN(...)          ::V5Core::Logger::GetLogger()->warn(__VA_ARGS__)
+		#define V5CLOG_ERROR(...)         ::V5Core::Logger::GetLogger()->error(__VA_ARGS__)
+		#define V5CLOG_CRITICAL(...)      ::V5Core::Logger::GetLogger()->critical(__VA_ARGS__)
+	#endif
+#else 
 
 #define V5CLOG_TRACE(...)      
 #define V5CLOG_INFO(...)       

@@ -117,3 +117,25 @@ std::shared_ptr<UniformBuffer> UniformBuffer::Create(uint32_t binding, uint32_t 
 	return nullptr;
 }
 
+std::shared_ptr<UniformBuffer> UniformBuffer::Create(std::string name, uint32_t size)
+{
+	switch (RendererAPI::GetAPI())
+	{
+#ifdef V5_PLATFORM_WINDOWS
+
+	case RendererAPI::API::OpenGL:
+		return std::make_shared<OpenGLUniformBuffer>(name, size);
+#endif
+#ifdef V5_PLATFORM_ANDROID
+	case RendererAPI::API::OpenGLES:
+		return std::make_shared<OpenGLES2UniformBuffer>(name, size);
+#endif
+
+	default:
+		break;
+	}
+
+	return nullptr;
+}
+
+

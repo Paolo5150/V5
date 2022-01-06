@@ -66,7 +66,10 @@ std::unique_ptr<OpenGLShader> OpenGLShader::FromSPIRV(const std::vector<char>& v
 	return theShader;
 }
 
-
+int OpenGLShader::GetAttribLocation(std::string attribName)
+{
+	return glGetAttribLocation(m_shaderID, attribName.c_str());
+}
 
 void OpenGLShader::Bind() const
 {

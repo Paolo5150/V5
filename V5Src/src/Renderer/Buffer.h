@@ -132,11 +132,15 @@ namespace V5Rendering
 		virtual ~UniformBuffer() = default;
 
 		virtual void Bind() const = 0;
+		virtual void Bind(uint32_t shaderID) const = 0;
+
 		virtual void Unbind() const = 0;
 		virtual void SetData(const void* data, uint32_t size) = 0;
 		virtual uint32_t GetID() const = 0;
 
 		static std::shared_ptr<UniformBuffer> Create(uint32_t binding, uint32_t size);
 		static std::shared_ptr<UniformBuffer> Create(uint32_t binding, const void* data, uint32_t size);
+		static std::shared_ptr<UniformBuffer> Create(std::string uniformName, uint32_t size);
+		static std::shared_ptr<UniformBuffer> Create(std::string uniformName, const void* data, uint32_t size);
 	};
 }

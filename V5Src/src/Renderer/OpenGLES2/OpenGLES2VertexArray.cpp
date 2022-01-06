@@ -65,6 +65,7 @@ void OpenGLES2VertexArray::AddVertexBuffer(std::shared_ptr<VertexBuffer> vb)
 		//m_locationIndex++;
 
 		glEnableVertexAttribArray(m_locationIndex);
+
 		glVertexAttribPointer(m_locationIndex,
 			element.GetComponentCount(),
 			ShaderDataTypeToOpenGLBaseType(element.DataType),

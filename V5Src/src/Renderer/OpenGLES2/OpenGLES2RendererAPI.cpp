@@ -2,8 +2,12 @@
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
 #include <glad/gles2.h>
+#include <V5/Core/Factory.h>
+#include <V5/Core/IWindow.h>
+#include <Renderer/VertexArray.h>
+#include <Renderer/Buffer.h>
 
-
+using namespace V5Core;
 using namespace V5Rendering;
 
 void OpenGLES2RendererAPI::Init()
@@ -20,10 +24,17 @@ void OpenGLES2RendererAPI::Init()
 	V5LOG_INFO("\t OpenGL: {0}", version);
 	V5LOG_INFO("\t GLSL: {0}", glsl);
 
-	SetClearColor(1, 0, 0, 1);
+	glViewport(0, 0, Factory::GetWindow().GetWidth(), Factory::GetWindow().GetHeight());
+
+
 }
 void OpenGLES2RendererAPI::Shutdown()
 {
+
+
+
+	gladLoaderUnloadGLES2();
+	V5LOG_INFO("Unloaded OpenGLES2");
 
 }
 
@@ -34,17 +45,29 @@ void OpenGLES2RendererAPI::OnEvent(V5Core::Event& e)
 
 
 void OpenGLES2RendererAPI::SetViewport(int x, int y, int width, int height) const
-{}
-
-void OpenGLES2RendererAPI::RenderIndexed(VertexArray& aroverride)
-{}
-
-void OpenGLES2RendererAPI::RenderIndexed(VertexArray& aroverride, uint32_t indexCount)
 {
+	glViewport(x, y, width, height);
+}
 
+void OpenGLES2RendererAPI::RenderIndexed(VertexArray& vao)
+{
+	vao.Bind();
+	vao.GetIndexBuffer().Bind();
+	glDrawElements(GL_TRIANGLES, vao.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);
+}
+
+void OpenGLES2RendererAPI::RenderIndexed(VertexArray& vao, uint32_t indexCount)
+{
+	vao.Bind();
+	vao.GetIndexBuffer().Bind();
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 }
 void OpenGLES2RendererAPI::RenderIndexedInstanced(VertexArray& vao, uint32_t instanceCount)
-{}
+{
+	vao.Bind();
+	vao.GetIndexBuffer().Bind();
+	glDrawElementsInstanced(GL_TRIANGLES, vao.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr, instanceCount);
+}
 
 void OpenGLES2RendererAPI::SetClearColor(float r, float g, float b, float a) const
 {

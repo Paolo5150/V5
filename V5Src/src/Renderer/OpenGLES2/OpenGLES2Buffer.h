@@ -46,9 +46,12 @@ namespace V5Rendering
 	public:
 		OpenGLES2UniformBuffer(uint32_t binding, uint32_t size);
 		OpenGLES2UniformBuffer(uint32_t binding, const void* data, uint32_t size);
+		OpenGLES2UniformBuffer(std::string uniformName, uint32_t size);
+		OpenGLES2UniformBuffer(std::string uniformName, const void* data, uint32_t size);
 		~OpenGLES2UniformBuffer();
 
 		void Bind() const override;
+		void Bind(uint32_t shaderID) const override;
 		void Unbind() const override;
 		void SetData(const void* data, uint32_t size) override;
 		uint32_t GetBinding() const { return m_binding; }

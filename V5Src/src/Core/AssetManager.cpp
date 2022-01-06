@@ -25,6 +25,20 @@ void AssetManager::Initialize(std::string assetFolderPath)
 
 std::string AssetManager::ReadTextFile(const char* path)
 {
+	//std::stringstream ss;
+	//ss << m_assetFolderPath << "/" << path;
+
+
+	//FILE* f = fopen(ss.str().c_str(), "r");
+	//if (f != nullptr)
+	//{
+	//	V5LOG_INFO("FILE FOUND!!!");
+
+	//}
+	//else
+	//{
+	//	V5LOG_ERROR("FILE not fonud............");
+	//}
 	std::ifstream inStream(m_assetFolderPath + std::string("/") + path);
 	
 	std::istreambuf_iterator<char> startIt(inStream), endIt;
