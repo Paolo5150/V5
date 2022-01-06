@@ -76,7 +76,13 @@ std::unique_ptr<OpenGLES2Shader> OpenGLES2Shader::FromSource(const std::string& 
 	glGetProgramiv(theShader->m_shaderID, GL_LINK_STATUS, (int*)&isLinked);
 	if (isLinked == GL_FALSE)
 	{
-		V5LOG_ERROR("Failed to create shader program");
+		GLint maxLength = 0;
+		glGetProgramiv(theShader->m_shaderID, GL_INFO_LOG_LENGTH, &maxLength);
+
+		std::vector<GLchar> infoLog(maxLength);
+		glGetProgramInfoLog(theShader->m_shaderID, maxLength, &maxLength, &infoLog[0]);
+
+		V5LOG_ERROR("Failed to create shader program: {0}", infoLog.data());
 	}
 
 	glDeleteShader(vertShader);
