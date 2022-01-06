@@ -31,6 +31,7 @@ namespace V5Rendering
 		virtual void RenderIndexed(VertexArray& aroverride, uint32_t indexCount) = 0;
 		virtual void RenderIndexedInstanced(VertexArray& vao, uint32_t instanceCount) = 0;
 
+
 		virtual void Clear() = 0;
 
 

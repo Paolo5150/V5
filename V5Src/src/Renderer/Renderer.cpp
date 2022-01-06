@@ -18,9 +18,8 @@ std::unique_ptr<Renderer> Renderer::s_Instance;
 namespace
 {
 	std::shared_ptr<VertexArray> vao;
-	std::shared_ptr<Texture2D> texture;
-	std::shared_ptr<Texture2D> texture2;
-	std::shared_ptr<UniformBuffer> ubo;
+	GLuint vertexbuffer;
+
 
 }
 
@@ -57,27 +56,75 @@ void Renderer::Init()
 	{
 		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSource("Shaders/textureOnly.vert", "Shaders/textureOnly.frag"));
 		ShaderLibrary::Add("TileTextureInstanced", Shader::CreateFromSource("Shaders/tileTextureOnlyInstanced.vert", "Shaders/tileTextureOnlyInstanced.frag"));
+		ShaderLibrary::Add("Simple", Shader::CreateFromSource("Shaders/simple.vert", "Shaders/simple.frag"));
 
-		int pos = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("aPosition");
-		int uv = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("aUV");
-		int textureIndex = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("textureIndex");
-		int pos2 = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("position");
-		int sca = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("scale");
-		int col = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("iColor");
-		int ubo = ShaderLibrary::GetShader("TileTextureInstanced").GetUBOLocation("ViewProj");
 
-		V5LOG_INFO("Pos {0}", pos);
-		V5LOG_INFO("uv {0}", uv);
-		V5LOG_INFO("textureIndex {0}", textureIndex);
-		V5LOG_INFO("pos2 {0}", pos2);
-		V5LOG_INFO("sca {0}", sca);
-		V5LOG_INFO("col {0}", col);
-		V5LOG_INFO("UBO {0}", ubo);
+		//int pos = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("aPosition");
+		//int uv = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("aUV");
+		//int textureIndex = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("textureIndex");
+		//int pos2 = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("position");
+		//int sca = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("scale");
+		//int col = ShaderLibrary::GetShader("TileTextureInstanced").GetAttribLocation("iColor");
+		//int ubo = ShaderLibrary::GetShader("TileTextureInstanced").GetUBOLocation("ViewProj");
+
+		//V5LOG_INFO("Pos {0}", pos);
+		//V5LOG_INFO("uv {0}", uv);
+		//V5LOG_INFO("textureIndex {0}", textureIndex);
+		//V5LOG_INFO("pos2 {0}", pos2);
+		//V5LOG_INFO("sca {0}", sca);
+		//V5LOG_INFO("col {0}", col);
+		//V5LOG_INFO("UBO {0}", ubo);
 
 	}
 	
 
+	//Debug
+	auto layout = BufferLayout({
+				BufferElement(ShaderDataType::Float3), // Position
+
+		});
+
+	struct Ver
+	{
+		glm::vec3 Position;
+	};
+
+	std::shared_ptr<VertexBuffer> batchVBO;
+	std::shared_ptr<IndexBuffer> batchIBO;
+	Ver quadVerts[4];
+
+	quadVerts[0].Position = glm::vec3(-0.5, -0.5, 0.0);
+	quadVerts[1].Position = glm::vec3(0.5, -0.5, 0.0);
+	quadVerts[2].Position = glm::vec3(0.5, 0.5, 0.0);
+	quadVerts[3].Position = glm::vec3(-0.5, 0.5, 0.0);
+
+	batchVBO = VertexBuffer::Create(&quadVerts[0], sizeof(Ver) * 4);
+
+	std::vector<uint32_t> indices = { 0,1,2,2,3,0 };
+	batchIBO = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
+
+	batchVBO->SetLayout(layout);
+	vao = VertexArray::Create();
+	vao->AddVertexBuffer(batchVBO);
+	vao->SetIndexBuffer(batchIBO);
+
 }
+
+
+
+void Renderer::DrawSample()
+{
+
+	
+	glViewport(0, 0, 1080, 1920);
+
+	ShaderLibrary::GetShader("Simple").Bind();
+	GetRenderAPI().RenderIndexed(*vao, 6);
+
+
+
+}
+
 
 void Renderer::Render()
 {

@@ -92,7 +92,7 @@ namespace V5Rendering
 			}
 		}
 
-		uint32_t m_stride;
+		uint32_t m_stride = 0; // Not initializing this costed me 1 full day of debugging
 
 	};
 

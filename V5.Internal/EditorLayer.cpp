@@ -4,6 +4,7 @@
 #include <V5/Core/ICore.h>
 #include <V5/Event/WindowEvents.h>
 #include <V5/Renderer/IRenderer2D.h>
+#include <V5/Renderer/IRenderer.h>
 #include <V5/Core/IWindow.h>
 #include <V5/Renderer/Texture.h>
 #include <V5/Debugging/Intrumentor.h>
@@ -131,7 +132,6 @@ void EditorLayer::OnRender()
 	{
 	case EditorState::EDIT:
 		m_activeScene.RenderEditor(*m_editorCamera);
-
 		break;
 
 	case EditorState::PLAY:

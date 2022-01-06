@@ -29,6 +29,8 @@ namespace V5Rendering
 		void OnEvent(V5Core::Event& e);
 		Renderer2D& GetRenderer2D() override { return *m_renderer2D; }
 		TileRenderer2D& GetTileRenderer2D() { return *m_tileRenderer2D; }
+		void DrawSample() override;
+
 
 	private:
 		static std::unique_ptr<Renderer> s_Instance;

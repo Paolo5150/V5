@@ -125,8 +125,8 @@ void TileRenderer2D::Begin(const glm::mat4& cameraViewProjection)
 	DrawCall = 0;
 	Renderer::Instance().m_cameraBuffer->SetData(&cameraViewProjection, sizeof(glm::mat4));
 	StartBatch();
-	Renderer::Instance().m_cameraBuffer->Bind();
-	//Renderer::Instance().m_cameraBuffer->Bind(ShaderLibrary::GetShader("TileTextureInstanced").GetNativeID());
+	//Renderer::Instance().m_cameraBuffer->Bind();
+	Renderer::Instance().m_cameraBuffer->Bind(ShaderLibrary::GetShader("TileTextureInstanced").GetNativeID());
 }
 
 
@@ -183,10 +183,10 @@ void TileRenderer2D::FlushBuffer()
 	ShaderLibrary::GetShader("TileTextureInstanced").Bind();
 
 	//TODO: commented to test android
-	for (int i = 0; i < TextureIndex; i++)
-	{
-		AllTextures[i]->Bind(i);
-	}
+	//for (int i = 0; i < TextureIndex; i++)
+	//{
+	//	AllTextures[i]->Bind(i);
+	//}
 	
 	instanceVBO->SetData(&InstancedData[0], sizeof(TileInstanceData) * m_submittedQuads);
 

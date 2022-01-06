@@ -59,6 +59,7 @@ void OpenGLES2RendererAPI::RenderIndexed(VertexArray& vao)
 void OpenGLES2RendererAPI::RenderIndexed(VertexArray& vao, uint32_t indexCount)
 {
 	vao.Bind();
+
 	vao.GetIndexBuffer().Bind();
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
 }

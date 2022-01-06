@@ -1,0 +1,33 @@
+[2022-01-06 21:48:59.168] [Generic] [info] ------------------ START OF LOG ----------------------
+
+[2022-01-06 21:48:59.498] [Generic] [info] App V5Editor start
+[2022-01-06 21:49:04.174] [Generic] [info] App V5Editor event 4
+[2022-01-06 21:49:17.525] [Generic] [info] App V5Editor event 4
+[2022-01-06 21:49:17.525] [Generic] [info] App V5Editor event 7
+[2022-01-06 21:49:17.811] [Generic] [info] App V5Editor event 7
+[2022-01-06 21:49:18.068] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:18.444] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:18.951] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:18.983] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.014] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.046] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.078] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.109] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.156] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.188] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.219] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.251] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.282] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:19.311] [Generic] [info] App V5Editor event 6
+[2022-01-06 21:49:20.444] [Generic] [info] App V5Editor event 7
+[2022-01-06 21:49:20.508] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:20.807] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:21.140] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:22.030] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:22.465] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:22.947] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:23.749] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:23.786] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:24.602] [Generic] [info] App V5Editor event 5
+[2022-01-06 21:49:26.189] [Generic] [info] App V5Editor quit
+[2022-01-06 21:49:26.190] [Generic] [info] Engine successfully shutdown

@@ -2,6 +2,7 @@
 #include <glad/gles2.h>
 #include "Renderer/Buffer.h"
 #include <V5/Debugging/Intrumentor.h>
+#include <V5/Core/Logger.h>
 using namespace V5Rendering;
 
 static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
@@ -39,8 +40,12 @@ OpenGLES2VertexArray::~OpenGLES2VertexArray()
 
 void OpenGLES2VertexArray::Bind() const
 {
-	V5_PROFILE_FUNCTION();
 	glBindVertexArray(m_vertexArrayID);
+	for (size_t i = 0; i < m_locationIndex; i++)
+	{
+		glEnableVertexAttribArray(i);
+
+	}
 }
 
 void OpenGLES2VertexArray::Unbind() const
@@ -57,15 +62,6 @@ void OpenGLES2VertexArray::AddVertexBuffer(std::shared_ptr<VertexBuffer> vb)
 
 	for (const auto& element : layout.GetBufferElements())
 	{
-		//glEnableVertexArrayAttrib(m_vertexArrayID, m_locationIndex);// Need to precise vao, as there is no context binding in DSA style
-		//glVertexArrayAttribFormat(m_vertexArrayID, m_locationIndex, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.DataType), element.Normalized, element.Offset);// Need to precise vao, as there is no context binding in DSA
-		//glVertexArrayAttribBinding(m_vertexArrayID, m_locationIndex, m_vertexBuffers.size());
-		//if (element.Instanced)
-		//	glVertexAttribDivisor(m_vertexBuffers.size(), 1);
-		//m_locationIndex++;
-
-		glEnableVertexAttribArray(m_locationIndex);
-
 		glVertexAttribPointer(m_locationIndex,
 			element.GetComponentCount(),
 			ShaderDataTypeToOpenGLBaseType(element.DataType),

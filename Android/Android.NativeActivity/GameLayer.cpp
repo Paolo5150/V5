@@ -8,6 +8,7 @@
 #include <V5/Components/Components.h>
 #include <V5/Core/Factory.h>
 #include <V5/Core/IWindow.h>
+#include <V5/Renderer/IRenderer.h>
 
 using namespace V5Rendering;
 using namespace V5Core;
@@ -45,7 +46,7 @@ void GameLayer::OnUpdate(double dt)
 void GameLayer::OnRender() 
 {
 	m_activeScene.RenderRuntime(testCamera->GetProjectionMatrix() * viewMat);
-
+	//V5Core::Factory().GetRenderer().DrawSample();
 }
 
 
