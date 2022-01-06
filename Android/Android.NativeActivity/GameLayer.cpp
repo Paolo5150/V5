@@ -1,7 +1,7 @@
 #pragma once
 #include "GameLayer.h"
 #include <V5/Renderer/RenderCommand.h>
-
+#include <V5/Core/AssetManager.h>
 
 void GameLayer::OnUpdate(double dt)
 {
@@ -15,6 +15,8 @@ void GameLayer::OnRender() {}
 void GameLayer::OnAttach() 
 {
 	V5Rendering::RenderCommand::SetClearColor(1, 0, 0, 1);
+
+
 }
 void GameLayer::OnImGuiRender() {}
 void GameLayer::OnEvent(V5Core::Event& e) {}

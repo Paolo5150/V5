@@ -7,7 +7,9 @@ namespace V5Rendering
 	class OpenGLES2Shader : public Shader
 	{
 	public:
-		OpenGLES2Shader(const std::string vert, const std::string frag);
+		static std::unique_ptr<OpenGLES2Shader> FromSource(const std::string& vertSource, const std::string& fragSource);
+
+		OpenGLES2Shader() = default;
 		void Bind() const override;
 		void Unbind() const override;
 

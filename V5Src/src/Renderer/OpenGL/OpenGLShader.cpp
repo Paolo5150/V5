@@ -5,20 +5,14 @@
 
 using namespace V5Rendering;
 
-OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
+std::unique_ptr<OpenGLShader> OpenGLShader::FromSPIRV(const std::vector<char>& vertBinary, const std::vector<char>& fragBinary)
 {
-	//Load SPIR-V shaders
+	std::unique_ptr<OpenGLShader> theShader = std::make_unique<OpenGLShader>();
 
 	GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
 	{
-		// Load the shader into a std::vector
-		std::ifstream inStream(vert, std::ios::binary);
-		std::istreambuf_iterator<char> startIt(inStream), endIt;
-		std::vector<char> buffer(startIt, endIt);
-		inStream.close();
-
 		// Load using glShaderBinary
-		glShaderBinary(1, &vertShader, GL_SHADER_BINARY_FORMAT_SPIR_V, buffer.data(), buffer.size());
+		glShaderBinary(1, &vertShader, GL_SHADER_BINARY_FORMAT_SPIR_V, vertBinary.data(), vertBinary.size());
 
 		// Specialize the shader (specify the entry point)
 		glSpecializeShader(vertShader, "main", 0, 0, 0);
@@ -37,14 +31,8 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 
 	GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// Load the shader into a std::vector
-	std::ifstream inStream(frag, std::ios::binary);
-	std::istreambuf_iterator<char> startIt(inStream), endIt;
-	std::vector<char> buffer(startIt, endIt);
-	inStream.close();
-
 	// Load using glShaderBinary
-	glShaderBinary(1, &fragShader, GL_SHADER_BINARY_FORMAT_SPIR_V, buffer.data(), buffer.size());
+	glShaderBinary(1, &fragShader, GL_SHADER_BINARY_FORMAT_SPIR_V, fragBinary.data(), fragBinary.size());
 
 	// Specialize the shader (specify the entry point)
 	glSpecializeShader(fragShader, "main", 0, 0, 0);
@@ -58,13 +46,13 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 	}
 
 	//Links
-	m_shaderID = glCreateProgram();
-	glAttachShader(m_shaderID, vertShader);
-	glAttachShader(m_shaderID, fragShader);
-	glLinkProgram(m_shaderID);
+	theShader->m_shaderID = glCreateProgram();
+	glAttachShader(theShader->m_shaderID, vertShader);
+	glAttachShader(theShader->m_shaderID, fragShader);
+	glLinkProgram(theShader->m_shaderID);
 
 	GLint isLinked = 0;
-	glGetProgramiv(m_shaderID, GL_LINK_STATUS, (int*)&isLinked);
+	glGetProgramiv(theShader->m_shaderID, GL_LINK_STATUS, (int*)&isLinked);
 	if (isLinked == GL_FALSE)
 	{
 		V5CLOG_ERROR("Failed to load fragment shader");
@@ -73,8 +61,13 @@ OpenGLShader::OpenGLShader(const std::string vert, const std::string frag)
 
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
-	glUseProgram(m_shaderID);
+	glUseProgram(theShader->m_shaderID);
+
+	return theShader;
 }
+
+
+
 void OpenGLShader::Bind() const
 {
 	glUseProgram(m_shaderID);

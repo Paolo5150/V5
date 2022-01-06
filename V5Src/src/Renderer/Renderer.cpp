@@ -48,15 +48,14 @@ void Renderer::Init()
 	if (m_renderAPI->GetAPI() == RendererAPI::API::OpenGL)
 	{
 		// Tests
-		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnlyInstanced.vert.spv", "Assets\\Shaders\\bin\\textureOnlyInstanced.frag.spv"));
-		ShaderLibrary::Add("TileTextureInstanced", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\tileTextureOnlyInstanced.vert.spv", "Assets\\Shaders\\bin\\tileTextureOnlyInstanced.frag.spv"));
-		ShaderLibrary::Add("TextureBatched", Shader::CreateFromSPIRV("Assets\\Shaders\\bin\\textureOnlyBatched.vert.spv", "Assets\\Shaders\\bin\\textureOnlyBatched.frag.spv"));
+		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSPIRV("Shaders/bin/textureOnlyInstanced.vert.spv", "Shaders/bin/textureOnlyInstanced.frag.spv"));
+		ShaderLibrary::Add("TileTextureInstanced", Shader::CreateFromSPIRV("Shaders/bin/tileTextureOnlyInstanced.vert.spv", "Shaders/bin/tileTextureOnlyInstanced.frag.spv"));
+		ShaderLibrary::Add("TextureBatched", Shader::CreateFromSPIRV("Shaders/bin/textureOnlyBatched.vert.spv", "Shaders/bin/textureOnlyBatched.frag.spv"));
 
 	}
 	else if(m_renderAPI->GetAPI() == RendererAPI::API::OpenGLES)
 	{
-		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSPIRV("assets\\Shaders\\src\\textureOnlyInstanced.vert", "assets\\Shaders\\src\\textureOnlyInstanced.frag"));
-
+		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSource("Shaders/textureOnly.vert", "Shaders/textureOnly.frag"));
 	}
 	
 

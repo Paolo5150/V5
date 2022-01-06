@@ -21,11 +21,13 @@
 #include <V5/Core/Factory.h>
 #include <V5/Core/ICore.h>
 #include <V5/Renderer/IRenderer.h>
+#include <V5/Core/AssetManager.h>
 #include <glad/gles2.h>
 #include <glad/egl.h>
 #include <V5/PlatformSpecific/AndroidWindowCallbacks.h>
 #include "GameApp.h"
 #include <iostream>
+#include <sstream>
 #include <fstream>
 /**
 * Our saved state data.
@@ -273,17 +275,25 @@ void android_main(struct android_app* state) {
 	awb.CloseWindow = CloseDisplay;
 
 	// Test getting assets
-	AAssetManager* amanager = state->activity->assetManager;
-	AAsset* asset = AAssetManager_open(amanager, "textureOnly.frag", AASSET_MODE_BUFFER);
-	
-	if (asset)
-	{
-		long size = AAsset_getLength(asset);
-		char* buffer = (char*)malloc(sizeof(char) * size);
-		AAsset_read(asset, buffer, size);
-		LOGI("%s", buffer);
-		AAsset_close(asset);
-	}
+	// // These files are to be placed under the assets folder in the project and are part of the APK
+	//AAssetManager* amanager = state->activity->assetManager;
+	//AAsset* asset = AAssetManager_open(amanager, "textureOnly.frag", AASSET_MODE_BUFFER);
+	//
+	//if (asset)
+	//{
+	//	long size = AAsset_getLength(asset);
+	//	char* buffer = (char*)malloc(sizeof(char) * size);
+	//	AAsset_read(asset, buffer, size);
+	//	LOGI("%s", buffer);
+	//	AAsset_close(asset);
+	//}
+	// 
+
+	//Set the path to asset folder
+	V5Core::AssetManager::Instance().Initialize(state->activity->obbPath + std::string("/Assets"));
+	// Test reading using plain C++
+
+
 	// This while loop is done to get the event of the screen being ready.
 	// That will set engine.ready to true, so we justmp out of this while loop and start the Core loop
 	while (!engine.ready) {

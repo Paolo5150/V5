@@ -50,6 +50,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Components\Components.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\AndroidWindow.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\AssetManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Core.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Factory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Input.cpp" />
@@ -70,8 +71,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Buffer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2RendererAPI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -148,6 +149,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Utils\Random.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\AndroidWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\AssetManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Core.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\CoreLogger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Time.h" />

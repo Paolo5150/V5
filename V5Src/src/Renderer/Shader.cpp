@@ -1,6 +1,7 @@
 #include <V5/Renderer/Shader.h>
 #include "Renderer.h"
 #include "Core/CoreLogger.h"
+#include <V5/Core/AssetManager.h>
 #ifdef V5_PLATFORM_WINDOWS
 #include "OpenGL/OpenGLShader.h"
 #endif
@@ -9,26 +10,45 @@
 #endif
 
 using namespace V5Rendering;
+using namespace V5Core;
 
 std::unordered_map<std::string, std::unique_ptr<Shader>> ShaderLibrary::m_shaderMap;
 
 std::unique_ptr<Shader> Shader::CreateFromSPIRV(const std::string vert, const std::string frag)
 {
+	// Read shader SPIRV
+	auto vertexBinary = AssetManager::Instance().ReadAssetBinary(vert.c_str());
+	auto fragBinary = AssetManager::Instance().ReadAssetBinary(frag.c_str());
+	
 	switch (RendererAPI::GetAPI())
 	{
 #ifdef V5_PLATFORM_WINDOWS
 	case RendererAPI::API::OpenGL:
-		return std::make_unique< OpenGLShader>(vert, frag);
-#endif
-#ifdef V5_PLATFORM_ANDROID
-	case RendererAPI::API::OpenGLES:
-		return std::make_unique< OpenGLES2Shader>(vert, frag);
+		return OpenGLShader::FromSPIRV(vertexBinary, fragBinary);
 #endif
 
 	default:
 		break;
 	}
 }
+
+std::unique_ptr<Shader> Shader::CreateFromSource(const std::string vert, const std::string frag)
+{
+	auto vertSource = AssetManager::Instance().ReadTextFile(vert.c_str());
+	auto fragSource = AssetManager::Instance().ReadTextFile(frag.c_str());
+
+	switch (RendererAPI::GetAPI())
+	{
+#ifdef V5_PLATFORM_ANDROID
+	case RendererAPI::API::OpenGLES:
+		return OpenGLES2Shader::FromSource(vertSource, fragSource);
+#endif
+
+	default:
+		break;
+	}
+}
+
 
 
 void ShaderLibrary::Add(std::string name, std::unique_ptr<Shader> shader)

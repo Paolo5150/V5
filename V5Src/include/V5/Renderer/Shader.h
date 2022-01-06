@@ -14,6 +14,7 @@ namespace V5Rendering
 		virtual void Unbind() const = 0;
 
 		static std::unique_ptr<Shader> CreateFromSPIRV(const std::string vert, const std::string frag);
+		static std::unique_ptr<Shader> CreateFromSource(const std::string vert, const std::string frag);
 
 	};
 

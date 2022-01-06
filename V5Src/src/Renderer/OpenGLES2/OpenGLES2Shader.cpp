@@ -6,89 +6,86 @@
 
 using namespace V5Rendering;
 
-OpenGLES2Shader::OpenGLES2Shader(const std::string vert, const std::string frag)
+std::unique_ptr<OpenGLES2Shader> OpenGLES2Shader::FromSource(const std::string& vertSource, const std::string& fragSource)
 {
-	char buf[1024];
-	getcwd(buf, 1024);
+	std::unique_ptr<OpenGLES2Shader> theShader = std::make_unique<OpenGLES2Shader>();
 
-	V5LOG_INFO("Working dir {0}", buf);
-
-	//Load SPIR-V shaders
-	unsigned int vertex, fragment;
-
-	std::string vertexCode;
-	std::string fragmentCode;
-	std::ifstream vShaderFile;
-	std::ifstream fShaderFile;
-	// ensure ifstream objects can throw exceptions:
-	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	try
+	GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 	{
-		// open files
-		vShaderFile.open(vert);
-		fShaderFile.open(frag);
-		std::stringstream vShaderStream, fShaderStream;
-		// read file's buffer contents into streams
-		vShaderStream << vShaderFile.rdbuf();
-		fShaderStream << fShaderFile.rdbuf();
-		// close file handlers
-		vShaderFile.close();
-		fShaderFile.close();
-		// convert stream into string
-		vertexCode = vShaderStream.str();
-		fragmentCode = fShaderStream.str();
-	}
-	catch (std::ifstream::failure e)
-	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+		if (fragShader == 0)
+		{
+			V5LOG_ERROR("Failed to create shader ID");
+
+		}
+		char const* sourcePointer = fragSource.c_str();
+
+		glShaderSource(fragShader, 1, &sourcePointer, NULL);
+		glCompileShader(fragShader);
+
+		// Check Shader
+		GLint result = GL_FALSE;
+		int infoLogLength;
+
+		glGetShaderiv(fragShader, GL_COMPILE_STATUS, &result);
+		glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &infoLogLength);
+		if (result == 0)
+		{
+			std::vector<char> shaderErrorMessage(infoLogLength + 1);
+			glGetShaderInfoLog(fragShader, infoLogLength, NULL, &shaderErrorMessage[0]);
+			V5LOG_ERROR("Failed to compile fragment shader: {0}", shaderErrorMessage.data());
+		}
 	}
 
 	GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
 	{
-		glShaderSource(vertex, 1, (const GLchar* const*)vertexCode.c_str(), NULL);
-		glCompileShader(vertex);
-
-		// Check for success/failure
-		GLint status;
-		glGetShaderiv(vertShader, GL_COMPILE_STATUS, &status);
-		if (GL_FALSE == status)
+		if (vertShader == 0)
 		{
-			V5LOG_ERROR("Failed to load vertex shader");
+			V5LOG_ERROR("Failed to create shader ID");
+
+		}
+		char const* sourcePointer = vertSource.c_str();
+
+		glShaderSource(vertShader, 1, &sourcePointer, NULL);
+		glCompileShader(vertShader);
+
+		// Check Shader
+		GLint result = GL_FALSE;
+		int infoLogLength;
+
+		glGetShaderiv(vertShader, GL_COMPILE_STATUS, &result);
+		glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &infoLogLength);
+		if (result == 0)
+		{
+			std::vector<char> shaderErrorMessage(infoLogLength + 1);
+			glGetShaderInfoLog(vertShader, infoLogLength, NULL, &shaderErrorMessage[0]);
+			V5LOG_ERROR("Failed to compile vertex shader: {0}", shaderErrorMessage.data());
 		}
 	}
+	
 
+	
 
-	GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-	glShaderSource(fragment, 1, (const GLchar* const*)fragmentCode.c_str(), NULL);
-	glCompileShader(fragment);
-
-	// Check for success/failure
-	GLint status;
-	glGetShaderiv(fragShader, GL_COMPILE_STATUS, &status);
-	if (GL_FALSE == status)
-	{
-		V5LOG_ERROR("Failed to load fragment shader");
-	}
 
 	//Links
-	m_shaderID = glCreateProgram();
-	glAttachShader(m_shaderID, vertShader);
-	glAttachShader(m_shaderID, fragShader);
-	glLinkProgram(m_shaderID);
+	theShader->m_shaderID = glCreateProgram();
+	glAttachShader(theShader->m_shaderID, vertShader);
+	glAttachShader(theShader->m_shaderID, fragShader);
+	glLinkProgram(theShader->m_shaderID);
 
 	GLint isLinked = 0;
-	glGetProgramiv(m_shaderID, GL_LINK_STATUS, (int*)&isLinked);
+	glGetProgramiv(theShader->m_shaderID, GL_LINK_STATUS, (int*)&isLinked);
 	if (isLinked == GL_FALSE)
 	{
-		V5LOG_ERROR("Failed to load vertex shader");
+		V5LOG_ERROR("Failed to create shader program");
 	}
 
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
-	glUseProgram(m_shaderID);
+	glUseProgram(theShader->m_shaderID);
+
+	return theShader;
 }
+
 void OpenGLES2Shader::Bind() const
 {
 	glUseProgram(m_shaderID);
