@@ -1,0 +1,22 @@
+[2022-01-05 22:59:24.333] [Generic] [info] ------------------ START OF LOG ----------------------
+
+[2022-01-05 22:59:24.643] [Generic] [info] App V5Editor start
+[2022-01-05 22:59:32.950] [Generic] [info] App V5Editor event 7
+[2022-01-05 22:59:32.990] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:33.250] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:33.577] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:34.085] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:34.118] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:34.151] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:34.179] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:34.325] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:34.697] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:35.452] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:35.967] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:35.994] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:36.029] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:36.055] [Generic] [info] App V5Editor event 6
+[2022-01-05 22:59:36.085] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:36.303] [Generic] [info] App V5Editor event 5
+[2022-01-05 22:59:39.329] [Generic] [info] App V5Editor quit
+[2022-01-05 22:59:39.349] [Generic] [info] Engine successfully shutdown

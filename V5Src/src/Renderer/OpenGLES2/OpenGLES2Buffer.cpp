@@ -59,7 +59,7 @@ OpenGLES2IndexBuffer::OpenGLES2IndexBuffer(uint32_t* data, uint32_t count) : m_c
 {
 	glGenBuffers(1, &m_bufferID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferID);
-	glBufferData(m_bufferID, count * sizeof(uint32_t), data, 0);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), data, GL_STATIC_DRAW);
 }
 
 OpenGLES2IndexBuffer::~OpenGLES2IndexBuffer()
@@ -88,7 +88,7 @@ OpenGLES2UniformBuffer::OpenGLES2UniformBuffer(uint32_t binding, uint32_t size) 
 {
 	glGenBuffers(1, &m_bufferID);
 	glBindBuffer(GL_UNIFORM_BUFFER, m_bufferID);
-	glBufferData(m_bufferID, size, NULL, GL_DYNAMIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
 	glBindBufferBase(GL_UNIFORM_BUFFER, m_binding, m_bufferID);
 
 }

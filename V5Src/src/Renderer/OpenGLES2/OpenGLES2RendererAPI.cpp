@@ -19,6 +19,8 @@ void OpenGLES2RendererAPI::Init()
 	V5LOG_INFO("\t GPU: {0}", gpu);
 	V5LOG_INFO("\t OpenGL: {0}", version);
 	V5LOG_INFO("\t GLSL: {0}", glsl);
+
+	SetClearColor(1, 0, 0, 1);
 }
 void OpenGLES2RendererAPI::Shutdown()
 {

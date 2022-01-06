@@ -16,16 +16,17 @@
 */
 
 #include <malloc.h>
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "AndroidProject1.NativeActivity", __VA_ARGS__))
-#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "AndroidProject1.NativeActivity", __VA_ARGS__))
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "V5Logger", __VA_ARGS__))
+#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "V5Logger", __VA_ARGS__))
 #include <V5/Core/Factory.h>
 #include <V5/Core/ICore.h>
 #include <V5/Renderer/IRenderer.h>
-#include <V5/Renderer/RenderCommand.h>
 #include <glad/gles2.h>
 #include <glad/egl.h>
 #include <V5/PlatformSpecific/AndroidWindowCallbacks.h>
 #include "GameApp.h"
+#include <iostream>
+#include <fstream>
 /**
 * Our saved state data.
 */
@@ -271,6 +272,18 @@ void android_main(struct android_app* state) {
 	awb.Refresh = Refresh;
 	awb.CloseWindow = CloseDisplay;
 
+	// Test getting assets
+	AAssetManager* amanager = state->activity->assetManager;
+	AAsset* asset = AAssetManager_open(amanager, "textureOnly.frag", AASSET_MODE_BUFFER);
+	
+	if (asset)
+	{
+		long size = AAsset_getLength(asset);
+		char* buffer = (char*)malloc(sizeof(char) * size);
+		AAsset_read(asset, buffer, size);
+		LOGI("%s", buffer);
+		AAsset_close(asset);
+	}
 	// This while loop is done to get the event of the screen being ready.
 	// That will set engine.ready to true, so we justmp out of this while loop and start the Core loop
 	while (!engine.ready) {

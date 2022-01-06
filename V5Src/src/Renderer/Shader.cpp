@@ -4,7 +4,9 @@
 #ifdef V5_PLATFORM_WINDOWS
 #include "OpenGL/OpenGLShader.h"
 #endif
-
+#ifdef V5_PLATFORM_ANDROID
+#include "OpenGLES2/OpenGLES2Shader.h"
+#endif
 
 using namespace V5Rendering;
 
@@ -17,6 +19,10 @@ std::unique_ptr<Shader> Shader::CreateFromSPIRV(const std::string vert, const st
 #ifdef V5_PLATFORM_WINDOWS
 	case RendererAPI::API::OpenGL:
 		return std::make_unique< OpenGLShader>(vert, frag);
+#endif
+#ifdef V5_PLATFORM_ANDROID
+	case RendererAPI::API::OpenGLES:
+		return std::make_unique< OpenGLES2Shader>(vert, frag);
 #endif
 
 	default:

@@ -4,6 +4,11 @@
 
 #include "OpenGL/OpenGLVertexArray.h"
 #endif
+
+#ifdef V5_PLATFORM_ANDROID
+
+#include "OpenGLES2/OpenGLES2VertexArray.h"
+#endif
 using namespace V5Rendering;
 
 std::unique_ptr<VertexArray> VertexArray::Create()
@@ -14,6 +19,11 @@ std::unique_ptr<VertexArray> VertexArray::Create()
 
 	case RendererAPI::API::OpenGL:
 		return std::make_unique<OpenGLVertexArray>();
+#endif
+#ifdef V5_PLATFORM_ANDROID
+
+	case RendererAPI::API::OpenGLES:
+		return std::make_unique<OpenGLES2VertexArray>();
 #endif
 		break;
 	default:
