@@ -24,9 +24,9 @@ void GameLayer::OnAttach()
 	V5Rendering::RenderCommand::SetClearColor(0.2f,0.2f,0.2f, 1);
 	float ratio = (float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight();
 	testCamera = std::make_unique<Camera>(75, ratio, 0.1f, 1000.0f);
-	viewMat = glm::lookAt(glm::vec3(1,0,5), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	viewMat = glm::lookAt(glm::vec3(1,0,15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 150000; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });
@@ -41,12 +41,31 @@ void GameLayer::OnUpdate(double dt)
 {
 	m_activeScene.UpdateRuntime(dt);
 
+	static float timer = 0;
+	static float timer2 = 0;
+	static int counter = 0;
+	static double FPS = 0;
+	timer += dt;
+	timer2+= dt;
+	FPS += 1.0 / dt;
+	counter++;
+
+	if (timer > 1.0f)
+	{
+		FPS /= counter;
+		timer = 0;
+		counter = 0;
+		LOGI("FPS %f", FPS);
+		FPS = 0;
+
+	}
+	viewMat = glm::lookAt(glm::vec3(timer2 * 2, 0, 15), glm::vec3(timer2 * 2, 0, 15) + glm::vec3(0,0,-1), glm::vec3(0, 1, 0));
+
 
 }
 void GameLayer::OnRender() 
 {
 	m_activeScene.RenderRuntime(testCamera->GetProjectionMatrix() * viewMat);
-	//V5Core::Factory().GetRenderer().DrawSample();
 }
 
 

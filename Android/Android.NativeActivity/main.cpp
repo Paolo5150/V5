@@ -16,8 +16,7 @@
 */
 
 #include <malloc.h>
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "V5Logger", __VA_ARGS__))
-#define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "V5Logger", __VA_ARGS__))
+
 #include <V5/Core/Factory.h>
 #include <V5/Core/ICore.h>
 #include <V5/Renderer/IRenderer.h>

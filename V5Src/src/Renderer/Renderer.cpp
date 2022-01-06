@@ -79,34 +79,7 @@ void Renderer::Init()
 	
 
 	//Debug
-	auto layout = BufferLayout({
-				BufferElement(ShaderDataType::Float3), // Position
-
-		});
-
-	struct Ver
-	{
-		glm::vec3 Position;
-	};
-
-	std::shared_ptr<VertexBuffer> batchVBO;
-	std::shared_ptr<IndexBuffer> batchIBO;
-	Ver quadVerts[4];
-
-	quadVerts[0].Position = glm::vec3(-0.5, -0.5, 0.0);
-	quadVerts[1].Position = glm::vec3(0.5, -0.5, 0.0);
-	quadVerts[2].Position = glm::vec3(0.5, 0.5, 0.0);
-	quadVerts[3].Position = glm::vec3(-0.5, 0.5, 0.0);
-
-	batchVBO = VertexBuffer::Create(&quadVerts[0], sizeof(Ver) * 4);
-
-	std::vector<uint32_t> indices = { 0,1,2,2,3,0 };
-	batchIBO = IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
-
-	batchVBO->SetLayout(layout);
-	vao = VertexArray::Create();
-	vao->AddVertexBuffer(batchVBO);
-	vao->SetIndexBuffer(batchIBO);
+	
 
 }
 
@@ -115,11 +88,7 @@ void Renderer::Init()
 void Renderer::DrawSample()
 {
 
-	
-	glViewport(0, 0, 1080, 1920);
 
-	ShaderLibrary::GetShader("Simple").Bind();
-	GetRenderAPI().RenderIndexed(*vao, 6);
 
 
 

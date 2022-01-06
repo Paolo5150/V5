@@ -125,8 +125,8 @@ void TileRenderer2D::Begin(const glm::mat4& cameraViewProjection)
 	DrawCall = 0;
 	Renderer::Instance().m_cameraBuffer->SetData(&cameraViewProjection, sizeof(glm::mat4));
 	StartBatch();
-	//Renderer::Instance().m_cameraBuffer->Bind();
-	Renderer::Instance().m_cameraBuffer->Bind(ShaderLibrary::GetShader("TileTextureInstanced").GetNativeID());
+	Renderer::Instance().m_cameraBuffer->Bind();
+	//Renderer::Instance().m_cameraBuffer->Bind(ShaderLibrary::GetShader("TileTextureInstanced").GetNativeID());
 }
 
 
