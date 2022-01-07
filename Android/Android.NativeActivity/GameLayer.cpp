@@ -19,6 +19,7 @@ namespace
 	std::unique_ptr<Camera> testCamera;
 	glm::mat4 viewMat;
 	std::unique_ptr<Texture2D> tt;
+	std::unique_ptr<Texture2D> tt2;
 
 }
 
@@ -29,17 +30,21 @@ void GameLayer::OnAttach()
 	testCamera = std::make_unique<Camera>(75, ratio, 0.1f, 1000.0f);
 	viewMat = glm::lookAt(glm::vec3(1,0,15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	auto td = AssetManager::Instance().LoadTextureData("Textures/smiley.png",true);
+	auto td2 = AssetManager::Instance().LoadTextureData("Textures/wall.jpg",true);
 	tt = Texture2D::Create(td);
+	tt2 = Texture2D::Create(td2);
 
 	for (int i = 0; i < 12; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });
-		e.AddComponent<TileRenderer>(tt.get());
-
 		e.GetComponent<Transform>().UpdateMatrix();
-	}
 
+		if(i % 2 == 0)
+			e.AddComponent<TileRenderer>(tt.get());
+		else
+			e.AddComponent<TileRenderer>(tt2.get());
+	}
 }
 
 void GameLayer::OnUpdate(double dt)
