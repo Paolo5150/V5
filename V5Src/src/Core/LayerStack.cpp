@@ -14,6 +14,8 @@ void LayerStack::ClearLayers()
 		layer->OnDetach();
 		delete layer;
 	}
+
+	m_Layers.clear();
 }
 
 

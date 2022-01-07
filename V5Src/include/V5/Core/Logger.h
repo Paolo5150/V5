@@ -15,6 +15,7 @@ namespace V5Core
 	{
 	public:
 		static void Init();
+		static void Shutdown();
 		inline static std::shared_ptr<spdlog::logger>& GetLogger() {  return s_Logger; }
 		inline static std::shared_ptr<spdlog::logger>& GetV5Logger() { return s_V5Logger; }
 		inline static std::shared_ptr<spdlog::logger>& GetConsoleLogger() { return s_ConsoleLogger; }

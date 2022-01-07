@@ -6,7 +6,12 @@
 #include <vector>
 #include "Buffer.h"
 
-
+#ifdef V5_PLATFORM_WINDOWS
+#define MaxTextures 32
+#endif
+#ifdef V5_PLATFORM_ANDROID
+#define MaxTextures 16
+#endif
 
 namespace V5Rendering
 {
@@ -25,6 +30,9 @@ namespace V5Rendering
 		uint32_t m_submittedQuads;
 
 		glm::mat4 const* m_currentViewProjection;
+
+	private:
+		Texture2D* AllTextures[MaxTextures];
 
 
 	};

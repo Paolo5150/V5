@@ -32,17 +32,11 @@ struct TileInstanceData
 namespace
 {
 	constexpr uint32_t MaxQuads = 200000;
-#ifdef V5_PLATFORM_WINDOWS
-	constexpr uint32_t MaxTextures = 32;
-#endif
-#ifdef V5_PLATFORM_ANDROID
-	constexpr uint32_t MaxTextures = 16;
-#endif
+
 	uint32_t DrawCall = 0;
 
 	std::shared_ptr<VertexArray> vao;
 
-	Texture2D* AllTextures[MaxTextures];
 	int TextureIndex = 0;
 
 	// Batching parameters

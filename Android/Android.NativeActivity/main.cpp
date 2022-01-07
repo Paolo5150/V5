@@ -142,6 +142,20 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 
 	struct engine* engine = (struct engine*)app->userData;
 
+	if (AInputEvent_getType(ev) == AINPUT_EVENT_TYPE_KEY)
+	{
+		int key_val = AKeyEvent_getKeyCode(ev);
+		switch (key_val)
+		{
+		case AKEYCODE_BACK:
+			awb.OnBackButtonPressed();
+			return 1;
+			break;
+
+		}
+
+	}
+
 	if (AInputEvent_getType(ev) == AINPUT_EVENT_TYPE_MOTION) 
 	{
 		int32_t action = AMotionEvent_getAction(ev);
@@ -226,8 +240,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 		}
 		break;
 	case APP_CMD_TERM_WINDOW:
-		// The window is being hidden or closed, clean it up.
-		awb.OnWindowClose();
+
 		break;
 	case APP_CMD_GAINED_FOCUS:
 		// When our app gains focus, we start monitoring the accelerometer.
@@ -246,9 +259,17 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 			ASensorEventQueue_disableSensor(engine->sensorEventQueue,
 				engine->accelerometerSensor);
 		}
-		// Also stop animating.
-		engine->animating = 0;
+
 		//engine_draw_frame(engine);
+		break;
+
+	case APP_CMD_STOP:
+		LOGI("Quit request");
+		_exit(0);
+		break;
+
+	case APP_CMD_START:
+		LOGI("Start request");
 		break;
 	}
 }
@@ -346,9 +367,7 @@ void android_main(struct android_app* state) {
 
 	//Set the path to asset folder
 	V5Core::AssetManager::Instance().Initialize(state->activity->obbPath + std::string("/Assets"));
-	// Test reading using plain C++
 
-	LOGI("Size %d", sizeof(float));
 	// This while loop is done to get the event of the screen being ready.
 	// That will set engine.ready to true, so we justmp out of this while loop and start the Core loop
 	while (!engine.ready) {
@@ -358,7 +377,7 @@ void android_main(struct android_app* state) {
 		int events;
 		struct android_poll_source* source;
 
-		while ((ident = ALooper_pollAll(engine.animating ? 0 : -1, NULL, &events,
+		while ((ident = ALooper_pollAll(0, NULL, &events,
 			(void**)&source)) >= 0) {
 
 			// Process this event.
@@ -369,5 +388,23 @@ void android_main(struct android_app* state) {
 
 	}
 	V5Core::Factory().GetCore().Start(&gameApp, engine.width, engine.height, "asd", &awb);
+
+	//From this point, the Core loop has ended, so we are shutting down
+
+	//Call finish on the activity. We override the back button, so we need to manually request the activity to stop
+	ANativeActivity_finish(engine.app->activity);
+	// Wait for stop CMD
+	int ident;
+	int events;
+	struct android_poll_source* source;
+
+	while ((ident = ALooper_pollAll(0, NULL, &events,
+		(void**)&source)) >= 0) {
+
+		// Process this event.
+		if (source != NULL) {
+			source->process(state, source);
+		}
+	}
 
 }

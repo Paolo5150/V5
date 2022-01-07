@@ -26,6 +26,7 @@ namespace V5Rendering
 	public:
 		static void Add(std::string, std::unique_ptr<Shader>);
 		static Shader& GetShader(std::string name);
+		static void Shutdown() { m_shaderMap.clear(); };
 
 	private:
 		static std::unordered_map<std::string, std::unique_ptr<Shader>> m_shaderMap;

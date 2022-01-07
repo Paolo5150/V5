@@ -51,3 +51,21 @@ void Logger::Init()
 	spdlog::set_pattern("[%H:%M:%S] [%t] %^%l%$: %v");
 	
 }
+
+void Logger::Shutdown()
+{
+
+#ifdef V5_PLATFORM_WINDOWS
+	spdlog::drop("Generic");
+	spdlog::drop("V5Engine");
+	spdlog::drop("Console");
+
+#endif
+
+#ifdef V5_PLATFORM_ANDROID
+	spdlog::drop("android");
+	spdlog::drop("android-engine");
+
+#endif
+}
+

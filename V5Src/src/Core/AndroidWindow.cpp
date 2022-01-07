@@ -48,7 +48,12 @@ AndroidWindow::AndroidWindow(int width, int height, const std::string& title, vo
 
 	};
 
-
+	m_androidWindowCallback->OnBackButtonPressed = []()
+	{
+		V5LOG_INFO("Pressing back btn");
+		WindowCloseEvent wce;
+		V5Core::Factory().GetCore().TriggerEvent(wce); // Force shutdown
+	};
 }
 
 AndroidWindow::~AndroidWindow() {}

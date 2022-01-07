@@ -13,6 +13,7 @@
 #include <V5/Event/Event.h>
 #include <Renderer/Renderer.h>
 #include <V5/Debugging/Intrumentor.h>
+#include <V5/Renderer/Shader.h>
 #include <time.h>
 
 using namespace V5Core;
@@ -170,10 +171,11 @@ void Core::OnEvent(Event& e)
 void Core::Shutdown()
 {
 	V5_PROFILE_FUNCTION();
-	m_window->Destroy();
 	m_Application->OnQuit();
-
+	m_window->Destroy();
 	V5Rendering::Renderer::Instance().Shutdown();
+	V5Rendering::ShaderLibrary::Shutdown();
+	Logger::Shutdown();
 	V5LOG_INFO("Engine successfully shutdown");
 }
 
