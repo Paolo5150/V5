@@ -121,14 +121,6 @@
     </AntPackage>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Content Include="assets\textureOnly.frag" />
-    <Content Include="assets\textureOnly.vert" />
-    <Content Include="assets\textureOnlyBatched.frag" />
-    <Content Include="assets\textureOnlyBatched.vert" />
-    <Content Include="assets\textureOnlyInstanced.frag" />
-    <Content Include="assets\textureOnlyInstanced.vert" />
-    <Content Include="assets\tileTextureOnlyInstanced.frag" />
-    <Content Include="assets\tileTextureOnlyInstanced.vert" />
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />
     <AndroidManifest Include="AndroidManifest.xml" />
@@ -138,6 +130,9 @@
     <ProjectReference Include="..\Android.NativeActivity\Android.NativeActivity.vcxproj">
       <Project>{156a21d3-99f5-47a1-a8cd-8f6284360c61}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\" />
   </ItemGroup>
   <Import Project="$(AndroidTargetsPath)\Android.targets" />
   <ImportGroup Label="ExtensionTargets" />

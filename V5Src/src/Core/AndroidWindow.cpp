@@ -18,7 +18,7 @@ AndroidWindow::AndroidWindow(int width, int height, const std::string& title, vo
 	// Called when user tap screen
 	m_androidWindowCallback->OnSingleTap = [](int32_t x, int32_t y) 
 	{
-		V5LOG_INFO("SINGLE TAP! {0} {1}",x,y);
+		//V5LOG_INFO("SINGLE TAP! {0} {1}",x,y);
 
 		MouseBtnClickEvent ev(0,x,y);
 		V5Core::Factory().GetCore().TriggerEvent(ev);

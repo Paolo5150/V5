@@ -63,6 +63,8 @@ void Scene::RenderRuntime(V5Rendering::Camera& camera)
 void Scene::RenderEditor(V5Rendering::EditorCamera& camera)
 {
 	//Render tiles
+	//RenderRuntime(camera.GetProjectionMatrix());
+
 
 	{
 		Renderer::Instance().GetTileRenderer2D().Begin(camera.GetViewProjectionMatrix());

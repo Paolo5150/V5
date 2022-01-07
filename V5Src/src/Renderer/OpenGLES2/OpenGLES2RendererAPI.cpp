@@ -25,7 +25,11 @@ void OpenGLES2RendererAPI::Init()
 	V5LOG_INFO("\t GLSL: {0}", glsl);
 
 	glViewport(0, 0, Factory::GetWindow().GetWidth(), Factory::GetWindow().GetHeight());
-
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_CULL_FACE);
+	glFrontFace(GL_CCW);
+	glCullFace(GL_BACK);
 
 }
 void OpenGLES2RendererAPI::Shutdown()

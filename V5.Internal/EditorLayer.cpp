@@ -6,29 +6,17 @@
 #include <V5/Renderer/IRenderer2D.h>
 #include <V5/Renderer/IRenderer.h>
 #include <V5/Core/IWindow.h>
-#include <V5/Renderer/Texture.h>
 #include <V5/Debugging/Intrumentor.h>
 #include <V5/Components/Components.h>
 #include <V5/ImGui/imgui.h>
-#include <V5/Utils/Random.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
-#include <V5/Core/AssetManager.h>
-#include "V5/Scene/Entity.h"
-
+#include <V5/Scene/TestScene.h>
 
 using namespace V5Rendering;
 using namespace V5Core;
-using namespace V5Utils;
 
-namespace
-{
-	constexpr int QUAD_COUNT = 12;
-	std::unique_ptr<Texture2D> tt;
-	std::unique_ptr<Texture2D> tt2;
-	std::vector<Entity> entities;
-	Entity par;
-}
+
 
 void EditorLayer::OnAttach()
 {
@@ -37,62 +25,8 @@ void EditorLayer::OnAttach()
 	m_editorCamera = std::make_unique<EditorCamera>(75, 
 		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.1f, 1000.0f);
 
-	auto td = AssetManager::Instance().LoadTextureData("Textures\\smiley.png",true);
-	auto td2 = AssetManager::Instance().LoadTextureData("Textures\\wall.jpg",true);
-	tt = Texture2D::Create(td);
-	tt2 = Texture2D::Create(td2);
 
-	for (int i = 0; i < QUAD_COUNT; i++)
-	{
-		auto e = m_activeScene.CreateEntity();
-		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
-		e.GetComponent<Transform>().SetRotation({ 0,0,90});
-		e.AddComponent<TileRenderer>(tt.get());
-
-		e.GetComponent<Transform>().UpdateMatrix();
-		entities.push_back(e);
-	}
-
-	// Try cube
-	par = m_activeScene.CreateEntity();
-	par.AddComponent<SpriteRenderer>(tt.get());
-
-	auto e = m_activeScene.CreateEntity();
-	e.GetComponent<Transform>().SetPosition({ 0,0,0.5 });
-	e.AddComponent<SpriteRenderer>(tt2.get());
-	e.GetComponent<Transform>().UpdateMatrix();
-	e.GetComponent<Transform>().SetParent(par.GetComponent<Transform>());
-
-	auto e2 = m_activeScene.CreateEntity();
-	e2.GetComponent<Transform>().SetPosition({ 0,0.5,0 });
-	e2.GetComponent<Transform>().SetRotation({ -90,0,0 });
-	e2.AddComponent<SpriteRenderer>(tt2.get());
-	e2.GetComponent<Transform>().UpdateMatrix();
-
-	auto e3 = m_activeScene.CreateEntity();
-	e3.GetComponent<Transform>().SetPosition({ 0,-0.5,0 });
-	e3.GetComponent<Transform>().SetRotation({ 90,0,0 });
-	e3.AddComponent<SpriteRenderer>(tt2.get());
-	e3.GetComponent<Transform>().UpdateMatrix();
-
-	auto e4 = m_activeScene.CreateEntity();
-	e4.GetComponent<Transform>().SetPosition({ 0,0,-0.5 });
-	e4.GetComponent<Transform>().SetRotation({ 0,180,0 });
-	e4.AddComponent<SpriteRenderer>(tt2.get());
-	e4.GetComponent<Transform>().UpdateMatrix();
-
-	auto e5 = m_activeScene.CreateEntity();
-	e5.GetComponent<Transform>().SetPosition({ 0.5,0,0 });
-	e5.GetComponent<Transform>().SetRotation({ 0,90,0 });
-	e5.AddComponent<SpriteRenderer>(tt2.get());
-	e5.GetComponent<Transform>().UpdateMatrix();
-
-	auto e6 = m_activeScene.CreateEntity();
-	e6.GetComponent<Transform>().SetPosition({ -0.5,0,0 });
-	e6.GetComponent<Transform>().SetRotation({ 0,-90,0 });
-	e6.AddComponent<SpriteRenderer>(tt2.get());
-	e6.GetComponent<Transform>().UpdateMatrix();
-
+	m_activeScene = std::make_unique<TestScene>();
 }
 
 void EditorLayer::OnUpdate(double dt) 
@@ -104,19 +38,16 @@ void EditorLayer::OnUpdate(double dt)
 
 	m_editorCamera->OnUpdate(dt);
 
-	par.GetComponent<Transform>().SetPosition({ timer2 * 0.2f,0,0 });
-
-	par.GetComponent<Transform>().UpdateMatrix();
 
 	switch (m_editorState)
 	{
 		case EditorState::EDIT:
-			m_activeScene.UpdateEditor(dt);
+			m_activeScene->UpdateEditor(dt);
 
 			break;
 
 		case EditorState::PLAY:
-			m_activeScene.UpdateRuntime(dt);
+			m_activeScene->UpdateRuntime(dt);
 			break;
 	}
 
@@ -134,7 +65,7 @@ void EditorLayer::OnRender()
 	switch (m_editorState)
 	{
 	case EditorState::EDIT:
-		m_activeScene.RenderEditor(*m_editorCamera);
+		m_activeScene->RenderEditor(*m_editorCamera);
 		break;
 
 	case EditorState::PLAY:

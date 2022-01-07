@@ -12,6 +12,7 @@ namespace V5Core
 	public:
 		friend class Entity;
 		Scene() = default;
+		virtual ~Scene() = default;
 		Entity CreateEntity();
 
 		void UpdateEditor(double dt);

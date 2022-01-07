@@ -32,6 +32,6 @@ public:
 private:
 	float m_frameTime;
 	std::unique_ptr<V5Rendering::EditorCamera> m_editorCamera;
-	V5Core::Scene m_activeScene;
+	std::unique_ptr<V5Core::Scene> m_activeScene;
 	EditorState m_editorState = EditorState::EDIT;
 };

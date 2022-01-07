@@ -120,6 +120,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\VertexArray.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Application\Application.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\entt.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\TestScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Utils\Random.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\AndroidWindow.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\AssetManager.h" />

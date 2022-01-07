@@ -1,4 +1,4 @@
-#version 460
+#version 320 es
 
 layout( location = 0) in vec3 aPosition;
 layout( location = 1) in vec2 aUV;
@@ -28,7 +28,7 @@ void main()
 	modelMat[3][2] = position[2];
 	
 	
-	gl_Position = viewProjection * modelMat * vec4(aPosition, 1.0);
+	gl_Position =  viewProjection * modelMat * vec4(aPosition, 1.0);
 	color = iColor;
 	textCoords = aUV;
 	iTextureIndex = textureIndex;

@@ -54,7 +54,7 @@ void Renderer::Init()
 	}
 	else if(m_renderAPI->GetAPI() == RendererAPI::API::OpenGLES)
 	{
-		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSource("Shaders/textureOnly.vert", "Shaders/textureOnly.frag"));
+		ShaderLibrary::Add("TextureInstanced", Shader::CreateFromSource("Shaders/textureOnlyInstanced.vert", "Shaders/textureOnlyInstanced.frag"));
 		ShaderLibrary::Add("TileTextureInstanced", Shader::CreateFromSource("Shaders/tileTextureOnlyInstanced.vert", "Shaders/tileTextureOnlyInstanced.frag"));
 		ShaderLibrary::Add("Simple", Shader::CreateFromSource("Shaders/simple.vert", "Shaders/simple.frag"));
 

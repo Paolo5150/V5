@@ -21,5 +21,5 @@ public:
 	void OnEvent(V5Core::Event& e) override;
 
 private:
-	V5Core::Scene m_activeScene;
+	std::unique_ptr<V5Core::Scene> m_activeScene;
 };
