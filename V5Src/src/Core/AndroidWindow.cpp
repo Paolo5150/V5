@@ -48,11 +48,12 @@ AndroidWindow::AndroidWindow(int width, int height, const std::string& title, vo
 
 	};
 
+	// Return 0, android app will execute default back btn behvaior, triggering STOP and DESTROY
+	// Return 1, skip default behavior. If we want to quit, 0 should be returned
 	m_androidWindowCallback->OnBackButtonPressed = []()
 	{
-		V5LOG_INFO("Pressing back btn");
-		WindowCloseEvent wce;
-		V5Core::Factory().GetCore().TriggerEvent(wce); // Force shutdown
+
+		return 0;
 	};
 }
 

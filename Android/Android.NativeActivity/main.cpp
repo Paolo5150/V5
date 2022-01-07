@@ -21,6 +21,7 @@
 #include <V5/Core/ICore.h>
 #include <V5/Renderer/IRenderer.h>
 #include <V5/Core/AssetManager.h>
+#include <V5/Event/WindowEvents.h>
 #include <glad/gles2.h>
 #include <glad/egl.h>
 #include <V5/PlatformSpecific/AndroidWindowCallbacks.h>
@@ -148,12 +149,9 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 		switch (key_val)
 		{
 		case AKEYCODE_BACK:
-			awb.OnBackButtonPressed();
-			return 1;
+			return awb.OnBackButtonPressed();
 			break;
-
 		}
-
 	}
 
 	if (AInputEvent_getType(ev) == AINPUT_EVENT_TYPE_MOTION) 
@@ -211,9 +209,6 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 			}
 			break;
 		}
-	
-
-		
 
 		return 1;
 	}
@@ -263,9 +258,22 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 		//engine_draw_frame(engine);
 		break;
 
+	// All buttons call this (eg. back button, home button)
 	case APP_CMD_STOP:
+
+	{
+		WindowCloseEvent wce;
+		V5Core::Factory().GetCore().TriggerEvent(wce); //Force shutdown, for now
+
+	}
 		LOGI("Quit request");
+
+		break;
+	// Back button calls this, after stop, as the activity is being killed
+	case APP_CMD_DESTROY:
 		_exit(0);
+
+		
 		break;
 
 	case APP_CMD_START:
@@ -301,6 +309,10 @@ static void Refresh()
 	eglSwapBuffers(engine.display, engine.surface);
 }
 
+static void RequestShutdown()
+{
+}
+
 static void CloseDisplay()
 {
 	if (engine.display != EGL_NO_DISPLAY) {
@@ -313,7 +325,6 @@ static void CloseDisplay()
 		}
 		eglTerminate(engine.display);
 	}
-	engine.animating = 0;
 	engine.display = EGL_NO_DISPLAY;
 	engine.context = EGL_NO_CONTEXT;
 	engine.surface = EGL_NO_SURFACE;
@@ -349,6 +360,7 @@ void android_main(struct android_app* state) {
 	awb.PollEvents = PollEvents;
 	awb.Refresh = Refresh;
 	awb.CloseWindow = CloseDisplay;
+
 
 	// Test getting assets
 	// // These files are to be placed under the assets folder in the project and are part of the APK
@@ -388,11 +400,9 @@ void android_main(struct android_app* state) {
 
 	}
 	V5Core::Factory().GetCore().Start(&gameApp, engine.width, engine.height, "asd", &awb);
+	ANativeActivity_finish(engine.app->activity); // This will request STOP
 
 	//From this point, the Core loop has ended, so we are shutting down
-
-	//Call finish on the activity. We override the back button, so we need to manually request the activity to stop
-	ANativeActivity_finish(engine.app->activity);
 	// Wait for stop CMD
 	int ident;
 	int events;

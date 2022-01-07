@@ -14,7 +14,7 @@ struct AndroidWindowCallbacks
 	void (*OnTap)(int32_t id, int32_t x, int32_t y);
 	void (*OnTapRelease)(int32_t id, int32_t x, int32_t y);
 	void (*OnPointerMove)(int32_t id, int32_t x, int32_t y);
-	void (*OnBackButtonPressed)();
+	int (*OnBackButtonPressed)();
 
 	/*
 	* Called when screen is being closed or hidden
