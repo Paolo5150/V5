@@ -6,14 +6,14 @@ namespace V5Rendering
 	class OpenGLES2Texture2D : public Texture2D
 	{
 	public:
-		OpenGLES2Texture2D(std::string filePath,
+		OpenGLES2Texture2D(TextureData& data,
 			Texture2DWrapMode sWrap,
 			Texture2DWrapMode tWrap,
 			Texture2DFilter minFilter,
 			Texture2DFilter magFilter);
 
 		OpenGLES2Texture2D(const TextureDescription& desc);
-		OpenGLES2Texture2D(float r, float g, float b);
+		OpenGLES2Texture2D(TextureData& data, const TextureDescription& desc);
 
 
 		~OpenGLES2Texture2D();

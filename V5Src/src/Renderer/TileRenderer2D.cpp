@@ -9,6 +9,7 @@
 #include <V5/Core/Logger.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <V5/Debugging/Intrumentor.h>
+#include <V5/Core/AssetManager.h>
 #include <glm/glm.hpp>
 #include "Core/Time.h"
 using namespace V5Rendering;
@@ -66,7 +67,8 @@ namespace
 
 TileRenderer2D::TileRenderer2D()
 {
-	t = Texture2D::Create(1, 1, 1);
+	auto td = AssetManager::Instance().CreateColorTextureData(1, 1, 1);
+	t = Texture2D::Create(td);
 	AllTextures[0] = t.get();
 	TextureIndex++;
 

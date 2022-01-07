@@ -13,6 +13,7 @@
 #include <V5/Utils/Random.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
+#include <V5/Core/AssetManager.h>
 #include "V5/Scene/Entity.h"
 
 
@@ -36,15 +37,17 @@ void EditorLayer::OnAttach()
 	m_editorCamera = std::make_unique<EditorCamera>(75, 
 		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.1f, 1000.0f);
 
-	tt = Texture2D::Create("Assets\\Textures\\smiley.png");
-	tt2 = Texture2D::Create("Assets\\Textures\\wall.jpg");
+	auto td = AssetManager::Instance().LoadTextureData("Assets\\Textures\\smiley.png",true);
+	auto td2 = AssetManager::Instance().LoadTextureData("Assets\\Textures\\wall.jpg",true);
+	tt = Texture2D::Create(td);
+	tt2 = Texture2D::Create(td2);
 
 	for (int i = 0; i < QUAD_COUNT; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0});
 		e.GetComponent<Transform>().SetRotation({ 0,0,90});
-		e.AddComponent<SpriteRenderer>(tt.get());
+		e.AddComponent<TileRenderer>(tt.get());
 
 		e.GetComponent<Transform>().UpdateMatrix();
 		entities.push_back(e);

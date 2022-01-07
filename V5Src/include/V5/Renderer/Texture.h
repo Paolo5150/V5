@@ -3,6 +3,18 @@
 #include <vector>
 #include <V5/Renderer/stb_image.h>
 
+struct TextureData
+{
+	void* Data;
+	int Width;
+	int Height;
+	int Channels;
+	bool LoadingOK;
+
+	void Delete();
+};
+
+
 namespace V5Rendering
 {
 	enum Texture2DSizeFormat
@@ -42,18 +54,7 @@ namespace V5Rendering
 	};
 
 
-	struct TextureData
-	{
-		friend class Texture;
-		void* Data;
-		int Width;
-		int Height;
-		int Channels;
-
-		void Delete();
-	private:
-		bool m_loadingOK;
-	};
+	
 
 	class Texture
 	{
@@ -64,22 +65,18 @@ namespace V5Rendering
 		virtual void Bind(uint32_t slot) const = 0;
 		virtual void SetData(void* data, uint32_t size) = 0;
 
-		//TODO: thils will probably move into a potential Asset manager class
-		static TextureData LoadData(const std::string& filePath, bool flipVertical = true);
-		static TextureData CreateColorTextureData(float r, float g, float b);
-
 	};
 
 	class Texture2D : public Texture
 	{
 	public:
-		 static std::unique_ptr<Texture2D> Create(	std::string filePath, 
+		 static std::unique_ptr<Texture2D> Create(	TextureData&,
 													Texture2DWrapMode sWrap = Texture2DWrapMode::REPEAT,
 													Texture2DWrapMode tWrap = Texture2DWrapMode::REPEAT,
 													Texture2DFilter minFilter = Texture2DFilter::LINEAR,
 													Texture2DFilter magFilter = Texture2DFilter::LINEAR);
 
 		 static std::unique_ptr<Texture2D> Create(const TextureDescription& desc);
-		 static std::unique_ptr<Texture2D> Create(float r, float g, float b);
+		 static std::unique_ptr<Texture2D> Create(TextureData&, const TextureDescription& desc);
 	};
 }

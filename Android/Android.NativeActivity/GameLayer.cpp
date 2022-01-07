@@ -9,6 +9,7 @@
 #include <V5/Core/Factory.h>
 #include <V5/Core/IWindow.h>
 #include <V5/Renderer/IRenderer.h>
+#include <V5/Core/AssetManager.h>
 
 using namespace V5Rendering;
 using namespace V5Core;
@@ -27,13 +28,14 @@ void GameLayer::OnAttach()
 	float ratio = (float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight();
 	testCamera = std::make_unique<Camera>(75, ratio, 0.1f, 1000.0f);
 	viewMat = glm::lookAt(glm::vec3(1,0,15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	tt = Texture2D::Create("Textures/smiley.png");
+	auto td = AssetManager::Instance().LoadTextureData("Textures/smiley.png",true);
+	tt = Texture2D::Create(td);
 
 	for (int i = 0; i < 12; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });
-		e.AddComponent<TileRenderer>(nullptr, glm::vec4(1,1,1,1));
+		e.AddComponent<TileRenderer>(tt.get());
 
 		e.GetComponent<Transform>().UpdateMatrix();
 	}
@@ -58,7 +60,7 @@ void GameLayer::OnUpdate(double dt)
 		FPS /= counter;
 		timer = 0;
 		counter = 0;
-		LOGI("FPS %f", FPS);
+	//	LOGI("FPS %f", FPS);
 		FPS = 0;
 
 	}

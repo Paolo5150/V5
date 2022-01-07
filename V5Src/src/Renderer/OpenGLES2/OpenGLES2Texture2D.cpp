@@ -1,10 +1,14 @@
 #include "OpenGLES2Texture2D.h"
 #include <glad/gles2.h>
 #include <V5/Debugging/Intrumentor.h>
+#define V5_PLATFORM_ANDROID
 #include <V5/Core/Logger.h>
 
 
 using namespace V5Rendering;
+
+namespace
+{
 
 static GLenum Texture2DSizeFormatToOpenGLFormat(Texture2DSizeFormat type)
 {
@@ -79,23 +83,23 @@ static GLenum Texture2DWrapModeToOpenGLType(Texture2DWrapMode type)
 }
 
 
+}
+
 OpenGLES2Texture2D::~OpenGLES2Texture2D()
 {
 	glDeleteTextures(1, &m_textureID);
 }
 
-OpenGLES2Texture2D::OpenGLES2Texture2D(float r, float g, float b)
+OpenGLES2Texture2D::OpenGLES2Texture2D(TextureData& data, const TextureDescription& desc)
 {
-	TextureData texture = V5Rendering::Texture::CreateColorTextureData(r, g, b);
-
 	GLenum internalFormat = 0, dataFormat = 0;
 	m_sizeFormat = Texture2DSizeFormat::RGBA8;
 
 	internalFormat = GL_RGBA8;
 	dataFormat = GL_RGBA;
 
-	m_width = texture.Width;
-	m_height = texture.Height;
+	m_width = data.Width;
+	m_height = data.Height;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, &m_textureID);
 	glBindTexture(GL_TEXTURE_2D, m_textureID);
@@ -113,9 +117,9 @@ OpenGLES2Texture2D::OpenGLES2Texture2D(float r, float g, float b)
 
 	auto dataType = Texture2DSizeFormatToOpenGLType(m_sizeFormat);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_width, m_height, 0, dataFormat, dataType, texture.Data);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_width, m_height, 0, dataFormat, dataType, data.Data);
 
-	texture.Delete();
+	data.Delete();
 }
 
 
@@ -149,7 +153,7 @@ OpenGLES2Texture2D::OpenGLES2Texture2D(const TextureDescription& desc) :
 }
 
 
-OpenGLES2Texture2D::OpenGLES2Texture2D(std::string filePath,
+OpenGLES2Texture2D::OpenGLES2Texture2D(TextureData& data,
 	Texture2DWrapMode sWrap,
 	Texture2DWrapMode tWrap,
 	Texture2DFilter minFilter,
@@ -157,17 +161,15 @@ OpenGLES2Texture2D::OpenGLES2Texture2D(std::string filePath,
 	m_sizeFormat(Texture2DSizeFormat::RGBA8)
 
 {
-	TextureData texture = V5Rendering::Texture::LoadData(filePath);
-
 	GLenum internalFormat = 0, dataFormat = 0;
-	if (texture.Channels == 4)
+	if (data.Channels == 4)
 	{
 		m_sizeFormat = Texture2DSizeFormat::RGBA8;
 
 		internalFormat = GL_RGBA8;
 		dataFormat = GL_RGBA;
 	}
-	else if (texture.Channels == 3)
+	else if (data.Channels == 3)
 	{
 		m_sizeFormat = Texture2DSizeFormat::RGB8;
 
@@ -175,8 +177,8 @@ OpenGLES2Texture2D::OpenGLES2Texture2D(std::string filePath,
 		dataFormat = GL_RGB;
 	}
 
-	m_width = texture.Width;
-	m_height = texture.Height;
+	m_width = data.Width;
+	m_height = data.Height;
 
 	glGenTextures(1, &m_textureID);
 	glBindTexture(GL_TEXTURE_2D, m_textureID);
@@ -196,9 +198,9 @@ OpenGLES2Texture2D::OpenGLES2Texture2D(std::string filePath,
 	auto format =   Texture2DSizeFormatToOpenGLInternalFormat(m_sizeFormat);
 	auto sizeFormat =   Texture2DSizeFormatToOpenGLFormat(m_sizeFormat);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, sizeFormat, m_width, m_height, 0, dataFormat, dataType, texture.Data);
+	glTexImage2D(GL_TEXTURE_2D, 0, sizeFormat, m_width, m_height, 0, dataFormat, dataType, data.Data);
 
-	texture.Delete();
+	data.Delete();
 }
 
 uint32_t OpenGLES2Texture2D::GetWidth() const

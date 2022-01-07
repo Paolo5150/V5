@@ -56,7 +56,13 @@ namespace V5Core
 		#define V5CLOG_WARN(...)          ::V5Core::Logger::GetLogger()->warn(__VA_ARGS__)
 		#define V5CLOG_ERROR(...)         ::V5Core::Logger::GetLogger()->error(__VA_ARGS__)
 		#define V5CLOG_CRITICAL(...)      ::V5Core::Logger::GetLogger()->critical(__VA_ARGS__)
-	#endif
+		#else
+			#define V5CLOG_TRACE(...)      
+			#define V5CLOG_INFO(...)       
+			#define V5CLOG_WARN(...)       
+			#define V5CLOG_ERROR(...)      
+			#define V5CLOG_CRITICAL(...) 
+		#endif
 #else 
 
 #define V5CLOG_TRACE(...)      

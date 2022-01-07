@@ -8,6 +8,7 @@
 #include <V5/Core/Logger.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <V5/Debugging/Intrumentor.h>
+#include <V5/Core/AssetManager.h>
 #include <glm/glm.hpp>
 
 using namespace V5Rendering;
@@ -70,7 +71,8 @@ namespace
 
 Renderer2D::Renderer2D()
 {
-	whiteTexture = Texture2D::Create(1, 1, 1);
+	auto td = AssetManager::Instance().CreateColorTextureData(1, 1, 1);
+	whiteTexture = Texture2D::Create(td);
 	AllTextures[0] = whiteTexture.get();
 	TextureIndex++;
 
