@@ -48,11 +48,15 @@ void GameLayer::OnUpdate(double dt)
 		FPS /= counter;
 		timer = 0;
 		counter = 0;
-	//	LOGI("FPS %f", FPS);
+		LOGI("frame time %f", dt);
 		FPS = 0;
 
 	}
-	viewMat = glm::lookAt(glm::vec3(timer2 * 2, 0, 15), glm::vec3(timer2 * 2, 0, 15) + glm::vec3(0,0,-1), glm::vec3(0, 1, 0));
+
+	static glm::vec3 pos(0, 0, 2);
+
+	pos += glm::vec3(1, 0, 0) * 0.5f * (float)dt;
+	viewMat = glm::lookAt(pos, pos + glm::vec3(0,0,-1), glm::vec3(0, 1, 0));
 
 
 }

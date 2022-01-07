@@ -29,6 +29,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <V5/Core/ITime.h>
 /**
 * Our saved state data.
 */
@@ -143,6 +144,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 
 	struct engine* engine = (struct engine*)app->userData;
 
+	
 	if (AInputEvent_getType(ev) == AINPUT_EVENT_TYPE_KEY)
 	{
 		int key_val = AKeyEvent_getKeyCode(ev);
@@ -153,6 +155,8 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 			break;
 		}
 	}
+
+	//auto m_timeStart = std::chrono::high_resolution_clock::now();
 
 	if (AInputEvent_getType(ev) == AINPUT_EVENT_TYPE_MOTION) 
 	{
@@ -209,6 +213,11 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 			}
 			break;
 		}
+
+		//auto now = std::chrono::high_resolution_clock::now();
+
+		//std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_timeStart);
+		//LOGI("Motion event time %f", time_span);
 
 		return 1;
 	}
@@ -287,19 +296,14 @@ static void PollEvents()
 	int ident;
 	int events;
 	struct android_poll_source* source;
-	while ( (ident = ALooper_pollAll(0, NULL, &events, (void**)(&source))) >= 0)
-	{
 
-		if (engine.app->destroyRequested != 0) {
-			break;
-		}
+	ALooper_pollAll(0, NULL, &events, (void**)(&source));
 		// Process this event.
-		if (source != NULL) {
+	if (source != NULL) {
 			source->process(engine.app, source);
-			continue;
 		}
-		break;
-	}
+
+
 
 }
 
