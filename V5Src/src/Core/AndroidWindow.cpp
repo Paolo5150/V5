@@ -3,6 +3,8 @@
 #include <V5/Core/ICore.h>
 #include <V5/Core/Factory.h>
 #include <V5/Event/WindowEvents.h>
+#include <V5/Event/InputEvents.h>
+#include <V5/Core/Input.h>
 using namespace V5Core;
 
 
@@ -13,9 +15,12 @@ AndroidWindow::AndroidWindow(int width, int height, const std::string& title, vo
 {
 	V5LOG_INFO("Init display {0} {1}", m_width, m_height);
 
-	m_androidWindowCallback->OnAcceleratorChange = [](int32_t& x, int32_t& y) 
+	// Called when user tap screen
+	m_androidWindowCallback->OnSingleTap = [](int32_t& x, int32_t& y) 
 	{
 		V5LOG_INFO("Tap {0} {1}", x, y);
+		MouseBtnClickEvent ev(0,x,y);
+		V5Core::Factory().GetCore().TriggerEvent(ev);
 	};
 
 	m_androidWindowCallback->OnWindowClose = []() 

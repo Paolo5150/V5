@@ -80,4 +80,9 @@ void GameLayer::OnRender()
 
 
 void GameLayer::OnImGuiRender() {}
-void GameLayer::OnEvent(V5Core::Event& e) {}
+void GameLayer::OnEvent(V5Core::Event& e) 
+{
+	if (e.GetType() == EventType::MouseBtnClick)
+	{
+	}
+}

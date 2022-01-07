@@ -24,9 +24,14 @@ namespace V5Core
 	class MouseBtnClickEvent : public Event
 	{
 	public:
-		MouseBtnClickEvent(int btn) : Event(EventType::MouseBtnClick), m_btn(btn) {}
+		MouseBtnClickEvent(int btn, int x, int y) : Event(EventType::MouseBtnClick), m_btn(btn), m_x(x), m_y(y) {}
+		int GetBtn() { return m_btn; }
+		int GetX() { return m_x; }
+		int GetY() { return m_y; }
 	private:
 		int m_btn;
+		int m_x;
+		int m_y;
 
 	};
 

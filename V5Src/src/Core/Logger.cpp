@@ -17,7 +17,6 @@ std::shared_ptr<spdlog::logger> Logger::s_ConsoleLogger;
 
 void Logger::Init()
 {
-
 	time_t t = time(0);   // get time now
 	struct tm * now = localtime(&t);
 

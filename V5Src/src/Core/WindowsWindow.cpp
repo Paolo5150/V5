@@ -119,7 +119,7 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 		if (Input::IsMouseButtonDown(button))
 		{
-			MouseBtnClickEvent e(button);
+			MouseBtnClickEvent e(button, Input::GetMousePosition()[0], Input::GetMousePosition()[1]);
 			if (data->m_eventListener)
 			{
 				data->m_eventListener(e);

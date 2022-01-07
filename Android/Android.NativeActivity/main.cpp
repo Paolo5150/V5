@@ -62,16 +62,14 @@ static GameApp gameApp;
 static AndroidWindowCallbacks awb;
 static struct engine engine;
 
-
-
-
 /**
 * Initialize an EGL context for the current display.
 */
 static int engine_init_display(struct engine* engine) {
 	// initialize OpenGL ES and EGL
 	if (!gladLoaderLoadEGL(NULL)) {
-		LOGW("Unable to eglMakeCurrent");
+		LOGW("Failed to initialize EGL");
+		return -1;
 	};
 
 	/*
@@ -142,10 +140,20 @@ static int engine_init_display(struct engine* engine) {
 */
 static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) {
 	struct engine* engine = (struct engine*)app->userData;
+
+
 	if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
+
 		engine->state.x = AMotionEvent_getX(event, 0);
 		engine->state.y = AMotionEvent_getY(event, 0);
-		awb.OnAcceleratorChange(engine->state.x, engine->state.y);
+
+		auto act = AKeyEvent_getAction(event);
+		
+		if (act == AKEY_EVENT_ACTION_DOWN)
+		{
+			awb.OnSingleTap(engine->state.x, engine->state.y);
+		}
+		
 
 		return 1;
 	}
