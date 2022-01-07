@@ -16,7 +16,7 @@
 */
 
 #include <malloc.h>
-
+#include <android/looper.h>
 #include <V5/Core/Factory.h>
 #include <V5/Core/ICore.h>
 #include <V5/Renderer/IRenderer.h>
@@ -138,21 +138,35 @@ static int engine_init_display(struct engine* engine) {
 /**
 * Process the next input event.
 */
-static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) {
+static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
+
 	struct engine* engine = (struct engine*)app->userData;
 
+	if (AInputEvent_getType(ev) == AINPUT_EVENT_TYPE_MOTION) 
+	{
+		int32_t action = AMotionEvent_getAction(ev);
 
-	if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
-
-		engine->state.x = AMotionEvent_getX(event, 0);
-		engine->state.y = AMotionEvent_getY(event, 0);
-
-		auto act = AKeyEvent_getAction(event);
-		
-		if (act == AKEY_EVENT_ACTION_DOWN)
+		switch (action & AMOTION_EVENT_ACTION_MASK)
 		{
-			awb.OnSingleTap(engine->state.x, engine->state.y);
+		case AMOTION_EVENT_ACTION_POINTER_DOWN:
+		case AMOTION_EVENT_ACTION_DOWN:
+
+			size_t index = (action & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
+			int32_t id = AMotionEvent_getPointerId(ev, index);
+
+			int x = static_cast<int>(AMotionEvent_getX(ev, index));
+			int y = static_cast<int>(AMotionEvent_getY(ev, index));
+
+			// Simple tap callback for first touch
+			if(id == 0)
+				awb.OnSingleTap(x, y);
+	
+			awb.OnTap(id, x, y);
+
+			break;
 		}
+	
+
 		
 
 		return 1;
