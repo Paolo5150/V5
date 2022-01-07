@@ -3,7 +3,6 @@
 
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
-#include "CoreLogger.h"
 #include <V5/Application/Application.h>
 #include <functional>
 #include <V5/Core/Input.h>
@@ -108,7 +107,7 @@ void Core::Run()
 	
 	}
 
-	V5CORE_LOG_INFO("Engine Run has ended");
+	V5LOG_INFO("Engine Run has ended");
 	V5_PROFILE_END();
 
 	V5_PROFILE_BEGIN("Core", "CoreShutdown.json");
@@ -157,7 +156,7 @@ void Core::OnEvent(Event& e)
 	if (e.GetType() == EventType::WindowClose)
 	{
 		m_isEngineRunning = false;
-		V5CORE_LOG_INFO("WindowClose event received by Core, initiating shutdown");
+		V5LOG_INFO("WindowClose event received by Core, initiating shutdown");
 		e.Consume();
 	}
 

@@ -1,7 +1,7 @@
 #include "OpenGLBuffer.h"
 #include <iostream>
 #include <glad/gl.h>
-#include <Core/CoreLogger.h>
+#include <V5/Core/Logger.h>
 #include <V5/Debugging/Intrumentor.h>
 
 using namespace V5Rendering;

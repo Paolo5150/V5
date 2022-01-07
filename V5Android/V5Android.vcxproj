@@ -138,7 +138,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\yaml\include;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -149,7 +149,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\yaml\include;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>

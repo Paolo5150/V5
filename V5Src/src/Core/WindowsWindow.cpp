@@ -1,7 +1,7 @@
 
 #include "WindowsWindow.h"
 
-#include "CoreLogger.h"
+#include <V5/Core/Logger.h>
 #include <V5/Core/Input.h>
 #include <Event/IEventListener.h>
 #include <V5/Event/WindowEvents.h>
@@ -14,10 +14,10 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 {
 	if (!glfwInit())
 	{
-		V5CORE_LOG_ERROR("GLFW failed to initialize, throwing exception");
+		V5LOG_ERROR("GLFW failed to initialize, throwing exception");
 		throw std::runtime_error("GLFW failed to initialize");
 	}
-	V5CORE_LOG_INFO("GLFW successfully initialized");
+	V5LOG_INFO("GLFW successfully initialized");
 
 	auto monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -26,7 +26,7 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 	if (!m_glfwWindow)
 	{
-		V5CORE_LOG_ERROR("Error while opening the window, throwing except");
+		V5LOG_INFO("Error while opening the window, throwing except");
 		throw std::runtime_error("Wrror while opening the window");
 	}
 
@@ -163,7 +163,6 @@ void WindowsWindow::Destroy()
 
 	glfwDestroyWindow(m_glfwWindow);
 	glfwTerminate();
-	V5CORE_LOG_INFO("Windows destroyed, GLFW terminated");
 }
 
 void WindowsWindow::RegisterEventListener(std::function<void(Event&)> listener)

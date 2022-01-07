@@ -1,6 +1,7 @@
 #include <V5/Renderer/Shader.h>
 #include "Renderer.h"
-#include "Core/CoreLogger.h"
+#include <V5/Core/Logger.h>
+
 #include <V5/Core/AssetManager.h>
 #ifdef V5_PLATFORM_WINDOWS
 #include "OpenGL/OpenGLShader.h"

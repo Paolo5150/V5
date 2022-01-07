@@ -1,6 +1,6 @@
 #include <V5/Core/Input.h>
 
-#include "CoreLogger.h"
+#include <V5/Core/Logger.h>
 
 using namespace V5Core;
 

@@ -2,7 +2,6 @@
 #include <V5/Debugging/Intrumentor.h>
 
 #include <V5/Core/Logger.h>
-#include <Core/CoreLogger.h>
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <V5/Event/WindowEvents.h>
@@ -16,7 +15,7 @@ using namespace V5Rendering;
 
 void OpenGLRendererAPI::Init()
 {
-	V5CORE_LOG_INFO("Initializing OpenGL");
+	V5LOG_INFO("Initializing OpenGL");
 	if (!gladLoaderLoadGL())
 	{
 		V5CLOG_CRITICAL("Failed to initialize GLAD");
@@ -26,9 +25,9 @@ void OpenGLRendererAPI::Init()
 	const GLubyte* gpu = glGetString(GL_RENDERER);
 	const GLubyte* version = glGetString(GL_VERSION);
 	const GLubyte* glsl = glGetString(GL_SHADING_LANGUAGE_VERSION);
-	V5CORE_LOG_INFO("\t GPU: {0}", gpu);
-	V5CORE_LOG_INFO("\t OpenGL: {0}", version);
-	V5CORE_LOG_INFO("\t GLSL: {0}", glsl);
+	V5LOG_INFO("\t GPU: {0}", gpu);
+	V5LOG_INFO("\t OpenGL: {0}", version);
+	V5LOG_INFO("\t GLSL: {0}", glsl);
 
 
 	glClearColor(0, 0, 0, 1);
@@ -43,7 +42,7 @@ void OpenGLRendererAPI::Init()
 
 void OpenGLRendererAPI::Shutdown()
 {
-	V5CORE_LOG_INFO("Shutting down OpenGL");
+	V5LOG_INFO("Shutting down OpenGL");
 }
 
 void OpenGLRendererAPI::OnEvent(V5Core::Event& e)

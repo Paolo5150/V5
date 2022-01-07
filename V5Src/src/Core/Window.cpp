@@ -1,6 +1,6 @@
 #include "Window.h"
 #include <V5/Core/PlatformDetection.h>
-#include "CoreLogger.h"
+#include <V5/Core/Logger.h>
 #include <Event/IEventListener.h>
 #include <V5/Event/WindowEvents.h>
 #include <V5/Event/InputEvents.h>

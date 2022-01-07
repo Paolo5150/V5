@@ -1,6 +1,7 @@
 #include "OpenGLShader.h"
 #include <fstream>
-#include <Core/CoreLogger.h>
+#include <V5/Core/Logger.h>
+
 #include <glad/gl.h>
 
 using namespace V5Rendering;

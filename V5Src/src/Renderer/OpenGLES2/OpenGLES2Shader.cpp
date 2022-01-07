@@ -1,8 +1,8 @@
 #include "OpenGLES2Shader.h"
 #include <fstream>
-#include <Core/CoreLogger.h>
 #include <glad/gles2.h>
 #include <sstream>
+#include <V5/Core/Logger.h>
 
 using namespace V5Rendering;
 

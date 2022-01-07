@@ -1,6 +1,7 @@
 #include <V5/Renderer/Texture.h>
 #include <Renderer/RendererAPI.h>
-#include <Core/CoreLogger.h>
+#include <V5/Core/Logger.h>
+
 
 
 #ifdef V5_PLATFORM_WINDOWS
