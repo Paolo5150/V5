@@ -150,19 +150,34 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 		{
 		case AMOTION_EVENT_ACTION_POINTER_DOWN:
 		case AMOTION_EVENT_ACTION_DOWN:
+			{
+				size_t index = (action & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
+				int32_t id = AMotionEvent_getPointerId(ev, index);
 
-			size_t index = (action & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
-			int32_t id = AMotionEvent_getPointerId(ev, index);
+				int x = static_cast<int>(AMotionEvent_getX(ev, index));
+				int y = static_cast<int>(AMotionEvent_getY(ev, index));
 
-			int x = static_cast<int>(AMotionEvent_getX(ev, index));
-			int y = static_cast<int>(AMotionEvent_getY(ev, index));
+				// Simple tap callback for first touch
+				if (id == 0)
+					awb.OnSingleTap(x, y);
 
-			// Simple tap callback for first touch
-			if(id == 0)
-				awb.OnSingleTap(x, y);
-	
-			awb.OnTap(id, x, y);
+				awb.OnTap(id, x, y);
+			}			
 
+			break;
+
+		case AMOTION_EVENT_ACTION_POINTER_UP:
+		case AMOTION_EVENT_ACTION_UP:
+			{
+				size_t index = (action & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
+				int32_t id = AMotionEvent_getPointerId(ev, index);
+
+				int x = static_cast<int>(AMotionEvent_getX(ev, index));
+				int y = static_cast<int>(AMotionEvent_getY(ev, index));
+
+				awb.OnTapRelease(id, x, y);
+			}
+			
 			break;
 		}
 	

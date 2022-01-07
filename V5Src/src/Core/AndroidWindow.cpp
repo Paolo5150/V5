@@ -36,6 +36,12 @@ AndroidWindow::AndroidWindow(int width, int height, const std::string& title, vo
 
 	};
 
+	m_androidWindowCallback->OnTapRelease = [](int32_t id, int32_t x, int32_t y)
+	{
+		V5LOG_INFO("Release! {0} {1} {2}", id, x, y);
+
+	};
+
 	m_androidWindowCallback->OnPointerDown = [](int32_t id, int32_t x, int32_t y)
 	{
 		V5LOG_INFO("P {0} {1} {2}", id,x, y);
