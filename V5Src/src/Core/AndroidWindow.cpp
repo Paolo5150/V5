@@ -42,9 +42,9 @@ AndroidWindow::AndroidWindow(int width, int height, const std::string& title, vo
 
 	};
 
-	m_androidWindowCallback->OnPointerDown = [](int32_t id, int32_t x, int32_t y)
+	m_androidWindowCallback->OnPointerMove = [](int32_t id, int32_t x, int32_t y)
 	{
-		V5LOG_INFO("P {0} {1} {2}", id,x, y);
+		V5LOG_INFO("Moving  {0} {1} {2}", id,x, y);
 
 	};
 

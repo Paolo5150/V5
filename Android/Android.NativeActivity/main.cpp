@@ -179,6 +179,23 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* ev) {
 			}
 			
 			break;
+
+		case AMOTION_EVENT_ACTION_MOVE:
+			{
+				size_t pointerCount = AMotionEvent_getPointerCount(ev);
+
+				for (size_t p = 0; p < pointerCount; p++)
+				{
+					int32_t id = AMotionEvent_getPointerId(ev, p);
+
+					int x = static_cast<int>(AMotionEvent_getX(ev, p));
+					int y = static_cast<int>(AMotionEvent_getY(ev, p));
+
+					awb.OnPointerMove(id, x, y);
+
+				}
+			}
+			break;
 		}
 	
 
