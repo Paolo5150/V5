@@ -17,6 +17,8 @@ namespace
 {
 	std::unique_ptr<Camera> testCamera;
 	glm::mat4 viewMat;
+	std::unique_ptr<Texture2D> tt;
+
 }
 
 void GameLayer::OnAttach()
@@ -25,8 +27,9 @@ void GameLayer::OnAttach()
 	float ratio = (float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight();
 	testCamera = std::make_unique<Camera>(75, ratio, 0.1f, 1000.0f);
 	viewMat = glm::lookAt(glm::vec3(1,0,15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	tt = Texture2D::Create("Textures/smiley.png");
 
-	for (int i = 0; i < 150000; i++)
+	for (int i = 0; i < 12; i++)
 	{
 		auto e = m_activeScene.CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });

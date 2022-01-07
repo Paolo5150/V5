@@ -82,6 +82,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Texture2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2VertexArray.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -171,6 +172,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Shader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Texture2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2VertexArray.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLBuffer.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>

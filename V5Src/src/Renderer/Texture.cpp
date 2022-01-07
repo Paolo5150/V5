@@ -7,6 +7,10 @@
 #ifdef V5_PLATFORM_WINDOWS
 #include <Renderer/OpenGL/OpenGLTexture2D.h>
 #endif
+#ifdef V5_PLATFORM_ANDROID
+#include <Renderer/OpenGLES2/OpenGLES2Texture2D.h>
+
+#endif
 
 using namespace V5Rendering;
 
@@ -112,6 +116,11 @@ std::unique_ptr<Texture2D> Texture2D::Create(const TextureDescription& desc)
 		case RendererAPI::API::OpenGL:
 			return std::make_unique<OpenGLTexture2D>(desc);
 #endif
+#ifdef V5_PLATFORM_ANDROID
+
+		case RendererAPI::API::OpenGLES:
+			return std::make_unique<OpenGLES2Texture2D>(desc);
+#endif
 		default:
 			break;
 	}
@@ -126,6 +135,11 @@ std::unique_ptr<Texture2D> Texture2D::Create(float r, float g, float b)
 
 	case RendererAPI::API::OpenGL:
 		return std::make_unique<OpenGLTexture2D>(r,g,b);
+#endif
+#ifdef V5_PLATFORM_ANDROID
+
+	case RendererAPI::API::OpenGLES:
+		return std::make_unique<OpenGLES2Texture2D>(r,g,b);
 #endif
 	default:
 		break;
@@ -147,6 +161,11 @@ std::unique_ptr<Texture2D> Texture2D::Create(std::string filePath,
 
 	case RendererAPI::API::OpenGL:
 		return std::make_unique<OpenGLTexture2D>(filePath, sWrap, tWrap, minFilter, magFilter);
+#endif
+#ifdef V5_PLATFORM_ANDROID
+
+	case RendererAPI::API::OpenGLES:
+		return std::make_unique<OpenGLES2Texture2D>(filePath, sWrap, tWrap, minFilter, magFilter);
 #endif
 	default:
 		break;

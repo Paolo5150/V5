@@ -50,7 +50,7 @@ namespace V5Core
 		#define V5CLOG_WARN(...)          ::V5Core::Logger::GetConsoleLogger()->warn(__VA_ARGS__)
 		#define V5CLOG_ERROR(...)         ::V5Core::Logger::GetConsoleLogger()->error(__VA_ARGS__)
 		#define V5CLOG_CRITICAL(...)      ::V5Core::Logger::GetConsoleLogger()->critical(__VA_ARGS__)
-		#elif defined V5_PLATFORM_ANDROID
+	#elif defined V5_PLATFORM_ANDROID
 		#define V5CLOG_TRACE(...)         ::V5Core::Logger::GetLogger()->trace(__VA_ARGS__)
 		#define V5CLOG_INFO(...)          ::V5Core::Logger::GetLogger()->info(__VA_ARGS__)
 		#define V5CLOG_WARN(...)          ::V5Core::Logger::GetLogger()->warn(__VA_ARGS__)

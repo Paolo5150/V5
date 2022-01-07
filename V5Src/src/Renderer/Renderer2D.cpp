@@ -274,10 +274,10 @@ void Renderer2D::FlushBuffer()
 	UseInstancing ? ShaderLibrary::GetShader("TextureInstanced").Bind() : ShaderLibrary::GetShader("TextureBatched").Bind();
 
 	//TODO commented to test android
-	//for (int i = 0; i < TextureIndex; i++)
-	//{
-	//	AllTextures[i]->Bind(i);
-	//}
+	for (int i = 0; i < TextureIndex; i++)
+	{
+		AllTextures[i]->Bind(i);
+	}
 
 
 	if (UseInstancing)
