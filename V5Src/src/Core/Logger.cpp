@@ -12,7 +12,6 @@
 using namespace V5Core;
 
 std::shared_ptr<spdlog::logger> Logger::s_Logger;
-std::shared_ptr<spdlog::logger> Logger::s_V5Logger;
 std::shared_ptr<spdlog::logger> Logger::s_ConsoleLogger;
 
 void Logger::Init()
@@ -31,7 +30,6 @@ void Logger::Init()
 #ifdef V5_PLATFORM_WINDOWS
 	auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(ss.str());
 	s_Logger = std::make_shared<spdlog::logger>(spdlog::logger("Generic", file_sink));
-	s_V5Logger = std::make_shared<spdlog::logger>(spdlog::logger("V5Engine", file_sink));
 	s_ConsoleLogger = spdlog::stdout_color_mt("Console");
 #endif
 
@@ -39,7 +37,6 @@ void Logger::Init()
 #ifdef V5_PLATFORM_ANDROID
 	std::string tag = "V5Logger";
 	s_Logger = spdlog::android_logger_mt("android", tag);
-	s_V5Logger = spdlog::android_logger_mt("android-engine", tag);
 
 #endif
 	
@@ -57,14 +54,12 @@ void Logger::Shutdown()
 
 #ifdef V5_PLATFORM_WINDOWS
 	spdlog::drop("Generic");
-	spdlog::drop("V5Engine");
 	spdlog::drop("Console");
 
 #endif
 
 #ifdef V5_PLATFORM_ANDROID
 	spdlog::drop("android");
-	spdlog::drop("android-engine");
 
 #endif
 }
