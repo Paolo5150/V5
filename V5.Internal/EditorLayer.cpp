@@ -37,8 +37,8 @@ void EditorLayer::OnAttach()
 	m_editorCamera = std::make_unique<EditorCamera>(75, 
 		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.1f, 1000.0f);
 
-	auto td = AssetManager::Instance().LoadTextureData("Assets\\Textures\\smiley.png",true);
-	auto td2 = AssetManager::Instance().LoadTextureData("Assets\\Textures\\wall.jpg",true);
+	auto td = AssetManager::Instance().LoadTextureData("Textures\\smiley.png",true);
+	auto td2 = AssetManager::Instance().LoadTextureData("Textures\\wall.jpg",true);
 	tt = Texture2D::Create(td);
 	tt2 = Texture2D::Create(td2);
 

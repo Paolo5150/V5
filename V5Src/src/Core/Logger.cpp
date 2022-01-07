@@ -26,7 +26,7 @@ void Logger::Init()
 	std::string fileName(buffer);
 
 	std::stringstream ss;
-	ss << "V5Log_" << fileName << ".txt";
+	ss << "Logs/V5Log_" << fileName << ".txt";
 
 
 #ifdef V5_PLATFORM_WINDOWS
@@ -43,14 +43,12 @@ void Logger::Init()
 	s_V5Logger = spdlog::android_logger_mt("android-engine", tag);
 
 #endif
-
-
+	
 	spdlog::set_pattern("[%H:%M:%S] %v");
 
 	s_Logger->info("------------------ START OF LOG ----------------------\n");
 
 	s_Logger->set_level(spdlog::level::trace);
 	spdlog::set_pattern("[%H:%M:%S] [%t] %^%l%$: %v");
-
 	
 }
