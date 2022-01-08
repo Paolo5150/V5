@@ -25,7 +25,6 @@ void OpenGLES2RendererAPI::Init()
 	V5LOG_INFO("\t GLSL: {0}", glsl);
 
 	glViewport(0, 0, Factory::GetWindow().GetWidth(), Factory::GetWindow().GetHeight());
-	glDepthFunc(GL_LESS);
 
 
 }
@@ -39,8 +38,13 @@ void OpenGLES2RendererAPI::Shutdown()
 
 void OpenGLES2RendererAPI::SetDepthTestEnabled(bool enabled)
 {
-	if(enabled)
+	if (enabled)
+	{
 		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		glDepthMask(GL_TRUE);
+
+	}
 	else
 		glDisable(GL_DEPTH_TEST);
 }
@@ -100,6 +104,6 @@ void OpenGLES2RendererAPI::SetClearColor(float r, float g, float b, float a) con
 
 void OpenGLES2RendererAPI::Clear()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
