@@ -32,17 +32,38 @@ void OpenGLRendererAPI::Init()
 
 	glClearColor(0, 0, 0, 1);
 	glViewport(0, 0, Factory::GetWindow().GetWidth(), Factory::GetWindow().GetHeight());
-
-	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CCW);
-	glCullFace(GL_BACK);
+
+
 }
 
 void OpenGLRendererAPI::Shutdown()
 {
 	V5LOG_INFO("Shutting down OpenGL");
+}
+
+void OpenGLRendererAPI::SetDepthTestEnabled(bool enabled)
+{
+	if (enabled)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+}
+
+void OpenGLRendererAPI::SetCullEnabled(bool enabled)
+{
+	if (enabled)
+	{
+		glEnable(GL_CULL_FACE);
+		glFrontFace(GL_CCW);
+		glCullFace(GL_BACK);
+	}
+	else
+	{
+		glDisable(GL_CULL_FACE);
+		glFrontFace(GL_CCW);
+		glCullFace(GL_BACK);
+	}
 }
 
 void OpenGLRendererAPI::OnEvent(V5Core::Event& e)

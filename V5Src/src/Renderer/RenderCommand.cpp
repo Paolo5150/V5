@@ -8,3 +8,12 @@ void RenderCommand::SetClearColor(float r, float g, float b, float a)
 {
 	Renderer::Instance().GetRenderAPI().SetClearColor(r, g, b, a);
 }
+
+void RenderCommand::SetDepthTestEnabled(bool enabled)
+{
+
+}
+void RenderCommand::SetCullEnabled(bool enabled)
+{
+
+}
