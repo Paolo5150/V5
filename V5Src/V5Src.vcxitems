@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{025aba19-3a86-4bb7-a4ce-8799c9b56d54}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Dependencies\glad\src\egl.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x86'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Dependencies\glad\src\gl.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x86'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CompileAsCpp</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CompileAsCpp</CompileAs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Dependencies\glad\src\gles2.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)include\V5\Application\ImGuiLayer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Components\Components.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\AndroidWindow.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\AssetManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Core.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Factory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Input.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Insturmentor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\LayerStack.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Logger.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Time.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\Window.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Core\WindowsWindow.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Buffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Camera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\EditorCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Buffer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2RendererAPI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Shader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Texture2D.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2VertexArray.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLBuffer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLRendererAPI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLShader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLTexture2D.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLVertexArray.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\RenderCommand.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Renderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Shader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Texture.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\TileRenderer2D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\VertexArray.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\Entity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\TestScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Application\Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Application\ImGuiLayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Components\Components.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Factory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\ICore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\ITime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\IWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\KeyCodes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Layer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\LayerStack.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Logger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\PlatformDetection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Debugging\Intrumentor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Event\Event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Event\InputEvents.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Event\WindowEvents.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\PlatformSpecific\AndroidWindowCallbacks.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\Camera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\EditorCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\IRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\IRenderer2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\RenderCommand.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\Shader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\stb_image.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Renderer\Texture.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\Entity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\entt.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Scene\TestScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Utils\Random.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\AndroidWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\AssetManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Core.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\CoreLogger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Time.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Window.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\WindowsWindow.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Event\IEventListener.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\Buffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Buffer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2RendererAPI.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Shader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2Texture2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGLES2\OpenGLES2VertexArray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLBuffer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLRendererAPI.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLShader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLTexture2D.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\OpenGL\OpenGLVertexArray.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\Renderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\Renderer2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\RendererAPI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\TileRenderer2D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\Vertex.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\VertexArray.h" />
+  </ItemGroup>
+</Project>
