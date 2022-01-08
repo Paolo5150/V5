@@ -30,6 +30,7 @@ public:
 	void OnEvent(V5Core::Event& e) override;
 
 private:
+	void ToggleState();
 	float m_frameTime;
 	std::unique_ptr<V5Rendering::EditorCamera> m_editorCamera;
 	EditorState m_editorState = EditorState::EDIT;
