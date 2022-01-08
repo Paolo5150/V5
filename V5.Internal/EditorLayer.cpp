@@ -158,7 +158,7 @@ void EditorLayer::OnImGuiRender()
         }
 
         ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f));
-        std::string btnText = m_editorState == EditorState::EDIT ? "Play" : "Edit";
+        std::string btnText = m_editorState == EditorState::EDIT ? "Play" : "Stop";
         if (ImGui::Button(btnText.c_str()))
         {
             ToggleState();

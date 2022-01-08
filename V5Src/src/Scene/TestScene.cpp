@@ -28,7 +28,7 @@ namespace
 
 TestScene::TestScene()
 {
-	auto td = AssetManager::Instance().LoadTextureData("Textures/wall.jpg", true);
+	auto td = AssetManager::Instance().LoadTextureData("Textures/smiley.png", true);
 	auto td2 = AssetManager::Instance().LoadTextureData("Textures/wall.jpg", true);
 	tt = Texture2D::Create(td);
 	tt2 = Texture2D::Create(td2);
@@ -38,7 +38,7 @@ TestScene::TestScene()
 		auto e = CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });
 		e.GetComponent<Transform>().SetRotation({ 0,0,90 });
-		e.AddComponent<TileRenderer>(tt.get());
+		e.AddComponent<TileRenderer>(tt2.get());
 
 		e.GetComponent<Transform>().UpdateMatrix();
 	}
@@ -51,7 +51,7 @@ TestScene::TestScene()
 		void Update(double dt) 
 		{
 			auto& t = entity->GetComponent<Transform>();
-			t.SetPosition(t.GetPosition() + glm::vec3(1, 0, 0) * 1.0f * (float)dt);
+			t.SetPosition(t.GetPosition() + glm::vec3(0.2f, 0, 1) * 1.0f * (float)dt);
 
 		}
 		void Destroy() 

@@ -25,7 +25,7 @@ void GameLayer::OnAttach(Scene* scene)
 {
 	float ratio = (float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight();
 	testCamera = std::make_unique<Camera>(75, ratio, 0.1f, 1000.0f);
-	viewMat = glm::lookAt(glm::vec3(0,0,2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	viewMat = glm::lookAt(glm::vec3(0,0,6), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	m_activeScene = scene;
 }
 
