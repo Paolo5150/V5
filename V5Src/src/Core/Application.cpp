@@ -34,6 +34,7 @@ void Application::OnStart()
 {
 	V5LOG_INFO("App {0} start", m_name);
 	m_imGuiLayer = new ImGuiLayer();
+
 	PushOverlay(m_imGuiLayer);
 
 

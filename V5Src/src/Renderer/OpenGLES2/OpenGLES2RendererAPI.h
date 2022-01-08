@@ -15,6 +15,8 @@ namespace V5Rendering
 		void RenderIndexed(VertexArray& aroverride) override;
 		void RenderIndexed(VertexArray& aroverride, uint32_t indexCount) override;
 		void RenderIndexedInstanced(VertexArray& vao, uint32_t instanceCount) override;
+		void SetDepthTestEnabled(bool enabled) override;
+		void SetCullEnabled(bool enabled) override;
 
 		void Clear() override;
 

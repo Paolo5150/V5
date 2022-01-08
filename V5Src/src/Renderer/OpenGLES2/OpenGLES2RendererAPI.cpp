@@ -25,21 +25,40 @@ void OpenGLES2RendererAPI::Init()
 	V5LOG_INFO("\t GLSL: {0}", glsl);
 
 	glViewport(0, 0, Factory::GetWindow().GetWidth(), Factory::GetWindow().GetHeight());
-	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CCW);
-	glCullFace(GL_BACK);
+
 
 }
 void OpenGLES2RendererAPI::Shutdown()
 {
 
-
-
 	gladLoaderUnloadGLES2();
 	V5LOG_INFO("Unloaded OpenGLES2");
 
+}
+
+void OpenGLES2RendererAPI::SetDepthTestEnabled(bool enabled)
+{
+	if(enabled)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+}
+
+void OpenGLES2RendererAPI::SetCullEnabled(bool enabled)
+{
+	if (enabled)
+	{
+		glEnable(GL_CULL_FACE);
+		glFrontFace(GL_CCW);
+		glCullFace(GL_BACK);
+	}
+	else
+	{
+		glDisable(GL_CULL_FACE);
+		glFrontFace(GL_CCW);
+		glCullFace(GL_BACK);
+	}
 }
 
 void OpenGLES2RendererAPI::OnEvent(V5Core::Event& e)
