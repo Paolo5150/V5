@@ -37,21 +37,6 @@ void EditorLayer::OnUpdate(double dt)
 
 	m_editorCamera->OnUpdate(dt);
 
-	if (Input::IsKeyDown(KeyCode::Space))
-	{
-		if (m_editorState == EditorState::EDIT)
-		{
-			m_editorState = EditorState::PLAY;
-			m_activeScene->OnStart();
-		}
-		else
-		{
-			m_editorState = EditorState::EDIT;
-			m_activeScene->OnEnd();
-		}
-	}
-
-
 	switch (m_editorState)
 	{
 		case EditorState::EDIT:
@@ -71,6 +56,21 @@ void EditorLayer::OnUpdate(double dt)
 		m_frameTime = 1.0f / (float)dt;
 	}
 }
+
+void EditorLayer::ToggleState()
+{
+    if (m_editorState == EditorState::EDIT)
+    {
+        m_editorState = EditorState::PLAY;
+        m_activeScene->OnStart();
+    }
+    else
+    {
+        m_editorState = EditorState::EDIT;
+        m_activeScene->OnEnd();
+    }
+}
+
 
 void EditorLayer::OnRender()
 {
@@ -149,33 +149,38 @@ void EditorLayer::OnImGuiRender()
     {
         if (ImGui::BeginMenu("File"))
         {
-            // Disabling fullscreen would allow the window to be moved to the front of other windows,
-            // which we can't undo at the moment without finer window depth/z control.
             if (ImGui::MenuItem("Exit"))
             {
                 WindowCloseEvent wce;
                 V5Core::Factory().GetCore().TriggerEvent(wce);
             }
-
-         //  if (ImGui::MenuItem("Flag: NoSplit", "", (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoSplit; }
-          //  if (ImGui::MenuItem("Flag: NoResize", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoResize; }
-         //  if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode; }
-         //   if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar; }
             ImGui::EndMenu();
+        }
+
+        ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f));
+        std::string btnText = m_editorState == EditorState::EDIT ? "Play" : "Edit";
+        if (ImGui::Button(btnText.c_str()))
+        {
+            ToggleState();
         }
 
         ImGui::EndMenuBar();
     }
+   
 
-    ImGui::Begin("Scene");
-    ImGui::Text("Bruh");
+    ImGui::Begin("Scene", nullptr,
+        ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+    ImGui::Text("Id %d", ImGui::GetWindowDockID());
+
+    ImGui::Text("Docked %d", ImGui::IsWindowDocked());
+
     ImGui::End();
 
-    ImGui::Begin("Properties");
-    ImGui::Text("Mate");
-    ImGui::End();
+   
 
-    ImGui::End();
+    
+
+    ImGui::End(); 
 
 	
 
