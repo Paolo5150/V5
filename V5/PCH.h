@@ -10,6 +10,6 @@
 #ifdef V5_PLATFORM_WINDOWS
 #include <Windows.h>  //Windows before glad (otherwise API macro redefinition spamming warning)
 #endif
-#include <glad/glad.h> //Glad before glfw
+#include <glad/gl.h> //Glad before glfw
 #include "GLFW/glfw3.h"
 
