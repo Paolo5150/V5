@@ -37,6 +37,22 @@ void EditorLayer::OnUpdate(double dt)
 
 	m_editorCamera->OnUpdate(dt);
 
+	if (Input::IsKeyDown(KeyCode::Space))
+	{
+		if (m_editorState == EditorState::EDIT)
+		{
+			m_editorState = EditorState::PLAY;
+			m_activeScene->OnStart();
+		}
+		else
+		{
+			m_editorState = EditorState::EDIT;
+			m_activeScene->OnEnd();
+
+
+		}
+	}
+
 
 	switch (m_editorState)
 	{
@@ -47,6 +63,7 @@ void EditorLayer::OnUpdate(double dt)
 
 		case EditorState::PLAY:
 			m_activeScene->UpdateRuntime(dt);
+
 			break;
 	}
 
@@ -68,6 +85,8 @@ void EditorLayer::OnRender()
 		break;
 
 	case EditorState::PLAY:
+		m_activeScene->RenderRuntime(m_editorCamera->GetViewProjectionMatrix());
+
 		break;
 	}
 }

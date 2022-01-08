@@ -5,6 +5,7 @@
 #include <V5/Event/WindowEvents.h>
 #include <V5/Renderer/IRenderer2D.h>
 #include <V5/Renderer/IRenderer.h>
+#include <V5/Core/Logger.h>
 #include <V5/Core/IWindow.h>
 #include <V5/Renderer/Texture.h>
 #include <V5/Debugging/Intrumentor.h>
@@ -42,9 +43,26 @@ TestScene::TestScene()
 		e.GetComponent<Transform>().UpdateMatrix();
 	}
 
+	class TestScript : public Behavior
+	{
+		void Start() 
+		{
+		}
+		void Update(double dt) 
+		{
+			auto& t = entity->GetComponent<Transform>();
+			t.SetPosition(t.GetPosition() + glm::vec3(1, 0, 0) * 1.0f * (float)dt);
+
+		}
+		void Destroy() 
+		{
+
+		}
+	};
 	// Try cube
 	par = CreateEntity();
 	par.AddComponent<TileRenderer>(tt.get());
+	par.AddComponent<NativeScript>().Bind<TestScript>();
 
 	auto e = CreateEntity();
 	e.GetComponent<Transform>().SetPosition({ 0,0,0.5 });

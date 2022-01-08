@@ -1,4 +1,5 @@
 #pragma once
+#include <V5/Core/PlatformDetection.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
@@ -6,7 +7,9 @@
 #include <V5/Renderer/Texture.h>
 #include <set>
 #include <V5/Scene/Entity.h>
-
+#ifdef V5_PLATFORM_WINDOWS
+#include <V5/Core/Logger.h>
+#endif
 
 namespace V5Core
 {
@@ -78,8 +81,48 @@ namespace V5Core
 		TileRenderer() = default;
 		TileRenderer(const TileRenderer&) = default;
 		TileRenderer(V5Rendering::Texture2D* tex = nullptr, const glm::vec4& color = { 1,1,1,1 })
-			: Texture(tex), Color(color) {}
+			: Texture(tex), Color(color) {}		
+	};
 
+	class Behavior
+	{
+	public:
+		Behavior() = default;
+		virtual void Start() {}
+		virtual void Update(double dt) {}
+		virtual void Destroy() {}
+		Entity* entity;
+	};
+
+	namespace
+	{
+		template <class T>
+		Behavior* InstantiateScript()
+		{
+			return static_cast<Behavior*>(new T());
+		}
+	}
+
+	class NativeScript : public Component
+	{
+	public:
 		
+		void OnComponentAttached(Entity* e) {
+			Component::OnComponentAttached(e);
+			e->GetComponent<Transform>().SetIgnoreRotation(true);
+		}
+		Behavior* Instance = nullptr;
+
+		Behavior* (*Instantiate)();
+		void (*Destroy)(NativeScript* b);
+
+		template <class T>
+		void Bind()
+		{
+			Instantiate = []() {  return static_cast<Behavior*>(new T()); };
+			Destroy = [](NativeScript* b) { b->Instance->Destroy(); delete b->Instance; b->Instance = nullptr; };
+
+		}
+
 	};
 }

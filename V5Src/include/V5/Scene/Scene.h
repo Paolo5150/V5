@@ -15,6 +15,8 @@ namespace V5Core
 		virtual ~Scene() = default;
 		Entity CreateEntity();
 
+		void OnStart();
+		void OnEnd();
 		void UpdateEditor(double dt);
 		void UpdateRuntime(double dt);
 

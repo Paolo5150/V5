@@ -51,14 +51,7 @@ void GameLayer::OnUpdate(double dt)
 		FPS = 0;
 
 	}
-	static glm::vec3 pos(0, 0, 2);
 
-	if (timer2 > 5)
-	{
-
-		pos += glm::vec3(1, 0, 0) * 0.5f * (float)dt;
-		viewMat = glm::lookAt(pos, pos + glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
-	}
 }
 void GameLayer::OnRender() 
 {

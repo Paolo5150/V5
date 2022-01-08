@@ -22,7 +22,7 @@ namespace V5Core
 		bool operator !=(const Entity& other) const { return !(*this == other); }
 
 		template<typename T, typename... Args>
-		T AddComponent(Args&&... args)
+		T& AddComponent(Args&&... args)
 		{
 			T& component = m_scene->m_enttRegistry.emplace<T>(m_enttHandle, std::forward<Args>(args)...);
 			component.OnComponentAttached(this);

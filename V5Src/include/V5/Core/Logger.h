@@ -3,7 +3,7 @@
 
 #include <string>
 #include <fstream>
-#include "spdlog/spdlog.h"
+#include <spdlog/spdlog.h>
 #include <V5/Core/PlatformDetection.h>
 
 #define ENABLE_FILE_LOGS 1
