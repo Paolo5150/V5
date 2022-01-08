@@ -11,14 +11,13 @@
 #include <V5/ImGui/imgui.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
-#include <V5/Scene/TestScene.h>
 
 using namespace V5Rendering;
 using namespace V5Core;
 
 
 
-void EditorLayer::OnAttach()
+void EditorLayer::OnAttach(Scene* scene)
 {
 	V5_PROFILE_FUNCTION();
 
@@ -26,7 +25,7 @@ void EditorLayer::OnAttach()
 		(float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight(), 0.1f, 1000.0f);
 
 
-	m_activeScene = std::make_unique<TestScene>();
+	m_activeScene = scene;
 }
 
 void EditorLayer::OnUpdate(double dt) 

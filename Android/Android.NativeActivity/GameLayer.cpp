@@ -10,7 +10,6 @@
 #include <V5/Core/IWindow.h>
 #include <V5/Renderer/IRenderer.h>
 #include <V5/Core/AssetManager.h>
-#include <V5/Scene/TestScene.h>
 
 using namespace V5Rendering;
 using namespace V5Core;
@@ -22,12 +21,12 @@ namespace
 
 }
 
-void GameLayer::OnAttach()
+void GameLayer::OnAttach(Scene* scene)
 {
 	float ratio = (float)Factory::GetWindow().GetWidth() / Factory::GetWindow().GetHeight();
 	testCamera = std::make_unique<Camera>(75, ratio, 0.1f, 1000.0f);
-	viewMat = glm::lookAt(glm::vec3(1,0,15), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	m_activeScene = std::make_unique<TestScene>();
+	viewMat = glm::lookAt(glm::vec3(0,0,2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	m_activeScene = scene;
 }
 
 void GameLayer::OnUpdate(double dt)
@@ -48,17 +47,18 @@ void GameLayer::OnUpdate(double dt)
 		FPS /= counter;
 		timer = 0;
 		counter = 0;
-		LOGI("frame time %f", dt);
+		//LOGI("frame time %f", dt);
 		FPS = 0;
 
 	}
-
 	static glm::vec3 pos(0, 0, 2);
 
-	pos += glm::vec3(1, 0, 0) * 0.5f * (float)dt;
-	viewMat = glm::lookAt(pos, pos + glm::vec3(0,0,-1), glm::vec3(0, 1, 0));
+	if (timer2 > 5)
+	{
 
-
+		pos += glm::vec3(1, 0, 0) * 0.5f * (float)dt;
+		viewMat = glm::lookAt(pos, pos + glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
+	}
 }
 void GameLayer::OnRender() 
 {

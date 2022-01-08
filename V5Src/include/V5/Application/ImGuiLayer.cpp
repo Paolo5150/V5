@@ -7,9 +7,10 @@
 #include <V5/Core/Factory.h>
 #include <V5/Core/ICore.h>
 #include <V5/Core/IWindow.h>
+#include <V5/Scene/Scene.h>
 #endif
 
-void ImGuiLayer::OnAttach()
+void ImGuiLayer::OnAttach(Scene* scene)
 {	
 #ifdef V5_PLATFORM_WINDOWS
 

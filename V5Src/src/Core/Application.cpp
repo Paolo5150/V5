@@ -20,14 +20,14 @@ Application::Application(std::string name) :
 void Application::PushLayer(Layer* layer)
 {
 	m_layerStack.PushLayer(layer);
-	layer->OnAttach();
+	layer->OnAttach(m_activeScene.get());
 }
 
 void Application::PushOverlay(Layer* layer)
 {
 
 	m_layerStack.PushOverlay(layer);
-	layer->OnAttach();
+	layer->OnAttach(m_activeScene.get());
 }
 
 void Application::OnStart()

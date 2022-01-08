@@ -8,6 +8,7 @@ namespace V5Core
 {
 	class Event;
 	class Layer;
+	class Scene;
 
 	class Application
 	{
@@ -25,7 +26,7 @@ namespace V5Core
 		* Called right before main loop starts, layers should be added here
 		*/
 		virtual void OnStart();
-
+		std::unique_ptr<Scene> m_activeScene;
 	
 	private:
 

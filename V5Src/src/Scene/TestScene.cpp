@@ -18,7 +18,7 @@ using namespace V5Rendering;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 120;
+	constexpr int QUAD_COUNT = 5000;
 	std::unique_ptr<Texture2D> tt;
 	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;
@@ -28,7 +28,7 @@ namespace
 TestScene::TestScene()
 {
 	auto td = AssetManager::Instance().LoadTextureData("Textures/wall.jpg", true);
-	auto td2 = AssetManager::Instance().LoadTextureData("Textures/smiley.png", true);
+	auto td2 = AssetManager::Instance().LoadTextureData("Textures/wall.jpg", true);
 	tt = Texture2D::Create(td);
 	tt2 = Texture2D::Create(td2);
 

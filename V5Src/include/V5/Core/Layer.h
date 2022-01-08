@@ -4,6 +4,7 @@
 
 namespace V5Core
 {
+	class Scene;
 
 	class Layer
 	{
@@ -11,7 +12,7 @@ namespace V5Core
 		Layer(const std::string& name = "Layer") : m_DebugName(name) {};
 		virtual ~Layer() = default;
 
-		virtual void OnAttach() {}
+		virtual void OnAttach(Scene* scene) {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate(double dt) {}
 		virtual void OnRender() {}
@@ -21,6 +22,7 @@ namespace V5Core
 		const std::string& GetName() const { return m_DebugName; }
 	protected:
 		std::string m_DebugName;
+		Scene* m_activeScene;
 	};
 
 }
