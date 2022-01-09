@@ -12,6 +12,8 @@
 #include <V5/ImGui/imgui.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
+#include <sstream>
+#include <optional>
 
 using namespace V5Rendering;
 using namespace V5Core;
@@ -176,9 +178,41 @@ void EditorLayer::OnImGuiRender()
             ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
         
         int counter = 0;
-        m_activeScene->ForEachEntity([&](Entity* e)
+        static std::optional<uint32_t> current;
+        m_activeScene->ForEachEntity([&](uint32_t eID)
             {
+                std::stringstream ss;
+                ss << "Entity " << eID;
+                if (ImGui::Button(ss.str().c_str()))
+                {
+                    if (current.has_value())
+                    {
+                        Entity e(current.value(), m_activeScene);
+                        if (e.HasComponent<SpriteRenderer>())
+                        {
+                            e.GetComponent<SpriteRenderer>().Color = { 1,1,1,1 };
+                        }
+                        if (e.HasComponent<TileRenderer>())
+                        {
+                            e.GetComponent<TileRenderer>().Color = { 1,1,1,1 };
+                        }
+                    }
+
+                    Entity e(eID, m_activeScene);
+                    if (e.HasComponent<SpriteRenderer>())
+                    {
+                        e.GetComponent<SpriteRenderer>().Color = { 1,0,0,1 };
+                    }
+                    if (e.HasComponent<TileRenderer>())
+                    {
+                        e.GetComponent<TileRenderer>().Color = { 1,0,0,1 };
+                    }
+
+                    current = e;
+                }
+
                 counter++;
+
             });
 
         ImGui::Text("Entities: %d", counter);

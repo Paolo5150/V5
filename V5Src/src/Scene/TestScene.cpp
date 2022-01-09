@@ -19,7 +19,7 @@ using namespace V5Rendering;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 5000;
+	constexpr int QUAD_COUNT = 12;
 	std::unique_ptr<Texture2D> tt;
 	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;

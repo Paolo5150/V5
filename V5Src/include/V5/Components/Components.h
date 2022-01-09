@@ -21,6 +21,14 @@ namespace V5Core
 		bool Active = true;
 	};
 
+	class Info : public Component
+	{
+	public:
+		std::string Name;
+		std::string Tag;
+	};
+
+
 	class Transform : public Component
 	{
 	public:

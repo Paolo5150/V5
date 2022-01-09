@@ -8,10 +8,13 @@
 using namespace V5Core;
 using namespace V5Rendering;
 
-Entity Scene::CreateEntity()
+Entity Scene::CreateEntity(const std::string& name, const std::string& tag)
 {
 	Entity e(m_enttRegistry.create(), this);
 	e.AddComponent<Transform>();
+	auto& info = e.AddComponent<Info>();
+	info.Name = name;
+	info.Tag = tag;
 	return e;
 }
 
@@ -21,12 +24,11 @@ void Scene::OnStart()
 
 }
 
-void Scene::ForEachEntity(std::function<void(Entity*)> f)
+void Scene::ForEachEntity(std::function<void(uint32_t)> f)
 {
 	m_enttRegistry.each([this, f](auto& entity) {
 		
-		Entity e(entity,this);
-		f(&e);
+		f((uint32_t)entity);
 
 		});
 }

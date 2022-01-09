@@ -13,6 +13,7 @@ namespace V5Core
 
 		Entity() = default;
 		Entity(entt::entity ent, Scene* scene);
+		Entity(uint32_t ent, Scene* scene);
 
 		operator entt::entity() const { return m_enttHandle; }
 		operator bool() const { return m_enttHandle != entt::null; }

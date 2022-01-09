@@ -14,7 +14,7 @@ namespace V5Core
 		friend class Entity;
 		Scene() = default;
 		virtual ~Scene() = default;
-		Entity CreateEntity();
+		Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "");
 
 		void OnStart();
 		void OnEnd();
@@ -25,7 +25,7 @@ namespace V5Core
 		void RenderRuntime(V5Rendering::Camera& camera);
 		void RenderRuntime(const glm::mat4& viewProjection);
 
-		void ForEachEntity(std::function<void(Entity*)> f);
+		void ForEachEntity(std::function<void(uint32_t)> f);
 
 	private:
 		entt::registry m_enttRegistry;
