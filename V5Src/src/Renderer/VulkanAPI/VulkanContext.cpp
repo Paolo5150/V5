@@ -3,6 +3,7 @@
 #include <V5/Core/Logger.h>
 #include <V5/Core/Factory.h>
 #include <V5/Core/IWindow.h>
+#include <set>
 
 #ifdef V5_PLATFORM_WINDOWS
 #define GLFW_INCLUDE_VULKAN
@@ -144,14 +145,22 @@ void VulkanContext::PickDevice()
 	{
 		if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) 
 		{
-			m_queueFamilyGraphics = i;
-			V5CLOG_INFO("Graphics family: {0}", m_queueFamilyGraphics);
+			m_queueFamilyIndexGraphics = i;
+			V5CLOG_INFO("Graphics family: {0}", m_queueFamilyIndexGraphics);
+			VkBool32 presentSupport = false;
+			vkGetPhysicalDeviceSurfaceSupportKHR(m_physicalDevice, i, m_surface, &presentSupport);
+			if (presentSupport)
+			{
+				m_queueFamilyIndexPresent = i;
+				V5CLOG_INFO("Present queue family, same index: {0}", m_queueFamilyIndexPresent);
+
+			}
 		}
 
 		i++;
 	}
 
-	if (m_queueFamilyGraphics == -1)
+	if (m_queueFamilyIndexGraphics == -1)
 	{
 		V5CLOG_ERROR("Graphics family queue not available, aborting");
 		throw std::runtime_error("Graphics family queue not available, aborting");
@@ -161,20 +170,27 @@ void VulkanContext::PickDevice()
 
 void VulkanContext::CreateLogicalDevice()
 {
-	VkDeviceQueueCreateInfo queueCreateInfo{};
-	queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-	queueCreateInfo.queueFamilyIndex = m_queueFamilyGraphics;
-	queueCreateInfo.queueCount = 1; // TODO: if multithreading, more queues?
+	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+	std::set<uint32_t> uniqueQueueFamilies = { m_queueFamilyIndexGraphics, m_queueFamilyIndexPresent };
 
 	float queuePriority = 1.0f;
-	queueCreateInfo.pQueuePriorities = &queuePriority;
+	for (uint32_t queueFamily : uniqueQueueFamilies) {
+		VkDeviceQueueCreateInfo queueCreateInfo{};
+		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		queueCreateInfo.queueFamilyIndex = queueFamily;
+		queueCreateInfo.queueCount = 1;
+		queueCreateInfo.pQueuePriorities = &queuePriority;
+		queueCreateInfos.push_back(queueCreateInfo);
+	}
+
+
 
 	VkPhysicalDeviceFeatures deviceFeatures{};
 
 	VkDeviceCreateInfo createInfo{};
 	createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-	createInfo.pQueueCreateInfos = &queueCreateInfo;
-	createInfo.queueCreateInfoCount = 1;
+	createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+	createInfo.pQueueCreateInfos = queueCreateInfos.data();
 	createInfo.pEnabledFeatures = &deviceFeatures;
 	createInfo.enabledLayerCount = 0; //TODO: change this when enablid validation layers
 
@@ -184,7 +200,10 @@ void VulkanContext::CreateLogicalDevice()
 		throw std::runtime_error("Failed to create logical device");
 	}
 
-	vkGetDeviceQueue(m_device, m_queueFamilyGraphics, 0, &m_queueGraphics);
+	// Get queues
+
+	vkGetDeviceQueue(m_device, m_queueFamilyIndexGraphics, 0, &m_queueGraphics);
+	vkGetDeviceQueue(m_device, m_queueFamilyIndexPresent, 0, &m_queuePresent);
 
 }
 
@@ -210,32 +229,13 @@ void VulkanContext::CreateSurface()
 	createInfo.window = w;
 
 
-	VkResult res = vkCreateAndroidSurfaceKHR(m_vulkanInstance, &createInfo, nullptr, &m_surface);
-	
-	switch (res)
+	if (vkCreateAndroidSurfaceKHR(m_vulkanInstance, &createInfo, nullptr, &m_surface) != VK_SUCCESS)
 	{
-	case VK_SUCCESS:
-		V5LOG_INFO("VK_SUCCESS");
-
-		break;
-	case VK_ERROR_OUT_OF_HOST_MEMORY:
-		V5LOG_ERROR("VK_ERROR_OUT_OF_HOST_MEMORY error");
-
-		break;
-	case VK_ERROR_OUT_OF_DEVICE_MEMORY:
-		V5LOG_ERROR("VK_ERROR_OUT_OF_DEVICE_MEMORY error");
-
-		break;
-	case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
-		V5LOG_ERROR("VK_ERROR_NATIVE_WINDOW_IN_USE_KHR error");
-
-		break;
-	
-	default:
-		V5LOG_ERROR("Unknowsn error");
-		break;
+		V5CLOG_ERROR("Failed to create surface");
+		throw std::runtime_error("Failed to create surface");
 	}
-
+	
+	
 
 #endif
 

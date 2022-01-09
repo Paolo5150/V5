@@ -19,9 +19,12 @@ namespace V5Rendering
 		VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
 		VkDevice m_device;
 		VkSurfaceKHR m_surface = VK_NULL_HANDLE;
-		VkQueue m_queueGraphics;
 
-		int32_t m_queueFamilyGraphics = -1;
+		VkQueue m_queueGraphics;
+		VkQueue m_queuePresent;
+
+		uint32_t m_queueFamilyIndexGraphics = -1;
+		uint32_t m_queueFamilyIndexPresent = -1;
 
 		void CreateInstance();
 		void PickDevice();

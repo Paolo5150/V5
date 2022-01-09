@@ -73,7 +73,7 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 	}
 
 	V5_PROFILE_END();
-	//Run();
+	Run();
 }
 
 

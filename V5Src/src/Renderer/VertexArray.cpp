@@ -1,5 +1,7 @@
 #include "VertexArray.h"
 #include "RendererAPI.h"
+#include <V5/Core/PlatformDetection.h>
+
 #ifdef V5_PLATFORM_WINDOWS
 
 #include "OpenGL/OpenGLVertexArray.h"

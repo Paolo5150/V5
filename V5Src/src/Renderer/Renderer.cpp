@@ -38,7 +38,6 @@ void Renderer::Init()
 	//V5_PROFILE_FUNCTION();
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
-	return;
 
 	m_renderAPI->SetCullEnabled(true);
 	m_renderAPI->SetDepthTestEnabled(true);
@@ -67,16 +66,7 @@ void Renderer::Init()
 void Renderer::Render()
 {
 	V5_PROFILE_FUNCTION();
-
-	/*ShaderLibrary::GetShader("Texture").Bind();
-	//Do rendering
-	texture2->Bind(0);
-	texture->Bind(1);
-	ubo->Bind();
-
-	m_renderAPI->RenderIndexed(*vao);*/
-
-}
+	}
 
 
 void Renderer::Shutdown()
