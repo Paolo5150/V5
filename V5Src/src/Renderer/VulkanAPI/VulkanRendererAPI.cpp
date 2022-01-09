@@ -1,5 +1,4 @@
 #include "VulkanRendererAPI.h"
-#include <V5/Core/PlatformDetection.h>
 #include <V5/Debugging/Intrumentor.h>
 
 #include <V5/Core/Logger.h>

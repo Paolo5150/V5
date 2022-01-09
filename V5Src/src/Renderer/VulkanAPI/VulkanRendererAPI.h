@@ -1,6 +1,11 @@
 #pragma once
 #include "Renderer/RendererAPI.h"
-#include <vulkan/vulkan.h>
+#include <V5/Core/PlatformDetection.h>
+
+#ifdef V5_PLAFTORM_ANDROID
+#define VK_USE_PLATFORM_ANDROID_KHR 1
+#endif
+#include <../Vulkan/Include/vulkan/vulkan.h>
 
 namespace V5Rendering
 {

@@ -34,6 +34,12 @@
       <Platform>x86</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\Microsoft\AndroidNDK\android-ndk-r21e\platforms\android-24\arch-arm64\usr\lib\libvulkan.so">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</DeploymentContent>
+    </Library>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{e2e78510-f077-412a-b097-f200cf3f1f10}</ProjectGuid>
     <Keyword>Android</Keyword>
@@ -67,11 +73,13 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>Clang_5_0</PlatformToolset>
+    <AndroidAPILevel>android-24</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>Clang_5_0</PlatformToolset>
+    <AndroidAPILevel>android-24</AndroidAPILevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -138,7 +146,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Vulkan\Include;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -149,7 +157,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Vulkan\Include;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glm;$(SolutionDir)V5Src\src;$(SolutionDir)Dependencies\glad\include;$(SolutionDir)Dependencies\spdlog;$(SolutionDir)V5Src\include;%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Enabled</ExceptionHandling>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
