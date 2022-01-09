@@ -2,6 +2,7 @@
 #include "entt.hpp"
 #include <V5/Renderer/EditorCamera.h>
 #include <V5/Renderer/Camera.h>
+#include <functional>
 
 namespace V5Core
 {
@@ -23,6 +24,8 @@ namespace V5Core
 		void RenderEditor(V5Rendering::EditorCamera& camera);
 		void RenderRuntime(V5Rendering::Camera& camera);
 		void RenderRuntime(const glm::mat4& viewProjection);
+
+		void ForEachEntity(std::function<void(Entity*)> f);
 
 	private:
 		entt::registry m_enttRegistry;

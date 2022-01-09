@@ -8,6 +8,7 @@
 #include <V5/Core/IWindow.h>
 #include <V5/Debugging/Intrumentor.h>
 #include <V5/Components/Components.h>
+#include <V5/Core/Time.h>
 #include <V5/ImGui/imgui.h>
 #include <V5/ImGui/imgui_impl_opengl3.h>
 #include <V5/ImGui/imgui_impl_glfw.h>
@@ -55,6 +56,8 @@ void EditorLayer::OnUpdate(double dt)
 		timer = 0;
 		m_frameTime = 1.0f / (float)dt;
 	}
+
+ 
 }
 
 void EditorLayer::ToggleState()
@@ -171,10 +174,14 @@ void EditorLayer::OnImGuiRender()
         ImGui::EndMenuBar();
         ImGui::Begin("Scene", nullptr,
             ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
-        ImGui::Text("Id %d", ImGui::GetWindowDockID());
+        
+        int counter = 0;
+        m_activeScene->ForEachEntity([&](Entity* e)
+            {
+                counter++;
+            });
 
-        ImGui::Text("Docked %d", ImGui::IsWindowDocked());
-
+        ImGui::Text("Entities: %d", counter);
         ImGui::End();
         ImGui::End();
 

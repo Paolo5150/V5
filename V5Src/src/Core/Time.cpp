@@ -1,8 +1,9 @@
-#include "Time.h"
+#include <V5/Core/Time.h>
 
 using namespace V5Core;
 
 std::chrono::high_resolution_clock::time_point Time::m_timeStart;
+ float Time::DeltaTime; // Set by Core, in Update
 
 
 void Time::StartTimer()

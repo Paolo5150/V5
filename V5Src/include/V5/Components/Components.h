@@ -30,6 +30,7 @@ namespace V5Core
 		void SetScale(const glm::vec3& s, bool updateMatrix = false);
 		void SetRotation(const glm::vec3 & r, bool updateMatrix = false);
 		void SetIgnoreRotation(bool ignore) { m_ignoreRotation = ignore; };
+		void Translate(const glm::vec3& offset) { m_position += offset; }
 
 		const glm::vec3& GetPosition();
 		const glm::vec3& GetScale();

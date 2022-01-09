@@ -8,7 +8,7 @@
 #include <V5/Core/Input.h>
 #include <V5/Core/IWindow.h>
 #include "Window.h"
-#include "Time.h"
+#include <V5/Core/Time.h>
 #include <V5/Event/Event.h>
 #include <Renderer/Renderer.h>
 #include <V5/Debugging/Intrumentor.h>
@@ -119,6 +119,7 @@ void Core::Run()
 
 void Core::Update(double dt)
 {
+	Time::DeltaTime = (float)dt; //So it's easily accessible
 	V5_PROFILE_FUNCTION();
 	m_window->Update(); //Poll events before application update
 	m_Application->Update(dt);

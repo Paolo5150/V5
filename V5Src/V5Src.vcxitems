@@ -131,7 +131,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Factory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\ICore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Input.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\ITime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\IWindow.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\KeyCodes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Layer.h" />
@@ -160,7 +159,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\AssetManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Core.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\CoreLogger.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Time.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)include\V5\Core\Time.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\Window.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Core\WindowsWindow.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

@@ -7,9 +7,11 @@
 
 namespace V5Core
 {
-	class Time : public ITime
+	class Time 
 	{
 	public:
+		friend class Core;
+
 		static void StartTimer();
 
 		/**
@@ -22,8 +24,10 @@ namespace V5Core
 		*/
 		static double Now();
 
-	private:
+		static float GetDeltaTime() { return DeltaTime; }
 
+	private:
+		static float DeltaTime; // Set by Core, in Update
 		static std::chrono::high_resolution_clock::time_point m_timeStart;
 	};
 }

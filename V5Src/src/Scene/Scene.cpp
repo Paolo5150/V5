@@ -19,9 +19,18 @@ void Scene::OnStart()
 {
 	V5CLOG_INFO("Scene start");
 
-	
-
 }
+
+void Scene::ForEachEntity(std::function<void(Entity*)> f)
+{
+	m_enttRegistry.each([this, f](auto& entity) {
+		
+		Entity e(entity,this);
+		f(&e);
+
+		});
+}
+
 void Scene::OnEnd()
 {
 	V5CLOG_INFO("Scene end");
