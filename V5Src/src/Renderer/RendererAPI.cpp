@@ -2,22 +2,31 @@
 #include "RendererAPI.h"
 
 #ifdef V5_PLATFORM_WINDOWS
-#include "OpenGL/OpenGLRendererAPI.h"
-#include "VulkanAPI/VulkanRendererAPI.h"
+	#include "VulkanAPI/VulkanRendererAPI.h"
+	#include "OpenGL/OpenGLRendererAPI.h"
 #endif
-#ifdef V5_PLATFORM_ANDROID
-#include "OpenGLES2/OpenGLES2RendererAPI.h"
-#include "VulkanAPI/VulkanRendererAPI.h"
 
+#ifdef V5_PLATFORM_ANDROID
+	#include "VulkanAPI/VulkanRendererAPI.h"
+	#include "OpenGLES2/OpenGLES2RendererAPI.h"
 #endif
 
 using namespace V5Rendering;
 
 // Change graphics API here
 #ifdef V5_PLATFORM_WINDOWS
-RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	#ifdef V5_GRAPHCIS_API_VULKAN
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	#elif define V5_GRAPHCIS_API_OPENGL
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	#endif
+
 #elif defined V5_PLATFORM_ANDROID
-RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	#ifdef V5_GRAPHCIS_API_VULKAN
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
+	#elif define V5_GRAPHCIS_API_OPENGL
+	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGLES;
+	#endif
 #endif
 
 
@@ -27,6 +36,7 @@ std::unique_ptr<RendererAPI> RendererAPI::Create()
 	switch (s_API)
 	{
 #ifdef V5_PLATFORM_WINDOWS
+
 	case RendererAPI::API::OpenGL:
 		return std::make_unique<OpenGLRendererAPI>();
 	case RendererAPI::API::Vulkan:

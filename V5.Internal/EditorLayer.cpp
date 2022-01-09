@@ -91,6 +91,10 @@ void EditorLayer::OnRender()
 
 void EditorLayer::OnImGuiRender()
 {
+    //Currentl OpenGL only
+#ifdef V5_PLATFORM_WINDOWS
+#ifdef V5_GRAPHICS_API_OPENGL
+
 	bool open = true;
     bool* p_open = &open;
 	auto w = V5Core::Factory().GetWindow().GetWidth();
@@ -165,9 +169,6 @@ void EditorLayer::OnImGuiRender()
         }
 
         ImGui::EndMenuBar();
-    }
-   
-
     ImGui::Begin("Scene", nullptr,
         ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     ImGui::Text("Id %d", ImGui::GetWindowDockID());
@@ -175,14 +176,10 @@ void EditorLayer::OnImGuiRender()
     ImGui::Text("Docked %d", ImGui::IsWindowDocked());
 
     ImGui::End();
-
-   
-
-    
-
     ImGui::End(); 
 
-	
+#endif
+#endif
 
 }
 

@@ -118,6 +118,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\Texture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\TileRenderer2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\VertexArray.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\VulkanAPI\VulkanContext.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Renderer\VulkanAPI\VulkanRendererAPI.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\Scene\Scene.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\TileRenderer2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\Vertex.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\VertexArray.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\VulkanAPI\VulkanContext.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Renderer\VulkanAPI\VulkanRendererAPI.h" />
   </ItemGroup>
 </Project>

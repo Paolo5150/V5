@@ -9,58 +9,21 @@
 #include <Renderer/VertexArray.h>
 #include <Renderer/Buffer.h>
 
-#ifdef V5_PLATFORM_WINDOWS
-#define GLFW_INCLUDE_VULKAN
-#include <GLFW/glfw3.h>
-#endif
+
 
 using namespace V5Core;
 using namespace V5Rendering;
 
 void VulkanRendererAPI::Init()
 {
-	V5CLOG_INFO("Initializing Vulkan");
-
-	VkApplicationInfo app_info = {};
-	app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	app_info.pNext = NULL;
-	app_info.pApplicationName = "V5";
-	app_info.applicationVersion = 1;
-	app_info.pEngineName = "V5";
-	app_info.engineVersion = 1;
-	app_info.apiVersion = VK_API_VERSION_1_0;
-
-	VkInstanceCreateInfo inst_info = {};
-	inst_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	inst_info.pNext = NULL;
-	inst_info.flags = 0;
-	inst_info.pApplicationInfo = &app_info;
-	inst_info.enabledExtensionCount = 0;
-	inst_info.ppEnabledExtensionNames = NULL;
-	inst_info.enabledLayerCount = 0;
-	inst_info.ppEnabledLayerNames = NULL;
-
-	VkResult res;
-
-	res = vkCreateInstance(&inst_info, NULL, &m_vulkanInstance);
-	if (res == VK_ERROR_INCOMPATIBLE_DRIVER) {
-		V5CLOG_ERROR("Cannot find a compatible Vulkan ICD");
-		V5LOG_ERROR("Cannot find a compatible Vulkan ICD");
-		exit(-1);
-	}
-	else if (res) {
-		V5CLOG_ERROR("Failed to initialize Vulkan intance");
-		V5LOG_ERROR("Failed to initialize Vulkan intance");
-		exit(-1);
-	}
-
-	V5CLOG_INFO("Vulkan instance ok");
+	m_vulkanContext.Initialize();
 
 }
 
 void VulkanRendererAPI::Shutdown()
 {
-	vkDestroyInstance(m_vulkanInstance, NULL);
+	m_vulkanContext.Shutdown();
+
 }
 
 void VulkanRendererAPI::SetDepthTestEnabled(bool enabled)
@@ -113,7 +76,5 @@ void VulkanRendererAPI::RenderIndexedInstanced(VertexArray& vao, uint32_t instan
 void VulkanRendererAPI::Clear()
 {
 }
-
-
 
 

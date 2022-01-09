@@ -1,5 +1,8 @@
 // Platform detection using predefined macros
 
+#define V5_GRAPHCIS_API_VULKAN
+//#define V5_GRAPHCIS_API_OPENGL
+
 #ifdef _WIN32
 	/* Windows x64/x86 */
 #ifdef _WIN64

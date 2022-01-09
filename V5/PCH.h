@@ -11,5 +11,6 @@
 #include <Windows.h>  //Windows before glad (otherwise API macro redefinition spamming warning)
 #endif
 #include <glad/gl.h> //Glad before glfw
+#define GLFW_INCLUDE_VULKAN
 #include "GLFW/glfw3.h"
 

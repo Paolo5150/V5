@@ -48,7 +48,6 @@ struct engine {
 	ASensorManager* sensorManager;
 	const ASensor* accelerometerSensor;
 	ASensorEventQueue* sensorEventQueue;
-
 	int animating;
 	EGLDisplay display;
 	EGLSurface surface;

@@ -1,11 +1,8 @@
 #pragma once
 #include "Renderer/RendererAPI.h"
-#include <V5/Core/PlatformDetection.h>
 
-#ifdef V5_PLAFTORM_ANDROID
-#define VK_USE_PLATFORM_ANDROID_KHR 1
-#endif
-#include <../Vulkan/Include/vulkan/vulkan.h>
+
+#include "VulkanContext.h"
 
 namespace V5Rendering
 {
@@ -27,7 +24,7 @@ namespace V5Rendering
 		void Clear() override;
 
 	private:
-		VkInstance m_vulkanInstance;
+		VulkanContext m_vulkanContext;
 
 
 	};

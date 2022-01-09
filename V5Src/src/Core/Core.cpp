@@ -138,7 +138,6 @@ void Core::Render()
 	V5Rendering::Renderer::Instance().GetRenderAPI().Clear();
 
 	m_Application->Render();
-	//V5Rendering::Renderer::Instance().Render();
 
 	m_window->Refresh();
 }

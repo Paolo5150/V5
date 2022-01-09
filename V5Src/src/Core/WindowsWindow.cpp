@@ -21,7 +21,7 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 	auto monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 	m_glfwWindow = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 
 	if (!m_glfwWindow)
@@ -142,6 +142,11 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 WindowsWindow::~WindowsWindow()
 {
+}
+
+void* WindowsWindow::GetNative() 
+{ 
+	return m_glfwWindow; 
 }
 
 void WindowsWindow::Update()
