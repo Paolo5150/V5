@@ -1,6 +1,6 @@
 
 #include "WindowsWindow.h"
-
+#include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
 #include <V5/Core/Input.h>
 #include <Event/IEventListener.h>
@@ -21,7 +21,15 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 	auto monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+#ifdef V5_GRAPHICS_API_OPENGL
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+#elif defined V5_GRAPHICS_API_VULKAN
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+#endif
+
+
+
 	m_glfwWindow = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 
 	if (!m_glfwWindow)

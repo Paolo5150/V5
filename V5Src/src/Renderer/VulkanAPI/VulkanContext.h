@@ -1,7 +1,7 @@
 #pragma once
 #include <V5/Core/PlatformDetection.h>
 
-#ifdef V5_PLAFTORM_ANDROID
+#ifdef V5_PLATFORM_ANDROID
 #define VK_USE_PLATFORM_ANDROID_KHR 1
 #endif
 #include <../Vulkan/Include/vulkan/vulkan.h>

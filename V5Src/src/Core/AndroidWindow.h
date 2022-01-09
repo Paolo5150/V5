@@ -29,11 +29,12 @@ namespace V5Core
 		std::string GetTitle() override { return ""; }
 		void MaximizeWindow() override;
 		void Destroy() override;
-		void* GetNative() override { return nullptr; }
+		void* GetNative() override { return m_nativeWindow; }
 
 	private:
 		AndroidWindowCallbacks* m_androidWindowCallback = nullptr;
 		int m_width;
 		int m_height;
+		void* m_nativeWindow;
 	};
 }

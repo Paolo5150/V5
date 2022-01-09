@@ -95,10 +95,10 @@ void EditorLayer::OnImGuiRender()
 #ifdef V5_PLATFORM_WINDOWS
 #ifdef V5_GRAPHICS_API_OPENGL
 
-	bool open = true;
+    bool open = true;
     bool* p_open = &open;
-	auto w = V5Core::Factory().GetWindow().GetWidth();
-	auto h = V5Core::Factory().GetWindow().GetHeight();
+    auto w = V5Core::Factory().GetWindow().GetWidth();
+    auto h = V5Core::Factory().GetWindow().GetHeight();
     static bool opt_fullscreen = true;
     static bool opt_padding = false;
     static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
@@ -169,18 +169,20 @@ void EditorLayer::OnImGuiRender()
         }
 
         ImGui::EndMenuBar();
-    ImGui::Begin("Scene", nullptr,
-        ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
-    ImGui::Text("Id %d", ImGui::GetWindowDockID());
+        ImGui::Begin("Scene", nullptr,
+            ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+        ImGui::Text("Id %d", ImGui::GetWindowDockID());
 
-    ImGui::Text("Docked %d", ImGui::IsWindowDocked());
+        ImGui::Text("Docked %d", ImGui::IsWindowDocked());
 
-    ImGui::End();
-    ImGui::End(); 
+        ImGui::End();
+        ImGui::End();
 
+
+
+    }
 #endif
 #endif
-
 }
 
 

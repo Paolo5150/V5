@@ -1,6 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugAndroid|ARM">
+      <Configuration>DebugAndroid</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugAndroid|ARM64">
+      <Configuration>DebugAndroid</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugAndroid|x64">
+      <Configuration>DebugAndroid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugAndroid|x86">
+      <Configuration>DebugAndroid</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
@@ -46,12 +62,21 @@
     <ConfigurationType>Application</ConfigurationType>
     <TargetName>BruhApp</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|ARM64'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <ConfigurationType>Application</ConfigurationType>
+    <TargetName>BruhApp</TargetName>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>Application</ConfigurationType>
     <TargetName>BruhApp</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|ARM'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
@@ -63,11 +88,19 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|x64'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|x86'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
@@ -85,12 +118,22 @@
       <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
     </AntPackage>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|ARM64'">
+    <AntPackage>
+      <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
+    </AntPackage>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <AntPackage>
       <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
     </AntPackage>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <AntPackage>
+      <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
+    </AntPackage>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|ARM'">
     <AntPackage>
       <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
     </AntPackage>
@@ -105,12 +148,22 @@
       <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
     </AntPackage>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|x64'">
+    <AntPackage>
+      <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
+    </AntPackage>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <AntPackage>
       <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
     </AntPackage>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <AntPackage>
+      <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
+    </AntPackage>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugAndroid|x86'">
     <AntPackage>
       <AndroidAppLibName>$(RootNamespace)</AndroidAppLibName>
     </AntPackage>

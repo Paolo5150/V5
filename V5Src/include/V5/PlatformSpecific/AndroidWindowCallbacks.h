@@ -21,4 +21,7 @@ struct AndroidWindowCallbacks
 	*/
 	void (*OnWindowClose)();
 
+	//Native window
+	void* NativeWindow = nullptr;
+
 };

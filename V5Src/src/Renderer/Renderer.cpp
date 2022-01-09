@@ -39,8 +39,6 @@ void Renderer::Init()
 	m_renderAPI = RendererAPI::Create();
 	m_renderAPI->Init();
 
-	return;
-
 	m_renderAPI->SetCullEnabled(true);
 	m_renderAPI->SetDepthTestEnabled(true);
 

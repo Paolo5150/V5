@@ -1,4 +1,5 @@
 #include "VulkanContext.h"
+#include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
 #include <V5/Core/Factory.h>
 #include <V5/Core/IWindow.h>
@@ -24,7 +25,6 @@ void VulkanContext::Initialize()
 void VulkanContext::CreateInstance()
 {
 	V5CLOG_INFO("Initializing Vulkan");
-
 	VkApplicationInfo app_info = {};
 	app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
 	app_info.pNext = NULL;
@@ -34,23 +34,28 @@ void VulkanContext::CreateInstance()
 	app_info.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 	app_info.apiVersion = VK_API_VERSION_1_0;
 
-	uint32_t glfwExtensionCount = 0;
-	const char** glfwExtensions;
+	uint32_t extensionsCount = 0;
+	const char** extensions;
 
-	glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
+#ifdef V5_PLATFORM_WINDOWS
+	extensions = glfwGetRequiredInstanceExtensions(&extensionsCount);
+#elif defined V5_PLATFORM_ANDROID
+	std::vector<const char*> e = { VK_KHR_SURFACE_EXTENSION_NAME, VK_KHR_ANDROID_SURFACE_EXTENSION_NAME };
+	extensions = e.data();
+	extensionsCount = e.size();
+#endif
 	VkInstanceCreateInfo inst_info = {};
 	inst_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	inst_info.pNext = NULL;
 	inst_info.flags = 0;
-	inst_info.enabledExtensionCount = glfwExtensionCount;
-	inst_info.ppEnabledExtensionNames = glfwExtensions;
 	inst_info.pApplicationInfo = &app_info;
 	inst_info.enabledLayerCount = 0;
 
-	VkResult res;
+	inst_info.enabledExtensionCount = extensionsCount;
+	inst_info.ppEnabledExtensionNames = extensions;
 
-	res = vkCreateInstance(&inst_info, NULL, &m_vulkanInstance);
+
+	VkResult res = vkCreateInstance(&inst_info, NULL, &m_vulkanInstance);
 	if (res == VK_ERROR_INCOMPATIBLE_DRIVER) {
 		V5CLOG_ERROR("Cannot find a compatible Vulkan ICD");
 		V5LOG_ERROR("Cannot find a compatible Vulkan ICD");
@@ -64,17 +69,18 @@ void VulkanContext::CreateInstance()
 
 	V5CLOG_INFO("Vulkan instance ok");
 
-	uint32_t extensionsCount = 0;
-	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, nullptr);
-	std::vector<VkExtensionProperties> m_supportedInstanceExtensions;
-
-	m_supportedInstanceExtensions.resize(extensionsCount);
-	m_supportedInstanceExtensions.resize(extensionsCount);
-	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, m_supportedInstanceExtensions.data());
-
-	//Uncomment to view the list of supported extensions
-	for (const auto& extension : m_supportedInstanceExtensions)
-		V5CLOG_INFO("Extension: {0}", extension.extensionName);
+//	uint32_t extensionsCount = 0;
+//	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, nullptr);
+//	std::vector<VkExtensionProperties> m_supportedInstanceExtensions;
+//
+//	m_supportedInstanceExtensions.resize(extensionsCount);
+//	m_supportedInstanceExtensions.resize(extensionsCount);
+//	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, m_supportedInstanceExtensions.data());
+//
+//	//Uncomment to view the list of supported extensions
+//	for (const auto& extension : m_supportedInstanceExtensions)
+//		V5CLOG_INFO("Extension: {0}", extension.extensionName);
+//
 }
 
 void VulkanContext::Shutdown()
@@ -193,6 +199,23 @@ void VulkanContext::CreateSurface()
 		throw std::runtime_error("Failed to create surface");
 	}
 #endif
+#ifdef V5_PLATFORM_ANDROID
+
+	ANativeWindow* w = (ANativeWindow*)(V5Core::Factory().GetWindow().GetNative());
+
+	VkAndroidSurfaceCreateInfoKHR createInfo;
+	createInfo.sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
+	createInfo.pNext = nullptr;
+	createInfo.flags = 0;
+	createInfo.window = w;
+	if (vkCreateAndroidSurfaceKHR(m_vulkanInstance, &createInfo, nullptr, &m_surface) != VK_SUCCESS)
+	{
+		V5CLOG_ERROR("Failed to create surface");
+	}
+
+	V5CLOG_INFO("Surface OK!");
+#endif
+
 }
 
 

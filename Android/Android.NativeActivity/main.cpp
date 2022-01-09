@@ -403,6 +403,8 @@ void android_main(struct android_app* state) {
 		}
 
 	}
+	awb.NativeWindow = engine.app->window;
+
 	V5Core::Factory().GetCore().Start(&gameApp, engine.width, engine.height, "asd", &awb);
 	ANativeActivity_finish(engine.app->activity); // This will request STOP
 
