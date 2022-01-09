@@ -18,7 +18,7 @@ namespace V5Rendering
 		VkInstance m_vulkanInstance;
 		VkPhysicalDevice m_physicalDevice = VK_NULL_HANDLE;
 		VkDevice m_device;
-		VkSurfaceKHR m_surface;
+		VkSurfaceKHR m_surface = VK_NULL_HANDLE;
 		VkQueue m_queueGraphics;
 
 		int32_t m_queueFamilyGraphics = -1;

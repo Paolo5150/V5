@@ -16,6 +16,7 @@
 */
 
 #include <malloc.h>
+#include <V5/Core/PlatformDetection.h>
 #include <android/looper.h>
 #include <V5/Core/Factory.h>
 #include <V5/Core/ICore.h>
@@ -67,6 +68,11 @@ static struct engine engine;
 * Initialize an EGL context for the current display.
 */
 static int engine_init_display(struct engine* engine) {
+
+#ifdef V5_GRAPHICS_API_VULKAN
+	engine->ready = 1;
+	return 0;
+#endif
 	// initialize OpenGL ES and EGL
 	if (!gladLoaderLoadEGL(NULL)) {
 		LOGW("Failed to initialize EGL");

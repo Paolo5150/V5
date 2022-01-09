@@ -15,9 +15,9 @@ using namespace V5Core;
 void VulkanContext::Initialize()
 {
 	CreateInstance();
+	CreateSurface();
 	PickDevice();
 	CreateLogicalDevice();
-	CreateSurface();
 
 	V5CLOG_INFO("Vulkan ready!");
 
@@ -52,7 +52,7 @@ void VulkanContext::CreateInstance()
 	inst_info.enabledLayerCount = 0;
 
 	inst_info.enabledExtensionCount = extensionsCount;
-	inst_info.ppEnabledExtensionNames = extensions;
+	inst_info.ppEnabledExtensionNames = e.data();
 
 
 	VkResult res = vkCreateInstance(&inst_info, NULL, &m_vulkanInstance);
@@ -69,22 +69,23 @@ void VulkanContext::CreateInstance()
 
 	V5CLOG_INFO("Vulkan instance ok");
 
-//	uint32_t extensionsCount = 0;
-//	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, nullptr);
-//	std::vector<VkExtensionProperties> m_supportedInstanceExtensions;
-//
-//	m_supportedInstanceExtensions.resize(extensionsCount);
-//	m_supportedInstanceExtensions.resize(extensionsCount);
-//	vkEnumerateInstanceExtensionProperties(nullptr, &extensionsCount, m_supportedInstanceExtensions.data());
-//
-//	//Uncomment to view the list of supported extensions
-//	for (const auto& extension : m_supportedInstanceExtensions)
-//		V5CLOG_INFO("Extension: {0}", extension.extensionName);
-//
+	//uint32_t c = 0;
+	//vkEnumerateInstanceExtensionProperties(nullptr, &c, nullptr);
+	//std::vector<VkExtensionProperties> m_supportedInstanceExtensions;
+
+	//m_supportedInstanceExtensions.resize(c);
+	//vkEnumerateInstanceExtensionProperties(nullptr, &c, m_supportedInstanceExtensions.data());
+
+	////Uncomment to view the list of supported extensions
+	//for (const auto& extension : m_supportedInstanceExtensions)
+	//	V5CLOG_INFO("Extension: {0}", extension.extensionName);
+
 }
 
 void VulkanContext::Shutdown()
 {
+	vkDestroySurfaceKHR(m_vulkanInstance, m_surface, nullptr);
+	vkDestroyInstance(m_vulkanInstance, nullptr);
 	vkDestroyDevice(m_device, nullptr);
 	vkDestroyInstance(m_vulkanInstance, NULL);
 	V5CLOG_INFO("Vulkan shutdown");
@@ -202,18 +203,40 @@ void VulkanContext::CreateSurface()
 #ifdef V5_PLATFORM_ANDROID
 
 	ANativeWindow* w = (ANativeWindow*)(V5Core::Factory().GetWindow().GetNative());
-
 	VkAndroidSurfaceCreateInfoKHR createInfo;
 	createInfo.sType = VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
 	createInfo.pNext = nullptr;
 	createInfo.flags = 0;
 	createInfo.window = w;
-	if (vkCreateAndroidSurfaceKHR(m_vulkanInstance, &createInfo, nullptr, &m_surface) != VK_SUCCESS)
+
+
+	VkResult res = vkCreateAndroidSurfaceKHR(m_vulkanInstance, &createInfo, nullptr, &m_surface);
+	
+	switch (res)
 	{
-		V5CLOG_ERROR("Failed to create surface");
+	case VK_SUCCESS:
+		V5LOG_INFO("VK_SUCCESS");
+
+		break;
+	case VK_ERROR_OUT_OF_HOST_MEMORY:
+		V5LOG_ERROR("VK_ERROR_OUT_OF_HOST_MEMORY error");
+
+		break;
+	case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+		V5LOG_ERROR("VK_ERROR_OUT_OF_DEVICE_MEMORY error");
+
+		break;
+	case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
+		V5LOG_ERROR("VK_ERROR_NATIVE_WINDOW_IN_USE_KHR error");
+
+		break;
+	
+	default:
+		V5LOG_ERROR("Unknowsn error");
+		break;
 	}
 
-	V5CLOG_INFO("Surface OK!");
+
 #endif
 
 }
