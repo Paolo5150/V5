@@ -191,15 +191,12 @@ void EditorLayer::OnEvent(V5Core::Event& e)
 {
 	if (e.GetType() == V5Core::EventType::MouseBtnClick)
 	{
-		//V5CLOG_INFO("EditorLayer received {0}", e.GetType());
 	}
 	else if (e.GetType() == V5Core::EventType::WindowClose)
 	{
-		//V5CLOG_INFO("closing");
 	}
 	else if (e.GetType() == V5Core::EventType::WindowResize)
 	{
-		//V5CLOG_INFO("closing");
 		WindowResizeEvent& ev = dynamic_cast<WindowResizeEvent&>(e);
 		m_editorCamera->UpdateProjectionMatrix(75, (float)ev.GetWidth() / ev.GetHeight(), 0.1f, 1000.0f);
 	}

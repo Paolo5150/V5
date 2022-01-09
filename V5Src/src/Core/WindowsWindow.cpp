@@ -7,6 +7,8 @@
 #include <V5/Event/WindowEvents.h>
 #include <V5/Event/InputEvents.h>
 #include <V5/Debugging/Intrumentor.h>
+#include <V5/Core/ICore.h>
+#include <V5/Core/Factory.h>
 
 using namespace V5Core;
 
@@ -50,10 +52,8 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 	//Register callbacks
 	glfwSetWindowCloseCallback(m_glfwWindow, [](GLFWwindow* win) {
 
-		auto data = (WindowData*)glfwGetWindowUserPointer(win);
 		WindowCloseEvent e;
-		data->m_eventListener(e);
-	
+		V5Core::Factory().GetCore().TriggerEvent(e);
 	});
 
 	glfwSetWindowSizeCallback(m_glfwWindow, [](GLFWwindow* win, int newWidth, int newHeight) {
@@ -63,29 +63,17 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 		data->Height = newHeight;
 
 		WindowResizeEvent e(newWidth, newHeight);
-		if (data->m_eventListener)
-		{
-			data->m_eventListener(e);
-		}
-
-
+		V5Core::Factory().GetCore().TriggerEvent(e);
 	});
 
 	glfwSetWindowFocusCallback(m_glfwWindow, [](GLFWwindow* win, int focused) {
 
 		WindowFocusEvent e(focused);
 		auto data = (WindowData*)glfwGetWindowUserPointer(win);
-
-		if (data->m_eventListener)
-		{
-			data->m_eventListener(e);
-		}
-	
+		V5Core::Factory().GetCore().TriggerEvent(e);	
 	});
 
 	glfwSetKeyCallback(m_glfwWindow, [](GLFWwindow* win, int key, int scancode, int action, int mods) {
-
-		auto data = (WindowData*)glfwGetWindowUserPointer(win);
 
 #ifdef V5_PLATFORM_WINDOWS
 
@@ -98,18 +86,13 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 		if (Input::IsKeyDown(key))
 		{
 			KeyPressedEvent e((KeyCode)key);
-			if (data->m_eventListener)
-			{
-				data->m_eventListener(e);
-			}
+			V5Core::Factory().GetCore().TriggerEvent(e);
+
 		}
 		else if (Input::IsKeyHold(key))
 		{
 			KeyHoldEvent e((KeyCode)key);
-			if (data->m_eventListener)
-			{
-				data->m_eventListener(e);
-			}
+			V5Core::Factory().GetCore().TriggerEvent(e);
 		}
 
 	});
@@ -121,25 +104,19 @@ WindowsWindow::WindowsWindow(int width, int height, const std::string& title)
 
 	glfwSetMouseButtonCallback(m_glfwWindow, [](GLFWwindow* win, int button, int action, int mods) {
 
-		auto data = (WindowData*)glfwGetWindowUserPointer(win);
-
 		Input::MouseCallback(button, action);
 
 		if (Input::IsMouseButtonDown(button))
 		{
 			MouseBtnClickEvent e(button, Input::GetMousePosition()[0], Input::GetMousePosition()[1]);
-			if (data->m_eventListener)
-			{
-				data->m_eventListener(e);
-			}
+			V5Core::Factory().GetCore().TriggerEvent(e);
+
 		}
 		else if (Input::IsMouseButtonDown(button))
 		{
 			MouseBtnHoldEvent e(button);
-			if (data->m_eventListener)
-			{
-				data->m_eventListener(e);
-			}
+			V5Core::Factory().GetCore().TriggerEvent(e);
+
 		}
 	
 	});
@@ -176,14 +153,6 @@ void WindowsWindow::Destroy()
 
 	glfwDestroyWindow(m_glfwWindow);
 	glfwTerminate();
-}
-
-void WindowsWindow::RegisterEventListener(std::function<void(Event&)> listener)
-{
-	if (m_data.m_eventListener == nullptr)
-	{
-		m_data.m_eventListener = listener;
-	}
 }
 
 void WindowsWindow::SetTitle(std::string title)

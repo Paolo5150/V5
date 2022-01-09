@@ -70,7 +70,6 @@ void AndroidWindow::Update()
 
 }
 
-void AndroidWindow::RegisterEventListener(std::function<void(Event&)> listener) {} ///< Intended for a single, main listener
 void AndroidWindow::Refresh() 
 { 
 	m_androidWindowCallback->Refresh();

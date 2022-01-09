@@ -23,7 +23,6 @@ namespace V5Core
 	private:
 		virtual void Update() = 0;
 		virtual void Refresh() = 0;
-		virtual void RegisterEventListener(std::function<void(Event&)> listener) = 0;
 		virtual void MaximizeWindow() = 0;
 		virtual void Destroy() = 0;
 	};

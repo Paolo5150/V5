@@ -64,9 +64,6 @@ void Core::Start(Application* app, int winWidth, int winHeight, std::string wint
 		//This will call OnWindowOpen
 		m_window =  V5Core::Window::Instance().OpenWindow(winWidth, winHeight, wintitle, windowCallback);
 
-#ifdef V5_PLATFORM_WINDOWS
-		m_window->RegisterEventListener(std::bind(&Core::OnEvent, this, std::placeholders::_1));	
-#endif
 		//Renderer must be inintialized here, after context is set up
 		V5Rendering::Renderer::Instance().Init();
 		m_Application->OnStart();
@@ -147,7 +144,6 @@ void  Core::TriggerEvent(Event& event)
 	OnEvent(event);
 }
 
-
 void Core::OnEvent(Event& e)
 {
 	//If the windows is being close, the core will consume the event.
@@ -156,6 +152,7 @@ void Core::OnEvent(Event& e)
 	{
 		m_isEngineRunning = false;
 		V5LOG_INFO("WindowClose event received by Core, initiating shutdown");
+		V5CLOG_INFO("WindowClose event received by Core, initiating shutdown");
 		e.Consume();
 	}
 

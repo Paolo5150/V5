@@ -21,7 +21,6 @@ namespace V5Core
 
 		void Update() override;
 
-		void RegisterEventListener(std::function<void(Event&)> listener) override; ///< Intended for a single, main listener
 		void Refresh() override;
 		int GetWidth() override { return m_data.Width; }
 		int GetHeight() override { return m_data.Height; }
@@ -39,8 +38,6 @@ namespace V5Core
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;
-
-			std::function<void(Event&)> m_eventListener;
 		};
 
 		WindowData m_data;

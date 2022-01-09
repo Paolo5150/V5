@@ -21,7 +21,6 @@ namespace V5Core
 
 		void Update() override;
 
-		void RegisterEventListener(std::function<void(Event&)> listener) override;
 		void Refresh() override;
 		int GetWidth() override { return m_width; }
 		int GetHeight() override { return m_height; }
