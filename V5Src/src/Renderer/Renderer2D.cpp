@@ -165,6 +165,7 @@ Renderer2D::Renderer2D()
 		vao->AddVertexBuffer(instanceVBO);
 		vao->SetIndexBuffer(batchIBO);
 	}	
+
 }
 
 void Renderer2D::StartBatch()
@@ -264,6 +265,7 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 
 void Renderer2D::End()
 {
+
 	FlushBuffer();
 	//V5CLOG_INFO("Draw calls {0}", DrawCall);
 	DrawCall = 0;
@@ -271,6 +273,7 @@ void Renderer2D::End()
 
 void Renderer2D::FlushBuffer()
 {
+
 	if (m_submittedQuads == 0) return;
 
 	UseInstancing ? ShaderLibrary::GetShader("TextureInstanced").Bind() : ShaderLibrary::GetShader("TextureBatched").Bind();

@@ -3,6 +3,7 @@
 
 #ifdef V5_PLATFORM_WINDOWS
 #include "OpenGL/OpenGLRendererAPI.h"
+#include "VulkanAPI/VulkanRendererAPI.h"
 #endif
 #ifdef V5_PLATFORM_ANDROID
 #include "OpenGLES2/OpenGLES2RendererAPI.h"
@@ -12,10 +13,12 @@ using namespace V5Rendering;
 
 // Change graphics API here
 #ifdef V5_PLATFORM_WINDOWS
-RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
+RendererAPI::API RendererAPI::s_API = RendererAPI::API::Vulkan;
 #elif defined V5_PLATFORM_ANDROID
 RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGLES;
 #endif
+
+
 
 std::unique_ptr<RendererAPI> RendererAPI::Create()
 {
@@ -25,7 +28,8 @@ std::unique_ptr<RendererAPI> RendererAPI::Create()
 	case RendererAPI::API::OpenGL:
 		return std::make_unique<OpenGLRendererAPI>();
 	case RendererAPI::API::Vulkan:
-		throw std::runtime_error("Vulkan API not implemented!");
+		return std::make_unique<VulkanRendererAPI>();
+
 #endif
 #ifdef V5_PLATFORM_ANDROID
 	case RendererAPI::API::OpenGLES:

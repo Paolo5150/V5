@@ -62,6 +62,9 @@ void Scene::UpdateRuntime(double dt)
 
 void Scene::RenderRuntime(const glm::mat4& viewProjection)
 {
+	//TODO enable vulkan when ready
+	if (Renderer::Instance().GetRenderAPI().GetAPI() == RendererAPI::API::Vulkan) return;
+	
 	{
 		Renderer::Instance().GetTileRenderer2D().Begin(viewProjection);
 
