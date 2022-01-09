@@ -8,6 +8,7 @@
 namespace V5Core
 {
 	class Event;
+	class Scene;
 }
 
 

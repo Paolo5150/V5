@@ -38,7 +38,7 @@ TestScene::TestScene()
 		auto e = CreateEntity();
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });
 		e.GetComponent<Transform>().SetRotation({ 0,0,90 });
-		e.AddComponent<TileRenderer>(tt2.get());
+		e.AddComponent<TileRenderer>(tt.get());
 
 		e.GetComponent<Transform>().UpdateMatrix();
 	}

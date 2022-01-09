@@ -53,7 +53,7 @@ void VulkanContext::CreateInstance()
 	inst_info.enabledLayerCount = 0;
 
 	inst_info.enabledExtensionCount = extensionsCount;
-	inst_info.ppEnabledExtensionNames = e.data();
+	inst_info.ppEnabledExtensionNames = extensions;
 
 
 	VkResult res = vkCreateInstance(&inst_info, NULL, &m_vulkanInstance);
