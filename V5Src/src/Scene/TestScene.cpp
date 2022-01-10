@@ -35,7 +35,7 @@ TestScene::TestScene()
 
 	for (int i = 0; i < QUAD_COUNT; i++)
 	{
-		auto e = CreateEntity();
+		auto e = CreateEntity("Test");
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });
 		e.GetComponent<Transform>().SetRotation({ 0,0,90 });
 		e.AddComponent<TileRenderer>(tt.get());
@@ -52,7 +52,7 @@ TestScene::TestScene()
 		{
 			auto& t = entity->GetComponent<Transform>();
 			t.SetPosition(t.GetPosition() + glm::vec3(0.2f, 0, 1) * 1.0f * (float)dt);
-
+			t.UpdateMatrix();
 		}
 		void Destroy() 
 		{
@@ -60,41 +60,41 @@ TestScene::TestScene()
 		}
 	};
 	// Try cube
-	par = CreateEntity();
+	par = CreateEntity("Parent");
 	par.AddComponent<TileRenderer>(tt.get());
 	par.AddComponent<NativeScript>().Bind<TestScript>();
 
-	auto e = CreateEntity();
+	auto e = CreateEntity("Some child");
 	e.GetComponent<Transform>().SetPosition({ 0,0,0.5 });
 	e.AddComponent<SpriteRenderer>(tt2.get());
 	e.GetComponent<Transform>().UpdateMatrix();
 	e.GetComponent<Transform>().SetParent(par.GetComponent<Transform>());
 
-	auto e2 = CreateEntity();
+	auto e2 = CreateEntity("asd");
 	e2.GetComponent<Transform>().SetPosition({ 0,0.5,0 });
 	e2.GetComponent<Transform>().SetRotation({ -90,0,0 });
 	e2.AddComponent<SpriteRenderer>(tt2.get());
 	e2.GetComponent<Transform>().UpdateMatrix();
 
-	auto e3 = CreateEntity();
+	auto e3 = CreateEntity("asd");
 	e3.GetComponent<Transform>().SetPosition({ 0,-0.5,0 });
 	e3.GetComponent<Transform>().SetRotation({ 90,0,0 });
 	e3.AddComponent<SpriteRenderer>(tt2.get());
 	e3.GetComponent<Transform>().UpdateMatrix();
 
-	auto e4 = CreateEntity();
+	auto e4 = CreateEntity("asd");
 	e4.GetComponent<Transform>().SetPosition({ 0,0,-0.5 });
 	e4.GetComponent<Transform>().SetRotation({ 0,180,0 });
 	e4.AddComponent<SpriteRenderer>(tt2.get());
 	e4.GetComponent<Transform>().UpdateMatrix();
 
-	auto e5 = CreateEntity();
+	auto e5 = CreateEntity("asd");
 	e5.GetComponent<Transform>().SetPosition({ 0.5,0,0 });
 	e5.GetComponent<Transform>().SetRotation({ 0,90,0 });
 	e5.AddComponent<SpriteRenderer>(tt2.get());
 	e5.GetComponent<Transform>().UpdateMatrix();
 
-	auto e6 = CreateEntity();
+	auto e6 = CreateEntity("asd");
 	e6.GetComponent<Transform>().SetPosition({ -0.5,0,0 });
 	e6.GetComponent<Transform>().SetRotation({ 0,-90,0 });
 	e6.AddComponent<SpriteRenderer>(tt2.get());

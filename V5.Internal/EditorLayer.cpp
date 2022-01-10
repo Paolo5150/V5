@@ -181,8 +181,10 @@ void EditorLayer::OnImGuiRender()
         static std::optional<uint32_t> current;
         m_activeScene->ForEachEntity([&](uint32_t eID)
             {
+                Entity eb(eID, m_activeScene);
+
                 std::stringstream ss;
-                ss << "Entity " << eID;
+                ss << eb.GetComponent<Info>().Name << "(" << eb.GetComponent<Info>().Tag << ")" << counter;
                 if (ImGui::Button(ss.str().c_str()))
                 {
                     if (current.has_value())
@@ -216,6 +218,36 @@ void EditorLayer::OnImGuiRender()
             });
 
         ImGui::Text("Entities: %d", counter);
+        ImGui::End();
+
+        ImGui::Begin("Properties", nullptr,
+            ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+
+        if (current.has_value())
+        {
+            Entity e(current.value(), m_activeScene);
+            ImGui::Text("%s (%s)", e.GetComponent<Info>().Name, e.GetComponent<Info>().Tag);
+            ImGui::Separator();
+
+            const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+
+            bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, "Transform");
+            if (open)
+            {
+                auto& tran = e.GetComponent<Transform>();
+                ImGui::Text("Position:");
+                ImGui::SameLine();
+                float x = tran.GetPosition().x;
+                if (ImGui::InputFloat("X", &x, 0.05f, 0.5f, "%.3f"))
+                {
+                    tran.SetPosition({ x, tran.GetPosition().y, tran.GetPosition().z });
+                    tran.UpdateMatrix();
+                }
+
+                ImGui::TreePop();
+            }
+
+        }
         ImGui::End();
         ImGui::End();
 
