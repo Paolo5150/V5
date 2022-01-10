@@ -8,13 +8,32 @@
 using namespace V5Core;
 using namespace V5Rendering;
 
-Entity Scene::CreateEntity(const std::string& name, const std::string& tag)
+Entity Scene::CreateEntity(std::string name, std::string tag)
 {
 	Entity e(m_enttRegistry.create(), this);
 	e.AddComponent<Transform>();
 	auto& info = e.AddComponent<Info>();
 	info.Name = name;
 	info.Tag = tag;
+	return e;
+}
+
+Entity Scene::CreateEntity(std::string name)
+{
+	Entity e(m_enttRegistry.create(), this);
+	e.AddComponent<Transform>();
+	auto& info = e.AddComponent<Info>();
+	info.Name = name;
+	info.Tag = "";
+	return e;
+}
+Entity Scene::CreateEntity()
+{
+	Entity e(m_enttRegistry.create(), this);
+	e.AddComponent<Transform>();
+	auto& info = e.AddComponent<Info>();
+	info.Name = "Entity";
+	info.Tag = "";
 	return e;
 }
 

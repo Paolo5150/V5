@@ -26,10 +26,17 @@ namespace V5Rendering
 		uint32_t m_queueFamilyIndexGraphics = -1;
 		uint32_t m_queueFamilyIndexPresent = -1;
 
+		//Surface details
+		VkSurfaceCapabilitiesKHR m_surfaceCapabilities;;
+		VkPresentModeKHR m_surfacePresentMode;
+		VkSurfaceFormatKHR m_surfaceFormat;
+		VkExtent2D m_surfaceSize;
+
 		void CreateInstance();
 		void PickDevice();
 		void CreateLogicalDevice();
 		void CreateSurface();
+		void GetSurfaceDetails();
 
 	};
 }

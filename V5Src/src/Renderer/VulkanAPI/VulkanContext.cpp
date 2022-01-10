@@ -13,12 +13,19 @@
 using namespace V5Rendering;
 using namespace V5Core;
 
+namespace
+{
+	// Device extension
+	const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
+}
+
 void VulkanContext::Initialize()
 {
 	CreateInstance();
 	CreateSurface();
 	PickDevice();
 	CreateLogicalDevice();
+	GetSurfaceDetails();
 
 	V5CLOG_INFO("Vulkan ready!");
 
@@ -126,6 +133,31 @@ void VulkanContext::PickDevice()
 
 		}
 	}
+	//Check device extensions
+	{
+		uint32_t extensionCount;
+		vkEnumerateDeviceExtensionProperties(m_physicalDevice, nullptr, &extensionCount, nullptr);
+
+		std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+		vkEnumerateDeviceExtensionProperties(m_physicalDevice, nullptr, &extensionCount, availableExtensions.data());
+
+		std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+
+		for (const auto& extension : availableExtensions) 
+		{
+			requiredExtensions.erase(extension.extensionName);
+		}
+
+		if (!requiredExtensions.empty())
+		{
+			V5CLOG_ERROR("Device does not support required extensions");
+		}
+		else
+		{
+			V5CLOG_INFO("Device extensions OK!");
+
+		}
+	}
 
 	VkPhysicalDeviceProperties props;
 	vkGetPhysicalDeviceProperties(m_physicalDevice, &props);
@@ -168,6 +200,61 @@ void VulkanContext::PickDevice()
 
 }
 
+void VulkanContext::GetSurfaceDetails()
+{
+	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_physicalDevice, m_surface, &m_surfaceCapabilities);
+
+	uint32_t formatCount;
+	vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &formatCount, nullptr);
+
+	//Surface formats
+	std::vector<VkSurfaceFormatKHR> surfaceFormats;
+
+	if (formatCount != 0) 
+	{
+		surfaceFormats.resize(formatCount);
+		vkGetPhysicalDeviceSurfaceFormatsKHR(m_physicalDevice, m_surface, &formatCount, surfaceFormats.data());
+	}
+
+	m_surfaceFormat = surfaceFormats[0]; //Default, pick first one
+	for (auto availableFormat : surfaceFormats)
+	{
+		if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR) 
+		{
+			m_surfaceFormat = availableFormat;
+			break;
+		}
+	}
+
+	V5CLOG_INFO("Surface format: {0}", m_surfaceFormat.format);
+
+	uint32_t presentModeCount;
+	vkGetPhysicalDeviceSurfacePresentModesKHR(m_physicalDevice, m_surface, &presentModeCount, nullptr);
+	std::vector<VkPresentModeKHR> presentModes;
+
+	if (presentModeCount != 0) {
+		presentModes.resize(presentModeCount);
+		vkGetPhysicalDeviceSurfacePresentModesKHR(m_physicalDevice, m_surface, &presentModeCount, presentModes.data());
+	}
+
+	m_surfacePresentMode = VK_PRESENT_MODE_FIFO_KHR; //Default
+	for (auto availablePresentMode : presentModes)
+	{
+		if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR)
+		{
+			m_surfacePresentMode =  availablePresentMode;
+		}
+	}
+	V5CLOG_INFO("Present mode: {0}", (int)m_surfacePresentMode);
+	
+	auto& win = V5Core::Factory().GetWindow();
+	m_surfaceSize.width = std::clamp((uint32_t)win.GetWidth(), m_surfaceCapabilities.minImageExtent.width, m_surfaceCapabilities.maxImageExtent.width);
+	m_surfaceSize.height = std::clamp((uint32_t)win.GetHeight(), m_surfaceCapabilities.minImageExtent.height, m_surfaceCapabilities.maxImageExtent.height);
+
+	V5CLOG_INFO("Surface size: {0} {1}", m_surfaceCapabilities.currentExtent.width, m_surfaceCapabilities.currentExtent.height);
+
+}
+
 void VulkanContext::CreateLogicalDevice()
 {
 	std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
@@ -193,6 +280,9 @@ void VulkanContext::CreateLogicalDevice()
 	createInfo.pQueueCreateInfos = queueCreateInfos.data();
 	createInfo.pEnabledFeatures = &deviceFeatures;
 	createInfo.enabledLayerCount = 0; //TODO: change this when enablid validation layers
+	createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
+	createInfo.ppEnabledExtensionNames = deviceExtensions.data(); //Swapchain extension must be manually enabled
+
 
 	if (vkCreateDevice(m_physicalDevice, &createInfo, nullptr, &m_device) != VK_SUCCESS) 
 	{
@@ -234,7 +324,6 @@ void VulkanContext::CreateSurface()
 		V5CLOG_ERROR("Failed to create surface");
 		throw std::runtime_error("Failed to create surface");
 	}
-	
 	
 
 #endif

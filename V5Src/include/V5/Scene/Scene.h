@@ -14,7 +14,9 @@ namespace V5Core
 		friend class Entity;
 		Scene() = default;
 		virtual ~Scene() = default;
-		Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "");
+		Entity CreateEntity(std::string name , std::string tag);
+		Entity CreateEntity(std::string name );
+		Entity CreateEntity( );
 
 		void OnStart();
 		void OnEnd();
