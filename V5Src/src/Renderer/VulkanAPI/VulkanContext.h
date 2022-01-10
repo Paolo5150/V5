@@ -5,7 +5,7 @@
 #define VK_USE_PLATFORM_ANDROID_KHR 1
 #endif
 #include <../Vulkan/Include/vulkan/vulkan.h>
-
+#include <vector>
 namespace V5Rendering
 {
 	class VulkanContext
@@ -32,11 +32,18 @@ namespace V5Rendering
 		VkSurfaceFormatKHR m_surfaceFormat;
 		VkExtent2D m_surfaceSize;
 
+		VkSwapchainKHR m_swapChain;
+
+		std::vector<VkImage> m_swapChainImages;
+		std::vector<VkImageView> m_swapChainImageViews;
+
 		void CreateInstance();
 		void PickDevice();
 		void CreateLogicalDevice();
 		void CreateSurface();
 		void GetSurfaceDetails();
+
+		void CreateSwapChain();
 
 	};
 }

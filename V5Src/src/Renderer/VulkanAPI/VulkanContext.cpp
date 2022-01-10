@@ -26,7 +26,7 @@ void VulkanContext::Initialize()
 	PickDevice();
 	CreateLogicalDevice();
 	GetSurfaceDetails();
-
+	CreateSwapChain();
 	V5CLOG_INFO("Vulkan ready!");
 
 }
@@ -92,6 +92,12 @@ void VulkanContext::CreateInstance()
 
 void VulkanContext::Shutdown()
 {
+	for (auto imageView : m_swapChainImageViews)
+	{
+		vkDestroyImageView(m_device, imageView, nullptr);
+	}
+
+	vkDestroySwapchainKHR(m_device, m_swapChain, nullptr);
 	vkDestroySurfaceKHR(m_vulkanInstance, m_surface, nullptr);
 	vkDestroyInstance(m_vulkanInstance, nullptr);
 	vkDestroyDevice(m_device, nullptr);
@@ -318,7 +324,6 @@ void VulkanContext::CreateSurface()
 	createInfo.flags = 0;
 	createInfo.window = w;
 
-
 	if (vkCreateAndroidSurfaceKHR(m_vulkanInstance, &createInfo, nullptr, &m_surface) != VK_SUCCESS)
 	{
 		V5CLOG_ERROR("Failed to create surface");
@@ -328,6 +333,91 @@ void VulkanContext::CreateSurface()
 
 #endif
 
+}
+
+void VulkanContext::CreateSwapChain()
+{
+	uint32_t imageCount = m_surfaceCapabilities.minImageCount + 1;
+
+	if (m_surfaceCapabilities.maxImageCount > 0 && imageCount > m_surfaceCapabilities.maxImageCount)
+	{
+		imageCount = m_surfaceCapabilities.maxImageCount;
+	}
+
+	VkSwapchainCreateInfoKHR createInfo{};
+	createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+	createInfo.surface = m_surface;
+	createInfo.minImageCount = imageCount;
+	createInfo.imageFormat = m_surfaceFormat.format;
+	createInfo.imageColorSpace = m_surfaceFormat.colorSpace;
+	createInfo.imageExtent = m_surfaceSize;
+	createInfo.imageArrayLayers = 1;
+	createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+
+	uint32_t queueFamilyIndices[] = { m_queueFamilyIndexGraphics, m_queueFamilyIndexPresent };
+
+	if (m_queueFamilyIndexGraphics != m_queueFamilyIndexPresent)
+	{
+		createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+		createInfo.queueFamilyIndexCount = 2;
+		createInfo.pQueueFamilyIndices = queueFamilyIndices;
+	}
+	else 
+	{
+		createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+		createInfo.queueFamilyIndexCount = 0; // Optional
+		createInfo.pQueueFamilyIndices = nullptr; // Optional
+	}
+
+	createInfo.preTransform = m_surfaceCapabilities.currentTransform;
+	createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+	createInfo.presentMode = m_surfacePresentMode;
+	createInfo.clipped = VK_TRUE;
+	createInfo.oldSwapchain = VK_NULL_HANDLE;
+
+	if (vkCreateSwapchainKHR(m_device, &createInfo, nullptr, &m_swapChain) != VK_SUCCESS)
+	{
+		V5CLOG_ERROR("Failed to create swap chain");
+		throw std::runtime_error("Failed to create swap chain");
+	}
+
+	V5CLOG_INFO("Swap chain ok");
+
+	//Get swap chain images
+	vkGetSwapchainImagesKHR(m_device, m_swapChain, &imageCount, nullptr);
+	m_swapChainImages.resize(imageCount);
+	vkGetSwapchainImagesKHR(m_device, m_swapChain, &imageCount, m_swapChainImages.data());
+
+	V5CLOG_INFO("Swap chain images ok");
+
+	m_swapChainImageViews.resize(m_swapChainImages.size());
+
+	//Image views
+	for (size_t i = 0; i < m_swapChainImages.size(); i++)
+	{
+		VkImageViewCreateInfo createInfo{};
+		createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		createInfo.image = m_swapChainImages[i];
+		createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		createInfo.format = m_surfaceFormat.format;
+
+		createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+		createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+		createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+		createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+
+		createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		createInfo.subresourceRange.baseMipLevel = 0;
+		createInfo.subresourceRange.levelCount = 1;
+		createInfo.subresourceRange.baseArrayLayer = 0;
+		createInfo.subresourceRange.layerCount = 1;
+
+		if (vkCreateImageView(m_device, &createInfo, nullptr, &m_swapChainImageViews[i]) != VK_SUCCESS) 
+		{
+			V5CLOG_ERROR("Failed to create swap chain image view");
+			throw std::runtime_error("Failed to create swap chain image view");
+		}
+	}
 }
 
 
