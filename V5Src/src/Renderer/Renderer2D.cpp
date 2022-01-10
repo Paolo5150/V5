@@ -164,7 +164,7 @@ Renderer2D::Renderer2D()
 		vao->AddVertexBuffer(batchVBO);
 		vao->AddVertexBuffer(instanceVBO);
 		vao->SetIndexBuffer(batchIBO);
-	}	
+	}
 
 }
 

@@ -251,7 +251,7 @@ void VulkanContext::GetSurfaceDetails()
 	m_surfaceSize.width = std::clamp((uint32_t)win.GetWidth(), m_surfaceCapabilities.minImageExtent.width, m_surfaceCapabilities.maxImageExtent.width);
 	m_surfaceSize.height = std::clamp((uint32_t)win.GetHeight(), m_surfaceCapabilities.minImageExtent.height, m_surfaceCapabilities.maxImageExtent.height);
 
-	V5CLOG_INFO("Surface size: {0} {1}", m_surfaceCapabilities.currentExtent.width, m_surfaceCapabilities.currentExtent.height);
+	V5CLOG_INFO("Surface size: {0} {1}", m_surfaceSize.width, m_surfaceSize.height);
 
 }
 

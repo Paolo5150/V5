@@ -69,10 +69,7 @@ static struct engine engine;
 */
 static int engine_init_display(struct engine* engine) {
 
-#ifdef V5_GRAPHICS_API_VULKAN
-	engine->ready = 1;
-	return 0;
-#endif
+
 	// initialize OpenGL ES and EGL
 	if (!gladLoaderLoadEGL(NULL)) {
 		LOGW("Failed to initialize EGL");
@@ -243,11 +240,22 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 		engine->app->savedStateSize = sizeof(struct saved_state);
 		break;
 	case APP_CMD_INIT_WINDOW:
+#ifdef V5_GRAPHICS_API_OPENGL
 		// The window is being shown, get it ready.
 		if (engine->app->window != NULL) {
 			engine_init_display(engine);
 
 		}
+#endif
+#ifdef V5_GRAPHICS_API_VULKAN
+		// If it's vulkan, just get the native window size, display will be initialized by core
+		if (engine->app->window != NULL) 
+		{
+			engine->width = ANativeWindow_getWidth(engine->app->window);
+			engine->height = ANativeWindow_getHeight(engine->app->window);
+			engine->ready = true;
+		}
+#endif
 		break;
 	case APP_CMD_TERM_WINDOW:
 
