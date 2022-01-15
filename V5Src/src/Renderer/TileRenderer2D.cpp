@@ -33,8 +33,6 @@ namespace
 {
 	constexpr uint32_t MaxQuads = 200000;
 
-	uint32_t DrawCall = 0;
-
 	std::shared_ptr<VertexArray> vao;
 
 	int TextureIndex = 0;
@@ -125,11 +123,9 @@ void TileRenderer2D::StartBatch()
 
 void TileRenderer2D::Begin(const glm::mat4& cameraViewProjection)
 {
-	DrawCall = 0;
 	Renderer::Instance().m_cameraBuffer->SetData(&cameraViewProjection, sizeof(glm::mat4));
 	StartBatch();
 	Renderer::Instance().m_cameraBuffer->Bind();
-	//Renderer::Instance().m_cameraBuffer->Bind(ShaderLibrary::GetShader("TileTextureInstanced").GetNativeID());
 }
 
 
@@ -170,13 +166,15 @@ void TileRenderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& scale,
 	{
 		FlushBuffer();
 	}
+
+	Renderer::Instance().GetRenderStats().TotalVertices += 4;
+
 }
 
 void TileRenderer2D::End()
 {
 	FlushBuffer();
 	//V5CLOG_INFO("Draw calls {0}", DrawCall);
-	DrawCall = 0;
 }
 
 void TileRenderer2D::FlushBuffer()
@@ -196,9 +194,9 @@ void TileRenderer2D::FlushBuffer()
 	V5Rendering::Renderer::Instance().GetRenderAPI().RenderIndexedInstanced(*vao, m_submittedQuads);
 	CurrentInstanceDataPtr = InstancedData;
 
-	DrawCall++;
 	m_submittedQuads = 0;
 	TextureIndex = 1; //Reset to 1 (not 0, slot 0 is alwayys white texture)
+	Renderer::Instance().GetRenderStats().DrawCalls++;
 
 }
 

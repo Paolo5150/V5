@@ -15,8 +15,8 @@ void Time::StartTimer()
 {
 	 auto now = std::chrono::high_resolution_clock::now();
 	 auto duration = now.time_since_epoch();
-	 auto millis = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
-	 return millis;
+	 auto nano = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+	 return nano;
 }
 
 
@@ -24,7 +24,9 @@ double Time::StopTimer()
 {
 	auto now = std::chrono::high_resolution_clock::now();
 
-	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_timeStart);
+	//auto time_span = std::chrono::duration_cast<std::chrono::duration<double, std::chrono::milliseconds>>(now - m_timeStart);
+	auto time_span = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(now - m_timeStart);
+
 	return time_span.count();
 }
 

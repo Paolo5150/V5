@@ -2,11 +2,14 @@
 #include <V5/Scene/Entity.h>
 #include <V5/Components/Components.h>
 #include <V5/Core/Logger.h>
+#include <V5/Core/Time.h>
 #include "../Renderer/Renderer.h"
 #include "../Renderer/Renderer2D.h"
 
 using namespace V5Core;
 using namespace V5Rendering;
+
+
 
 Entity Scene::CreateEntity(std::string name, std::string tag)
 {
@@ -42,6 +45,18 @@ void Scene::OnStart()
 	V5CLOG_INFO("Scene start");
 
 }
+
+std::vector<uint32_t> Scene::GetEntities()
+{
+	std::vector<uint32_t> r;
+	m_enttRegistry.each([&](auto& entity) {
+
+		r.push_back((uint32_t)entity);
+		});
+
+	return r;
+}
+
 
 void Scene::ForEachEntity(std::function<void(uint32_t)> f)
 {
@@ -92,6 +107,10 @@ void Scene::UpdateRuntime(double dt)
 
 void Scene::RenderRuntime(const glm::mat4& viewProjection)
 {
+	Renderer::Instance().GetRenderStats().DrawCalls = 0;
+	Renderer::Instance().GetRenderStats().TotalVertices = 0;
+	Time::StartTimer();
+
 	//TODO enable vulkan when ready
 	if (Renderer::Instance().GetRenderAPI().GetAPI() == RendererAPI::API::Vulkan) return;
 	
@@ -119,6 +138,28 @@ void Scene::RenderRuntime(const glm::mat4& viewProjection)
 			});
 
 		Renderer::Instance().GetRenderer2D().End();
+
+		static double timer = 0;
+		static double accumulator = 0;
+		static double counter = 0;
+
+		if (timer > 1.0)
+		{
+			Renderer::Instance().GetRenderStats().Time = accumulator / counter;
+			timer = 0;
+			counter = 0;
+			accumulator = 0;
+		}
+
+		counter++;
+		timer += Time::GetDeltaTime();
+
+		accumulator += (Time::StopTimer() );
+		//V5CLOG_INFO("{0:.6f}", time_span.count());
+
+
+
+
 	}
 }
 

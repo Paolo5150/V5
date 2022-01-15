@@ -40,7 +40,6 @@ namespace
 	bool UseInstancing = 1; // If 1, instancing, if 0, batching
 	constexpr uint32_t MaxQuads = 100000;
 	std::shared_ptr<VertexArray> vao;
-	uint32_t DrawCall = 0;
 
 	Texture2D* AllTextures[32];
 	int TextureIndex = 0;
@@ -183,7 +182,6 @@ void Renderer2D::StartBatch()
 
 void Renderer2D::Begin(const glm::mat4& cameraViewProjection)
 {
-	DrawCall = 0;
 	Renderer::Instance().m_cameraBuffer->SetData(&cameraViewProjection,sizeof(glm::mat4));
 	StartBatch();
 	Renderer::Instance().m_cameraBuffer->Bind();
@@ -261,14 +259,14 @@ void Renderer2D::DrawQuad(const V5Core::Transform& transform, const glm::vec4& c
 	{
 		FlushBuffer();
 	}	
+
+	Renderer::Instance().GetRenderStats().TotalVertices += 4;
 }
 
 void Renderer2D::End()
 {
 
 	FlushBuffer();
-	//V5CLOG_INFO("Draw calls {0}", DrawCall);
-	DrawCall = 0;
 }
 
 void Renderer2D::FlushBuffer()
@@ -303,10 +301,10 @@ void Renderer2D::FlushBuffer()
 		CurrentVertexPtr = verticesBatched;
 		IndexCount = 0;
 	}
-		DrawCall++;
 		m_submittedQuads = 0;
 		TextureIndex = 1; //Reset to 1 (not 0, slot 0 is alwayys white texture)
-	
+		Renderer::Instance().GetRenderStats().DrawCalls++;
+
 
 }
 

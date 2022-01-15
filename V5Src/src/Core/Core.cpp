@@ -4,6 +4,7 @@
 #include <V5/Core/PlatformDetection.h>
 #include <V5/Core/Logger.h>
 #include <V5/Application/Application.h>
+#include "Renderer/Renderer.h"
 #include <functional>
 #include <V5/Core/Input.h>
 #include <V5/Core/IWindow.h>
@@ -19,7 +20,7 @@ using namespace V5Core;
 
 namespace
 {
-	int FPS = 600;
+	int FPS = 300;
 	double frameTime = 1.0 / FPS;
 }
 
@@ -89,7 +90,7 @@ void Core::Run()
 		m_prevTime = now;
 
 		auto delta = m_looseDeltaTime;
-		m_accumulator += delta;
+		m_accumulator += delta;	
 
 		if (m_accumulator > frameTime)
 		{
@@ -101,6 +102,24 @@ void Core::Run()
 			//Render callback
 			Render();
 		}
+
+		//Some FPS stats
+		static double fpsTimeAccumulator = 0;
+		static double simpleTimer = 0;
+		static double ticks = 0;
+
+		simpleTimer += m_deltaTime;
+		if (simpleTimer > 1.0)
+		{
+			V5Rendering::Renderer::Instance().GetRenderStats().FPSAveragePerSecond = fpsTimeAccumulator / ticks;
+			fpsTimeAccumulator = 0;
+			ticks = 0;
+			simpleTimer = 0;
+			V5CLOG_INFO("{0}", fpsTimeAccumulator);
+		}
+
+		ticks++;
+		fpsTimeAccumulator += m_deltaTime;
 	
 	}
 

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include "RendererAPI.h"
 #include "Renderer2D.h"
 #include "TileRenderer2D.h"
@@ -14,6 +14,8 @@ namespace V5Core
 
 namespace V5Rendering
 {
+	
+
 	class Renderer : public IRenderer
 	{
 		friend class Core;
@@ -29,7 +31,9 @@ namespace V5Rendering
 		void Shutdown();
 		void OnEvent(V5Core::Event& e);
 		Renderer2D& GetRenderer2D() override { return *m_renderer2D; }
+		RenderingStats& GetRenderStats() override { return Renderstats; }
 		TileRenderer2D& GetTileRenderer2D() { return *m_tileRenderer2D; }
+		RenderingStats Renderstats;
 
 	private:
 		static std::unique_ptr<Renderer> s_Instance;

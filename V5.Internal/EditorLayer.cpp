@@ -174,12 +174,15 @@ void EditorLayer::OnImGuiRender()
         }
 
         ImGui::EndMenuBar();
+        Time::StartTimer();
         ImGui::Begin("Scene", nullptr,
             ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
         
         int counter = 0;
         static std::optional<uint32_t> current;
-        m_activeScene->ForEachEntity([&](uint32_t eID)
+        auto entities = m_activeScene->GetEntities();
+        
+       /* m_activeScene->ForEachEntity([&](uint32_t eID)
             {
                 Entity eb(eID, m_activeScene);
 
@@ -215,9 +218,28 @@ void EditorLayer::OnImGuiRender()
 
                 counter++;
 
-            });
+            });*/
 
         ImGui::Text("Entities: %d", counter);
+        ImGui::End();
+
+        auto sceneWindowtime = Time::StopTimer();
+
+        ImGui::Begin("Stats", nullptr,
+            ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+        ImGui::Text("RENDERING");
+
+        auto& rs = V5Core::Factory().GetRenderer().GetRenderStats();
+        ImGui::Text("FPS: %.6f",( 1.0 / rs.FPSAveragePerSecond ));
+        ImGui::Text("Total verts: %d", rs.TotalVertices);
+        ImGui::Text("Draw calls: %d", rs.DrawCalls);
+        ImGui::Text("Total time mils: %.6f", rs.Time );
+
+        ImGui::Separator();
+        ImGui::Text("IMGUI");
+        ImGui::Text("Scene window: %.6f", sceneWindowtime);
+
+
         ImGui::End();
 
         ImGui::Begin("Properties", nullptr,

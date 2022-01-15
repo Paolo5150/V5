@@ -20,7 +20,7 @@ namespace V5Core
 		static double StopTimer();
 
 		/**
-		* Returns the difference beteen now and the last StartTimer called, in nanoseconds
+		* Returns the difference beteen now and the last StartTimer called, in milliseconds
 		*/
 		static double Now();
 

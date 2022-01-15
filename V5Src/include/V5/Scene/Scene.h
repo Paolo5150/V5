@@ -28,6 +28,7 @@ namespace V5Core
 		void RenderRuntime(const glm::mat4& viewProjection);
 
 		void ForEachEntity(std::function<void(uint32_t)> f);
+		std::vector<uint32_t> GetEntities();
 
 	private:
 		entt::registry m_enttRegistry;

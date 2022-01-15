@@ -19,7 +19,7 @@ using namespace V5Rendering;
 
 namespace
 {
-	constexpr int QUAD_COUNT = 12;
+	constexpr int QUAD_COUNT = 200000;
 	std::unique_ptr<Texture2D> tt;
 	std::unique_ptr<Texture2D> tt2;
 	std::vector<Entity> entities;
@@ -38,7 +38,7 @@ TestScene::TestScene()
 		auto e = CreateEntity("Test");
 		e.GetComponent<Transform>().SetPosition({ i * 2, 0, 0 });
 		e.GetComponent<Transform>().SetRotation({ 0,0,90 });
-		e.AddComponent<TileRenderer>(tt.get());
+		e.AddComponent<SpriteRenderer>(tt.get());
 
 		e.GetComponent<Transform>().UpdateMatrix();
 	}
