@@ -115,7 +115,6 @@ void Core::Run()
 			fpsTimeAccumulator = 0;
 			ticks = 0;
 			simpleTimer = 0;
-			V5CLOG_INFO("{0}", fpsTimeAccumulator);
 		}
 
 		ticks++;

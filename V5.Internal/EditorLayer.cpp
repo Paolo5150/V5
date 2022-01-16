@@ -181,14 +181,14 @@ void EditorLayer::OnImGuiRender()
         int counter = 0;
         static std::optional<uint32_t> current;
         auto entities = m_activeScene->GetEntities();
-        
-       /* m_activeScene->ForEachEntity([&](uint32_t eID)
+        ImGui::Text("Entities: %d", entities.size());
+
+        m_activeScene->ForEachEntity([&](uint32_t eID)
             {
                 Entity eb(eID, m_activeScene);
-
-                std::stringstream ss;
-                ss << eb.GetComponent<Info>().Name << "(" << eb.GetComponent<Info>().Tag << ")" << counter;
-                if (ImGui::Button(ss.str().c_str()))
+                auto& info = eb.GetComponent<Info>();
+                ImGui::PushID(counter);
+                if (ImGui::Button(info.Name.c_str()))
                 {
                     if (current.has_value())
                     {
@@ -215,12 +215,12 @@ void EditorLayer::OnImGuiRender()
 
                     current = e;
                 }
+                ImGui::PopID();
 
                 counter++;
 
-            });*/
+            });
 
-        ImGui::Text("Entities: %d", counter);
         ImGui::End();
 
         auto sceneWindowtime = Time::StopTimer();
