@@ -4,7 +4,7 @@
 #ifdef V5_PLATFORM_ANDROID
 #define VK_USE_PLATFORM_ANDROID_KHR 1
 #endif
-#include <../Vulkan/Include/vulkan/vulkan.h>
+#include <vulkan/vulkan.h>
 #include <vector>
 namespace V5Rendering
 {
